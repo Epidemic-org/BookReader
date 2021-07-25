@@ -13,5 +13,6 @@ namespace BookReader.Data.Models
         public string Address { get; set; }
 
         public User User { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

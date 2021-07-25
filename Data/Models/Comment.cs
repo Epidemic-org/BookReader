@@ -6,19 +6,22 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class Comments
+    public class Comment
     {
         public int Id { get; set; }
-        [ForeignKey ("1")]
+
         public int ProductId { get; set; }
-        [ForeignKey("2")]
+
         public int UserId { get; set; }
         public string Text { get; set; }
         public DateTime CreationDate { get; set; }
-        [ForeignKey("3")]
+
         public int ParentId { get; set; }
         public int IsActive { get; set; }
         public double RateValue { get; set; } //real value in sql : in c# ??
-
+        public ICollection<CommentLikes> CommentLikes { get; set; }
+        public User User { get; set; }
+        public Comment Parent { get; set; }
+        public Product Product { get; set; }
     }
 }

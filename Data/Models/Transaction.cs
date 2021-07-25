@@ -15,7 +15,7 @@ namespace BookReader.Data.Models
         public bool IsSuccess { get; set; }
         public string Description { get; set; }
 
-        public ICollection<InvoicePayment> InvoicePayments { get; set; }
+        public ICollection<InvoicePayment> InvoicePayments { get; set; }        
 
     }
 }

@@ -15,5 +15,7 @@ namespace BookReader.Data.Models
         public int TermType1 { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreationDate { get; set; }
+        public ICollection<InvoiceTerm> InvoiceTerms { get; set; }
+        public ICollection<Permit> Permits { get; set; }
     }
 }

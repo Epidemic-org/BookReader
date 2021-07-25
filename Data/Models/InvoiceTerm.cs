@@ -11,5 +11,9 @@ namespace BookReader.Data.Models
         public int InvoiceId { get; set; }
         public int TermTypeId { get; set; }
         public decimal TermAmount { get; set; }
+
+        public Invoice Invoice { get; set; }
+        public TermType TermType { get; set; }
+
     }
 }

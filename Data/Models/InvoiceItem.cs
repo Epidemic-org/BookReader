@@ -13,6 +13,7 @@ namespace BookReader.Data.Models
         public decimal Quantity { get; set; }
         public decimal Price { get; set; }
         public decimal TermAMount { get; set; }
-
+        public Product Product { get; set; }
+        public Invoice Invoice { get; set; }
     }
 }

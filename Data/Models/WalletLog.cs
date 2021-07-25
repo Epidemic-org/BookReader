@@ -15,5 +15,7 @@ namespace BookReader.Data.Models
         public string Description { get; set; }
         public User User { get; set; }
         public Transaction Transaction { get; set; }
+        public ICollection<Gift> Gifts { get; set; }
+
     }
 }
