@@ -14,7 +14,7 @@ namespace BookReader.Data.Models
         public DateTime CreationDate { get; set; }
         public int ScoreValue { get; set; }
 
-        //ToDo : Score
+        public ScoreType ScoreType { get; set; }
 
         public User User { get; set; }
     }
