@@ -21,6 +21,6 @@ namespace BookReader.Data.Models
         public int AdminId { get; set; }
         public DateTime CreationDate { get; set; }
         public int ProductType { get; set; }
-        public ICollection<Book> Books { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

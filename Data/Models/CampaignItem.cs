@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class CompaignItem
+    public class CampaignItem
     {
         public int Id { get; set; }
         [ForeignKey("1")]

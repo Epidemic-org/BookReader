@@ -17,7 +17,7 @@ namespace BookReader.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration<Book>(new BookMap());
+            builder.ApplyConfiguration<Product>(new ProductMap());
             builder.ApplyConfiguration<Category>(new CategoryMap());
 
 
