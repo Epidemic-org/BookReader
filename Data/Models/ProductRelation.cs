@@ -11,5 +11,11 @@ namespace BookReader.Data.Models
         public int ProductId { get; set; }
         public int RelatedProductId { get; set; }
         public int RelationType { get; set; }
+
+
+        public Product Product { get; set; }
+        public Product RelatedProduct { get; set; }
+
+
     }
 }
