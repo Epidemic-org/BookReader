@@ -28,5 +28,13 @@ namespace BookReader.Data.Models
         public ICollection<ProductFile> ProductFiles { get; set; }
         public ICollection<ProductPlay> ProductPlays{ get; set; }
         public ICollection<ProductPrice> ProductPrices{ get; set; }
+        public ICollection<ProductPublisher> ProductPublishers { get; set; }
+        public ICollection<ProductRate> ProductRates { get; set; }
+        public ICollection<ProductRelation> ProductRelations { get; set; }
+        public ICollection<ProductRelation> RelatedProductRelations { get; set; }
+        public ICollection<ProductTranslator> ProductTranslators { get; set; }
+        public ICollection<ProductVisit> ProductVisits { get; set; }
+
+
     }
 }

@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class ProductTranslators
+    public class ProductPublisher
     {
         public int Id { get; set; }
-        [ForeignKey ("1")]
         public int ProductId { get; set; }
-        [ForeignKey ("2")]
-        public int TranslatorId { get; set; }
-        public decimal TranslatorWagePercent { get; set; }
+        public int PublisherId { get; set; }
+        public decimal PublisherWagePercent{ get; set; }
+
+        public Product Product { get; set; }
+        public People Publisher { get; set; }
+
     }
 }

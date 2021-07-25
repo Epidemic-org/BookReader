@@ -43,6 +43,8 @@ namespace BookReader.Data.Models
         public ICollection<ProductDownload> ProductDownloads { get; set; }
         public ICollection<ProductPlay> ProductPlays { get; set; }
         public ICollection<ProductPrice> ProductPrices{ get; set; }
+        public ICollection<ProductRate> ProductRates{ get; set; }
+        public ICollection<ProductVisit> ProductVisits{ get; set; }
 
     }
 }
