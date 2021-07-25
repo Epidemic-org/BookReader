@@ -12,6 +12,6 @@ namespace BookReader.Data.Models
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public ICollection<Book> Books { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }
