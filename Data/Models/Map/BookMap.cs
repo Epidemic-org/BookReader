@@ -17,7 +17,7 @@ namespace BookReader.Data.Models.Map
 
             builder.HasOne(d => d.Category)
                 .WithMany(w => w.Books)
-                .HasForeignKey(d => d.CategoryId)
+                .HasForeignKey(d => d.ProductCategoryId)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.NoAction);
         }

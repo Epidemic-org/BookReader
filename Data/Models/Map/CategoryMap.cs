@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class CategoryMap : IEntityTypeConfiguration<Category>
+    public class CategoryMap : IEntityTypeConfiguration<ProductCategory>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<ProductCategory> builder)
         {
             builder.Property(d => d.Title).IsRequired(true).HasMaxLength(50).IsUnicode(true);
         }
