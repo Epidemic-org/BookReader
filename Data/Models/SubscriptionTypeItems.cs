@@ -11,9 +11,5 @@ namespace BookReader.Data.Models
         public int ProductCategoryId { get; set; }
         public int ProductId { get; set; }
         public int SubcriptionTypeId { get; set; }
-
-        public ICollection<ProductCategory> ProductCategories { get; set; }
-        public ICollection<Product> Products { get; set; }
-        public ICollection<SubscriptionType> subscriptionTypes  { get; set; }
     }
 }

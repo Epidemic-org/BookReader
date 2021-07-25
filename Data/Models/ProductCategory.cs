@@ -19,6 +19,5 @@ namespace BookReader.Data.Models
         public DateTime CreationDate { get; set; }
         public int ProductType { get; set; }
         public ICollection<Book> Books { get; set; }
-        public ICollection<ProductCategory> ParentCategories { get; set; }
     }
 }
