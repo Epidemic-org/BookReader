@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class ProductAuthors
+    public class ProductAuthor
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

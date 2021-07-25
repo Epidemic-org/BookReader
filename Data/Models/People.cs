@@ -20,7 +20,7 @@ namespace BookReader.Data.Models
         public DateTime CreationDate { get; set; }
 
         public User User { get; set; }
-        public ICollection<ProductAuthors> ProductAuthors { get; set; }
+        public ICollection<ProductAuthor> ProductAuthors { get; set; }
 
 
     }
