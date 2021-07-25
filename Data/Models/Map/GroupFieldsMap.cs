@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class GroupFields : IEntityTypeConfiguration<GroupField>
+    public class GroupFieldsMap : IEntityTypeConfiguration<GroupField>
     {
         public void Configure(EntityTypeBuilder<GroupField> builder)
         {
