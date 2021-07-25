@@ -9,11 +9,11 @@ namespace BookReader.Data.Models
     public class ScoreTypeItem
     {
         public int Id { get; set; }
-        [ForeignKey("1")]
         public int ProductCategoryId { get; set; }
-        [ForeignKey("2")]
         public int ProductId { get; set; }
-        [ForeignKey("3")]
         public int ScoreId { get; set; }
+        public ProductCategory ProductCategory { get; set; }
+        public Product Product { get; set; }
+        public ScoreType ScoreType { get; set; }
     }
 }

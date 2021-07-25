@@ -45,6 +45,15 @@ namespace BookReader.Data.Models
         public ICollection<ProductPrice> ProductPrices{ get; set; }
         public ICollection<ProductRate> ProductRates{ get; set; }
         public ICollection<ProductVisit> ProductVisits{ get; set; }
+        public ICollection<RequestMoney> RequestMoneys{ get; set; }
+        public ICollection<ScoreLog> ScoreLogs{ get; set; }
+        public ICollection<ScoreType> ScoreType { get; set; }
+        public ICollection<Shelves> Shelves { get; set; }
+        public ICollection<SubscriptionInvoice> SubscriptionInvoices { get; set; }
+        public ICollection<SubscriptionType> SubscriptionTypes { get; set; }
+        public ICollection<TermType> TermTypes { get; set; }
+        public ICollection<TicketMessage> TicketMessages { get; set; }
+
 
     }
 }

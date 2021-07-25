@@ -9,7 +9,6 @@ namespace BookReader.Data.Models
     public class ScoreType
     {
         public int Id { get; set; }
-        [ForeignKey("1")]
         public int AdminId { get; set; }
         public string Title { get; set; }
         public int ScoreValue { get; set; }
@@ -21,5 +20,9 @@ namespace BookReader.Data.Models
         public DateTime EndDate { get; set; }
 
         public User Admin { get; set; }
+        public ICollection<ScoreLog> ScoreLogs { get; set; }
+        public ICollection<ScoreTypeItem> ScoreTypeItems { get; set; }
+
+
     }
 }

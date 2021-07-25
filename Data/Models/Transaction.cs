@@ -16,6 +16,7 @@ namespace BookReader.Data.Models
         public string Description { get; set; }
 
         public ICollection<InvoicePayment> InvoicePayments { get; set; }        
+        public ICollection<SubscriptionInvoicePayment> SubscriptionInvoicePayments { get; set; }        
 
     }
 }

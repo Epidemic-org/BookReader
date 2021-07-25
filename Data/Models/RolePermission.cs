@@ -12,5 +12,6 @@ namespace BookReader.Data.Models
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public FormAction FormAction { get; set; }
+
     }
 }

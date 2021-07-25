@@ -19,6 +19,7 @@ namespace BookReader.Data.Models
         public User User { get; set; }
         public Permit Permit { get; set; }
         public ICollection<Invoice> Invoices { get; set; }
+        public ICollection<SubscriptionInvoice> SubscriptionInvoice { get; set; }
 
     }
 }

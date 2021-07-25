@@ -17,5 +17,7 @@ namespace BookReader.Data.Models
         public bool IsActive { get; set; }
         public string Icon { get; set; }
         public string Pic { get; set; }
+        public User Admin { get; set; }
+        public ICollection<SubscriptionTypeItem> SubscriptionTypeItem { get; set; }
     }
 }

@@ -11,5 +11,10 @@ namespace BookReader.Data.Models
         public int SubcriptionInvoiceId { get; set; }
         public int ProductId { get; set; }
         public int ProductCategoryId { get; set; }
+
+        public SubscriptionInvoice SubscriptionInvoice { get; set; }
+        public Product Product { get; set; }
+        public ProductCategory ProductCategory { get; set; }
+
     }
 }

@@ -10,5 +10,6 @@ namespace BookReader.Data.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime CreationDate { get; set; }
+        public ICollection<TicketMessage> TicketMessages { get; set; }
     }
 }

@@ -9,11 +9,11 @@ namespace BookReader.Data.Models
     public class SubscriptionTypeItem
     {
         public int Id { get; set; }
-        [ForeignKey("1")]
         public int ProductCategoryId { get; set; }
-        [ForeignKey("2")]
         public int ProductId { get; set; }
-        [ForeignKey("3")]
         public int SubcriptionTypeId { get; set; }
+        public ProductCategory ProductCategory { get; set; }
+        public Product Product { get; set; }
+        public SubscriptionType SubscriptionType { get; set; }
     }
 }

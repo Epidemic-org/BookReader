@@ -12,5 +12,7 @@ namespace BookReader.Data.Models
         public decimal PayAmount { get; set; }
         public int TransactionId { get; set; }
         public DateTime CreationDate { get; set; }
+        public SubscriptionInvoice SubscriptionInvoice { get; set; }
+        public Transaction Transaction { get; set; }
     }
 }
