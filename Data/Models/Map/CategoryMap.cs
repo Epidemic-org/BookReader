@@ -12,6 +12,8 @@ namespace BookReader.Data.Models.Map
         public void Configure(EntityTypeBuilder<ProductCategory> builder)
         {
             builder.Property(d => d.Title).IsRequired(true).HasMaxLength(50).IsUnicode(true);
+            
+
         }
     }
 }

@@ -18,6 +18,6 @@ namespace BookReader.Data.Models
         public DateTime ConfirmDate { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime EditionDate { get; set; }
-        public Category Category { get; set; }
+        public ProductCategory Category { get; set; }
     }
 }
