@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class Book
+    public class Product
     {
         public int Id { get; set; }
         public int ProductCategoryId { get; set; }
