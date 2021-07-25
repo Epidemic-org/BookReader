@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookReader.Data.Models.Map
+namespace BookReader.Data.Models
 {
     public class SubscriptionInvoice
     {
