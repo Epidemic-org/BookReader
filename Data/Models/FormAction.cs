@@ -14,5 +14,6 @@ namespace BookReader.Data.Models
         public string Controller { get; set; }
         public string Action { get; set; }
         public bool IsActive { get; set; }
+        public FormAction FormAction { get; set; }
     }
 }

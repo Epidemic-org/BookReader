@@ -12,5 +12,6 @@ namespace BookReader.Data.Models
         public decimal AmountValue { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
+        public User User { get; set; }
     }
 }
