@@ -19,6 +19,11 @@ namespace BookReader.Data.Models
 
         public User User { get; set; }
         public PermitGeneration PermitGeneration { get; set; }
+        
+
+        public ICollection<Gift> Gifts { get; set; }
+        public ICollection<InvoiceItem> InvoiceItems { get; set; }
+        public ICollection<InvoiceTerm> InvoiceTerms { get; set; }
 
     }
 }

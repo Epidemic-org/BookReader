@@ -17,8 +17,11 @@ namespace BookReader.Data.Models
         public bool IsSearchable { get; set; }
         public bool IsActive { get; set; }
         public bool IsGlobal { get; set; }
-        public DateTime CreationDate { get; set; }
-        public ICollection<User> Admins { get; set; }
+        public DateTime CreationDate { get; set; }        
         public GroupField GroupField { get; set; }
+        public User Admin { get; set; }
+        public ICollection<FieldValue> FieldValues { get; set; }
+        public ICollection<ProductCategoryField> ProductCategoryFields { get; set; }
+        public ICollection<ProductFieldValue> ProductFieldValues{ get; set; }
     }
 }

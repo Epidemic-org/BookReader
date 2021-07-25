@@ -13,10 +13,12 @@ namespace BookReader.Data.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime CreationDate { get; set; }
-        [ForeignKey("GG")]
         public int AdminId { get; set; }
         public int AmountType { get; set; }
         public decimal AmountValue { get; set; }
         public bool IsActive { get; set; }
+        public User Admin { get; set; }
+        public ICollection<CampaignItem> CampaignItems { get; set; }
+
     }
 }

@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class ProductRates
+    public class ProductAuthor
     {
         public int Id { get; set; }
-        [ForeignKey ("1")]
-        public int UserId { get; set; }
-        [ForeignKey("2")]
         public int ProductId { get; set; }
-        public double RateValue { get; set; } // real value : c# ??
-        public DateTime  CreationDate { get; set; }
+        public int AuthorId { get; set; }
+        public decimal ProductAuthorWagePercent { get; set; }
 
+        public Product Product { get; set; }
+        public People People { get; set; }
     }
 }

@@ -9,11 +9,15 @@ namespace BookReader.Data.Models
     public class CampaignItem
     {
         public int Id { get; set; }
-        [ForeignKey("1")]
+
         public int CampaingnId { get; set; }
-        [ForeignKey("2")]
-        public int ProductCategory { get; set; }
-        [ForeignKey("3")]
+
+        public int ProductCategoryId { get; set; }
+
         public int ProductId { get; set; }
+
+        public Campaingn Campaingn { get; set; }
+        public ProductCategory ProductCategory { get; set; }
+        public Product Product { get; set; }
     }
 }

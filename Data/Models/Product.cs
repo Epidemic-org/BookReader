@@ -19,5 +19,22 @@ namespace BookReader.Data.Models
         public DateTime CreationDate { get; set; }
         public DateTime EditionDate { get; set; }
         public ProductCategory Category { get; set; }
+        public ICollection<CampaignItem> CampaignItems { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<InvoiceItem> InvoiceItems { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
+        public ICollection<ProductDownload> ProductDownloads { get; set; }
+        public ICollection<ProductFieldValue> ProductFieldValues { get; set; }
+        public ICollection<ProductFile> ProductFiles { get; set; }
+        public ICollection<ProductPlay> ProductPlays{ get; set; }
+        public ICollection<ProductPrice> ProductPrices{ get; set; }
+        public ICollection<ProductPublisher> ProductPublishers { get; set; }
+        public ICollection<ProductRate> ProductRates { get; set; }
+        public ICollection<ProductRelation> ProductRelations { get; set; }
+        public ICollection<ProductRelation> RelatedProductRelations { get; set; }
+        public ICollection<ProductTranslator> ProductTranslators { get; set; }
+        public ICollection<ProductVisit> ProductVisits { get; set; }
+
+
     }
 }

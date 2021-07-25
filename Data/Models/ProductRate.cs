@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class ProductAuthors
+    public class ProductRate
     {
         public int Id { get; set; }
-        [ForeignKey("1")]
+        public int UserId { get; set; }
         public int ProductId { get; set; }
-        [ForeignKey ("2")]
-        public int AuthorId { get; set; }
-        public decimal ProductAuthorWagePercent { get; set; }
+        public decimal RateValue { get; set; }
+        public DateTime  CreationDate { get; set; }
+        public User User { get; set; }
+        public Product Product { get; set; }
+
+
     }
 }

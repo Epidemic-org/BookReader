@@ -12,6 +12,8 @@ namespace BookReader.Data.Models
         public string GroupName { get; set; }
         public int AdminId { get; set; }
         public DateTime CreationDate { get; set; }
+        public ICollection<Field> Fields { get; set; }
+        public User Admin { get; set; }
 
     }
 }

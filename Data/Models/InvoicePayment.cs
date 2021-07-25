@@ -13,5 +13,6 @@ namespace BookReader.Data.Models
         public int TransactionId { get; set; }
         public DateTime CreationDate { get; set; }
         public Invoice Invoice { get; set; }
+        public Transaction Transaction { get; set; }
     }
 }

@@ -19,5 +19,14 @@ namespace BookReader.Data.Models
         public int IsAcceptRules { get; set; }
         public DateTime CreationDate { get; set; }
 
+        public User User { get; set; }
+        public ICollection<ProductAuthor> ProductAuthors { get; set; }
+        public ICollection<ProductFileNarrator> ProductFileNarrators { get; set; }
+        public ICollection<ProductPublisher> ProductPublishers { get; set; }
+        public ICollection<ProductTranslator> ProductTranslators { get; set; }
+
+
+
+
     }
 }

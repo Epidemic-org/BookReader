@@ -12,6 +12,7 @@ namespace BookReader.Data.Models
         public int ProductId { get; set; }
         public DateTime CreationDate { get; set; }
         public User User { get; set; }
-        //TODO: fucking product model is needed here
+        public Product Product { get; set; }
+
     }
 }
