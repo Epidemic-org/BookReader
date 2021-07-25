@@ -18,10 +18,10 @@ namespace BookReader.Data.Models
         public int PermitCount { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public DateTime CreationDate { get; set; }
-
-        //TODO: term type model is needed here
+        public DateTime CreationDate { get; set; }        
+        public TermType TermType { get; set; }
         public User User { get; set; }
         public ICollection<PermitGeneration> PermitGenerations { get; set; }
+        public ICollection<PermitUser> PermitUsers { get; set; }
     }
 }

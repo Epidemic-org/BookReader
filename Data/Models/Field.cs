@@ -19,6 +19,6 @@ namespace BookReader.Data.Models
         public bool IsGlobal { get; set; }
         public DateTime CreationDate { get; set; }
         public ICollection<User> Admins { get; set; }
-        //ToDo : GroupID
+        public GroupField GroupField { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace BookReader.Data.Models
         public DateTime CreationDate { get; set; }
 
         public User User { get; set; }
-        //TODO: permit generation
+        public PermitGeneration PermitGeneration { get; set; }
 
     }
 }

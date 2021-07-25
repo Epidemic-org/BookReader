@@ -18,8 +18,8 @@ namespace BookReader.Data.Models
 
         public User Giver { get; set; }
         public User Recipient { get; set; }
-        //TODO: wallet model is needed here
-        //TODO: invoice model is needed here
+        public WalletLog WalletLog { get; set; }
+        public Invoice Invoice { get; set; }
 
     }
 }

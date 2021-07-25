@@ -5,15 +5,13 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class WalletLog
+    public class InvoicePayment
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public int InvoiceId { get; set; }
+        public decimal PayAmount { get; set; }
         public int TransactionId { get; set; }
-        public decimal WalletValue { get; set; }
         public DateTime CreationDate { get; set; }
-        public string Description { get; set; }
-        public User User { get; set; }
-        public Transaction Transaction { get; set; }
+        public Invoice Invoice { get; set; }
     }
 }
