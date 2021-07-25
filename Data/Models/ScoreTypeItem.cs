@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class SubscriptionTypeItems
+    public class ScoreTypeItem
     {
         public int Id { get; set; }
         [ForeignKey("1")]
@@ -14,6 +14,6 @@ namespace BookReader.Data.Models
         [ForeignKey("2")]
         public int ProductId { get; set; }
         [ForeignKey("3")]
-        public int SubcriptionTypeId { get; set; }
+        public int ScoreId { get; set; }
     }
 }
