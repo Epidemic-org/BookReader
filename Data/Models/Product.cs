@@ -23,7 +23,10 @@ namespace BookReader.Data.Models
         public ICollection<Comment> Comments { get; set; }
         public ICollection<InvoiceItem> InvoiceItems { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
-
-
+        public ICollection<ProductDownload> ProductDownloads { get; set; }
+        public ICollection<ProductFieldValue> ProductFieldValues { get; set; }
+        public ICollection<ProductFile> ProductFiles { get; set; }
+        public ICollection<ProductPlay> ProductPlays{ get; set; }
+        public ICollection<ProductPrice> ProductPrices{ get; set; }
     }
 }

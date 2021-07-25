@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class ProductFiles
+    public class ProductFile
     {
         public int Id{ get; set; }
         public int ProductId { get; set; }
@@ -18,11 +18,14 @@ namespace BookReader.Data.Models
         public string Path{ get; set; }
         public int FileSize { get; set; }
         public string FileName{ get; set; }
+        //TODO:WTF?
         //public int FileTime { get; set; } time(7)
         public DateTime CreationDate{ get; set; }
         public int DisplayOrder{ get; set; }
-        [ForeignKey ("1")]
         public int ParentId { get; set; }
+        public Product Product { get; set; }
 
+        public ProductFile Parent{ get; set; }
+        public ICollection<ProductFileNarrator> ProductFileNarrators { get; set; }
     }
 }

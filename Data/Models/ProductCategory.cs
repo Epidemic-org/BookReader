@@ -19,8 +19,16 @@ namespace BookReader.Data.Models
         public int AdminId { get; set; }
         public DateTime CreationDate { get; set; }
         public int ProductType { get; set; }
+
+
+        public User Admin { get; set; }
+        public ProductCategory Parent { get; set; }
+
+
         public ICollection<Product> Products { get; set; }
         public ICollection<CampaignItem> CampaignItems { get; set; }
         public ICollection<ProductAuthor> ProductAuthors { get; set; }
+        public ICollection<ProductCategoryField> ProductCategoryFields { get; set; }
+
     }
 }

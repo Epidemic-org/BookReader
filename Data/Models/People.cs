@@ -21,6 +21,7 @@ namespace BookReader.Data.Models
 
         public User User { get; set; }
         public ICollection<ProductAuthor> ProductAuthors { get; set; }
+        public ICollection<ProductFileNarrator> ProductFileNarrators { get; set; }
 
 
     }

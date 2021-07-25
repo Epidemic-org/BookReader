@@ -11,5 +11,6 @@ namespace BookReader.Data.Models
         public int FieldId { get; set; }
         public string Value { get; set; }
         public Field Field { get; set; }
+        public ICollection<ProductFieldValue> ProductFieldValues { get; set; }
     }
 }

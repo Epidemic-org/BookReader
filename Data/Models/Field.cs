@@ -21,5 +21,7 @@ namespace BookReader.Data.Models
         public GroupField GroupField { get; set; }
         public User Admin { get; set; }
         public ICollection<FieldValue> FieldValues { get; set; }
+        public ICollection<ProductCategoryField> ProductCategoryFields { get; set; }
+        public ICollection<ProductFieldValue> ProductFieldValues{ get; set; }
     }
 }

@@ -39,6 +39,10 @@ namespace BookReader.Data.Models
         public ICollection<PermitGeneration> PermitGenerations { get; set; }
         public ICollection<Permit> Permits { get; set; }
         public ICollection<PermitUser> PermitUsers { get; set; }
+        public ICollection<ProductCategory> ProductCategories { get; set; }
+        public ICollection<ProductDownload> ProductDownloads { get; set; }
+        public ICollection<ProductPlay> ProductPlays { get; set; }
+        public ICollection<ProductPrice> ProductPrices{ get; set; }
 
     }
 }
