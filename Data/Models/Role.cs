@@ -8,7 +8,7 @@ namespace BookReader.Data.Models
     public class Role
     {
         public int Id { get; set; }
-        public Byte RoleType { get; set; }
+        public int RoleType { get; set; }
         public string Name { get; set; }
         public string NormalizedName { get; set; }
         public Guid ConcurrencyStamp { get; set; }
