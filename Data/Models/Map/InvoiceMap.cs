@@ -13,8 +13,19 @@ namespace BookReader.Data.Models.Map
         {
 
             builder.HasKey(f => f.Id);
-            //foreignkey userid
-            //foreignkey permitgenerationid
+
+            builder.HasOne(s => s.User)
+           .WithMany(g => g.Invoices)
+           .HasForeignKey(s => s.UserId)
+           .IsRequired(true)
+           .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(s => s.PermitGeneration)
+           .WithMany(g => g.Invoices)
+           .HasForeignKey(s => s.PermitGenerationId)
+           .IsRequired(false)
+           .OnDelete(DeleteBehavior.NoAction);
+
             builder.Property(d => d.TotalAmount).IsRequired(true).HasPrecision(18, 0);
             builder.Property(d => d.TotalTerms).IsRequired(true).HasPrecision(18, 2);
             builder.Property(d => d.PayableAmount).IsRequired(true).HasPrecision(18, 2);
