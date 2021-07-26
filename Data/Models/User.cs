@@ -60,6 +60,7 @@ namespace BookReader.Data.Models
         public ICollection<UserLogin> UserLogins { get; set; }
         public ICollection<UserLogs> UserLogs { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<UserShelves> UserShelves { get; set; }
 
 
     }

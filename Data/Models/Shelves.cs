@@ -14,6 +14,7 @@ namespace BookReader.Data.Models
         public int IsGlobal { get; set; }
         public DateTime  CreationDate { get; set; }
         public User User { get; set; }
+        public ICollection<UserShelves> UserShelves { get; set; }
 
     }
 
