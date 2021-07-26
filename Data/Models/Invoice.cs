@@ -24,6 +24,7 @@ namespace BookReader.Data.Models
         public ICollection<Gift> Gifts { get; set; }
         public ICollection<InvoiceItem> InvoiceItems { get; set; }
         public ICollection<InvoiceTerm> InvoiceTerms { get; set; }
+        public ICollection<InvoicePayment> invoicePayments { get; set; }
 
     }
 }

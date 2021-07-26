@@ -12,9 +12,21 @@ namespace BookReader.Data.Models.Map
         public void Configure(EntityTypeBuilder<InvoicePayment> builder)
         {
             builder.HasKey(f => f.Id);
-            //foreignkey invoiceid
+
+            builder.HasOne(s => s.Invoice)
+           .WithMany(g => g.invoicePayments)
+           .HasForeignKey(s => s.InvoiceId)
+           .IsRequired(true)
+           .OnDelete(DeleteBehavior.NoAction);
+
             builder.Property(d => d.PayAmount).IsRequired(true).HasPrecision(18, 0);
-            //foreignkey transactionid
+
+            builder.HasOne(s => s.Transaction)
+           .WithMany(g => g.InvoicePayments)
+           .HasForeignKey(s => s.TransactionId)
+           .IsRequired(true)
+           .OnDelete(DeleteBehavior.NoAction);
+
             builder.Property(d => d.CreationDate).IsRequired(true).HasMaxLength(7).HasColumnType("datetime2");
 
         }
