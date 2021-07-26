@@ -10,7 +10,7 @@ namespace BookReader.Data.Models
     {
         public int Id { get; set; }
         public int ParentId { get; set; }
-        public string Title { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public int DisplayOrder { get; set; }
         public string Pic { get; set; }
@@ -32,6 +32,7 @@ namespace BookReader.Data.Models
         public ICollection<ScoreTypeItem> ScoreTypeItems { get; set; }
         public ICollection<SubscriptionInvoiceItem> SubscriptionInvoiceItem { get; set; }
         public ICollection<SubscriptionTypeItem> SubscriptionTypeItem { get; set; }
+        public ICollection<ProductCategory> ProductCategories { get; set; }
 
 
     }
