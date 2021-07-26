@@ -11,7 +11,7 @@ namespace BookReader.Data.Models
         public int ProductId { get; set; }
         public decimal ProductPriceValue { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public DateTime CreationDate { get; set; }
         public bool IsActive { get; set; }
         public int AdminId { get; set; }
