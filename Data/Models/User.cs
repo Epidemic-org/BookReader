@@ -59,6 +59,7 @@ namespace BookReader.Data.Models
         public ICollection<UserFavorites> UserFavorites{ get; set; }
         public ICollection<UserLogin> UserLogins { get; set; }
         public ICollection<UserLogs> UserLogs { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
 
 
     }
