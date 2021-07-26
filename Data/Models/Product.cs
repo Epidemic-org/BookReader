@@ -41,6 +41,7 @@ namespace BookReader.Data.Models
         public ICollection<ScoreTypeItem> ScoreTypeItems { get; set; }
         public ICollection<SubscriptionInvoiceItem> SubscriptionInvoiceItems { get; set; }
         public ICollection<SubscriptionTypeItem> SubscriptionTypeItems { get; set; }
+        public ICollection<UserFavorites> UserFavorites{ get; set; }
 
 
     }

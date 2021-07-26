@@ -56,6 +56,7 @@ namespace BookReader.Data.Models
         public ICollection<TermType> TermTypes { get; set; }
         public ICollection<TicketMessage> TicketMessages { get; set; }
         public ICollection<UserClaim> UserClaims{ get; set; }
+        public ICollection<UserFavorites> UserFavorites{ get; set; }
 
 
     }

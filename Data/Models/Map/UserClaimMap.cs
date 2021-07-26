@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class UserClaimMap : IEntityTypeConfiguration<UserMap>
+    public class UserClaimMap : IEntityTypeConfiguration<UserClaim>
     {
         public void Configure(EntityTypeBuilder<UserClaim> builder) {
             builder.HasKey(t => t.Id);
