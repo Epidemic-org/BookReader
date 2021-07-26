@@ -16,10 +16,12 @@ namespace BookReader.Data.Models.Map
             builder.HasOne(q => q.Product)
                 .WithMany(q => q.SubscriptionInvoiceItems)
                 .HasForeignKey(q => q.ProductId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(q => q.ProductCategory)
                 .WithMany(q => q.SubscriptionInvoiceItems)
                 .HasForeignKey(q => q.ProductCategoryId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(q => q.SubscriptionInvoice)
                 .WithMany(q => q.SubscriptionInvoiceItems)
