@@ -61,6 +61,7 @@ namespace BookReader.Data.Models
         public ICollection<UserLogs> UserLogs { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<UserShelves> UserShelves { get; set; }
+        public ICollection<UserToken> UserTokens{ get; set; }
 
 
     }
