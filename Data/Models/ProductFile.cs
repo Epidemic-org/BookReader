@@ -18,14 +18,14 @@ namespace BookReader.Data.Models
         public string Path{ get; set; }
         public int FileSize { get; set; }
         public string FileName{ get; set; }
-        //TODO:WTF?
-        //public int FileTime { get; set; } time(7)
+        public TimeSpan? FileTime { get; set; }
         public DateTime CreationDate{ get; set; }
         public int DisplayOrder{ get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
         public Product Product { get; set; }
 
         public ProductFile Parent{ get; set; }
+        public ICollection<ProductFile> ProductFiles { get; set; }
         public ICollection<ProductFileNarrator> ProductFileNarrators { get; set; }
     }
 }
