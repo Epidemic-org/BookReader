@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class CreditTypesMap : IEntityTypeConfiguration<CreditType>
+    public class CreditTypeMap : IEntityTypeConfiguration<CreditType>
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<CreditType> builder)
         {
 
             builder.HasKey(f => f.Id);
-            //foreignkey adminid 
+            
+            
+            builder.HasOne(s => s.Admin)
+            .WithMany(g => g.CreditTypes)
+            .HasForeignKey(s => s.AdminId)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.NoAction);
+
             builder.Property(d => d.Title).IsRequired(true).HasMaxLength(100).IsUnicode(true);
             builder.Property(d => d.Description).IsRequired(false).IsUnicode(true).HasMaxLength(250);
             builder.Property(d => d.CreditPrice).IsRequired(true).HasPrecision(18, 0);
