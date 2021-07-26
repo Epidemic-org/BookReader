@@ -9,8 +9,8 @@ namespace BookReader.Data.Models
     public class SubscriptionTypeItem
     {
         public int Id { get; set; }
-        public int ProductCategoryId { get; set; }
-        public int ProductId { get; set; }
+        public int? ProductCategoryId { get; set; }
+        public int? ProductId { get; set; }
         public int SubcriptionTypeId { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public Product Product { get; set; }

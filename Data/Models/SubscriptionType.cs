@@ -18,6 +18,6 @@ namespace BookReader.Data.Models
         public string Icon { get; set; }
         public string Pic { get; set; }
         public User Admin { get; set; }
-        public ICollection<SubscriptionTypeItem> SubscriptionTypeItem { get; set; }
+        public ICollection<SubscriptionTypeItem> SubscriptionTypeItems { get; set; }
     }
 }

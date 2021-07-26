@@ -30,8 +30,8 @@ namespace BookReader.Data.Models
         public ICollection<ProductAuthor> ProductAuthors { get; set; }
         public ICollection<ProductCategoryField> ProductCategoryFields { get; set; }
         public ICollection<ScoreTypeItem> ScoreTypeItems { get; set; }
-        public ICollection<SubscriptionInvoiceItem> SubscriptionInvoiceItem { get; set; }
-        public ICollection<SubscriptionTypeItem> SubscriptionTypeItem { get; set; }
+        public ICollection<SubscriptionInvoiceItem> SubscriptionInvoiceItems { get; set; }
+        public ICollection<SubscriptionTypeItem> SubscriptionTypeItems { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
 
 
