@@ -26,7 +26,7 @@ namespace BookReader.Data.Models.Map
             .IsRequired(true)
             .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Property(d => d.ProductAuthorWagePercent).IsRequired(true).HasColumnType("decimal").HasPrecision(18, 2); ;
+            builder.Property(d => d.ProductAuthorWagePercent).IsRequired(true).HasColumnType("decimal").HasPrecision(18, 2);
         }
 
     }
