@@ -21,7 +21,7 @@ namespace BookReader.Data.Models
         public string SubscriptionTypeTitle { get; set; }
         public User User { get; set; }
         public PermitGeneration PermitGeneration { get; set; }
-        public ICollection<SubscriptionInvoiceItem> SubscriptionInvoiceItem { get; set; }
+        public ICollection<SubscriptionInvoiceItem> SubscriptionInvoiceItems { get; set; }
         public ICollection<SubscriptionInvoicePayment> SubscriptionInvoicePayments { get; set; }
 
     }
