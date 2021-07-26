@@ -52,6 +52,7 @@ namespace BookReader.Data.Models
         public ICollection<Shelves> Shelves { get; set; }
         public ICollection<SubscriptionInvoice> SubscriptionInvoices { get; set; }
         public ICollection<SubscriptionType> SubscriptionTypes { get; set; }
+        public ICollection<SubscriptionType> SubscriptionTypeItems { get; set; }
         public ICollection<TermType> TermTypes { get; set; }
         public ICollection<TicketMessage> TicketMessages { get; set; }
 
