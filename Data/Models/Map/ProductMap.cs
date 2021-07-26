@@ -11,17 +11,37 @@ namespace BookReader.Data.Models.Map
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.Property(f => f.Title).HasMaxLength(50).IsRequired(true).IsUnicode(true);
+            builder.HasKey(d => d.Id);
 
-            builder.Property(d => d.Description).IsRequired(false).IsUnicode(false);
+            builder.HasOne(d => d.ProductCategory)
+            .WithMany(s => s.Products)
+            .HasForeignKey(d => d.ProductCategoryId)
+            .IsRequired(true).OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(d => d.Category)
-                .WithMany(w => w.Products)
-                .HasForeignKey(d => d.ProductCategoryId)
-                .IsRequired(true)
-                .OnDelete(DeleteBehavior.NoAction)
-                ;
-            
+            builder.Property(d => d.Title).HasMaxLength(50).IsRequired(true).IsUnicode(true);
+
+            builder.Property(d => d.Description).IsRequired(false).IsUnicode(true);
+            builder.Property(d => d.Tags).IsRequired(false).IsUnicode(true);
+
+            builder.HasOne(d => d.User)
+            .WithMany(w => w.Products)
+            .HasForeignKey(d => d.UserId)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(d => d.Admin)
+            .WithMany(w => w.Products)
+            .HasForeignKey(d => d.AdminId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(d => d.IsConfirmed).IsRequired(true).HasColumnType("bit");
+            builder.Property(d => d.ConfirmDate).HasColumnType("datetime2").HasMaxLength(7).IsRequired(false);
+            builder.Property(d => d.CreationDate).HasColumnType("datetime2").HasMaxLength(7).IsRequired();
+            builder.Property(d => d.EditionDate).HasColumnType("datetime2").HasMaxLength(7).IsRequired(false);
+            builder.Property(d => d.ProductType).IsRequired(true).HasColumnType("tinyint");
+
+
         }
     }
 }

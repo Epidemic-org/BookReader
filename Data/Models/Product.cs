@@ -18,7 +18,10 @@ namespace BookReader.Data.Models
         public DateTime ConfirmDate { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime EditionDate { get; set; }
-        public ProductCategory Category { get; set; }
+        public int  ProductType { get; set; }
+        public ProductCategory ProductCategory { get; set; }
+        public User User { get; set; }
+        public User Admin { get; set; }
         public ICollection<CampaignItem> CampaignItems { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<InvoiceItem> InvoiceItems { get; set; }
