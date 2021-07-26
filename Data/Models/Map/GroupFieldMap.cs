@@ -14,7 +14,13 @@ namespace BookReader.Data.Models.Map
 
             builder.HasKey(f => f.Id);
             builder.Property(d => d.GroupName).IsRequired(true).IsUnicode(true).HasMaxLength(50);
-            //foreignkey adminid
+
+            builder.HasOne(s => s.Admin)
+           .WithMany(g => g.GroupFields)
+           .HasForeignKey(s => s.AdminId)
+           .IsRequired(true)
+           .OnDelete(DeleteBehavior.NoAction);
+
             builder.Property(d => d.CreationDate).IsRequired(true).HasMaxLength(7).HasColumnType("datetime2");
 
         }
