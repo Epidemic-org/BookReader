@@ -18,8 +18,9 @@ namespace BookReader.Data.Models
 
         public int ParentId { get; set; }
         public int IsActive { get; set; }
-        public double RateValue { get; set; } //real value in sql : in c# ??
+        public double RateValue { get; set; }
         public ICollection<CommentLikes> CommentLikes { get; set; }
+        public ICollection<Comment> Comments { get; set; }
         public User User { get; set; }
         public Comment Parent { get; set; }
         public Product Product { get; set; }

@@ -7,13 +7,30 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class CommentsMap : IEntityTypeConfiguration<Comments>
+    public class CommentsMap : IEntityTypeConfiguration<Comment>
     {
-        public void Configure(EntityTypeBuilder<Comments> builder)
+        public void Configure(EntityTypeBuilder<Comment> builder)
         {
             builder.HasKey(f => f.Id);
-            //foreign key productid
-            //foreign key userid
+
+            builder.HasOne(s => s.Product)
+            .WithMany(g => g.Comments)
+            .HasForeignKey(s => s.ProductId)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(s => s.User)
+            .WithMany(g => g.Comments)
+            .HasForeignKey(s => s.UserId)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(s => s.Parent)
+           .WithMany(g => g.Comments)
+           .HasForeignKey(s => s.ParentId)
+           .IsRequired(false)
+           .OnDelete(DeleteBehavior.NoAction);
+
             builder.Property(d => d.Text).IsRequired(true).IsUnicode(true);
             builder.Property(d => d.CreationDate).IsRequired(true).HasColumnType("datetime2").HasMaxLength(7);
             //foreign key parentid
