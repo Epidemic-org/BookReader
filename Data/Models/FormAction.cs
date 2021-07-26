@@ -16,5 +16,7 @@ namespace BookReader.Data.Models
         public bool IsActive { get; set; }
         public FormAction Parent { get; set; }
         public ICollection<RolePermission> RolePermissions { get; set; }
+        public ICollection<FormAction> FormActions { get; set; }
+
     }
 }
