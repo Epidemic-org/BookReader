@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class GiftsMap : IEntityTypeConfiguration<Gift>
+    public class GiftMap : IEntityTypeConfiguration<Gift>
     {
         public void Configure(EntityTypeBuilder<Gift> builder)
         {

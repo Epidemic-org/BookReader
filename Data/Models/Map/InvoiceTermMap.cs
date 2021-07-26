@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class InvoiceTermsMap : IEntityTypeConfiguration<InvoiceTerm>
+    public class InvoiceTermMap : IEntityTypeConfiguration<InvoiceTerm>
     {
         public void Configure(EntityTypeBuilder<InvoiceTerm> builder)
         {
