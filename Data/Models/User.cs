@@ -30,8 +30,8 @@ namespace BookReader.Data.Models
         public ICollection<Comment> Comments { get; set; }
         public ICollection<CreditType> CreditTypes { get; set; }
         public ICollection<Field> Fields { get; set; }
-        public ICollection<Gift> GiftGiver { get; set; }
-        public ICollection<Gift> GiftRecipient { get; set; }
+        public ICollection<Gift> GiftGivers { get; set; }
+        public ICollection<Gift> GiftRecipients { get; set; }
         public ICollection<GroupField> GroupFields { get; set; }
         public ICollection<Invoice> Invoices { get; set; }
         public ICollection<Order> Orders { get; set; }

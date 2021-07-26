@@ -10,14 +10,14 @@ namespace BookReader.Data.Models
         public int Id { get; set; }
         public int GiftGiverId { get; set; }
         public int GiftRecipientId { get; set; }
-        public int WalletId{ get; set; }
+        public int WalletLogId{ get; set; }
         public int InvoiceId { get; set; }
         public string GiftCode { get; set; }
         public DateTime RecieveDate { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public User Giver { get; set; }
-        public User Recipient { get; set; }
+        public User GiftGiver { get; set; }
+        public User GiftRecipient { get; set; }
         public WalletLog WalletLog { get; set; }
         public Invoice Invoice { get; set; }
 
