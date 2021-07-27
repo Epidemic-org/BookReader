@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class CommentLikeMap : IEntityTypeConfiguration<CommentLikes>
+    public class CommentLikeMap : IEntityTypeConfiguration<CommentLike>
     {
-        public void Configure(EntityTypeBuilder<CommentLikes> builder)
+        public void Configure(EntityTypeBuilder<CommentLike> builder)
         {
 
             builder.HasKey(f => f.Id);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class CommentLikes
+    public class CommentLike
     {
         public int Id{ get; set; }
         public int UserId { get; set; }        

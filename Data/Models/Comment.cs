@@ -19,7 +19,7 @@ namespace BookReader.Data.Models
         public int ParentId { get; set; }
         public int IsActive { get; set; }
         public double RateValue { get; set; }
-        public ICollection<CommentLikes> CommentLikes { get; set; }
+        public ICollection<CommentLike> CommentLikes { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public AppUser User { get; set; }
         public Comment Parent { get; set; }
