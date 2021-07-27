@@ -8,7 +8,8 @@ using System.Text;
 
 namespace BookReader.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<AppUser,AppRole,int>
+    public class ApplicationDbContext : IdentityDbContext<AppUser,AppRole,int, AppUserClaim, AppUserRole,
+        AppUserLogin, AppRoleClaim, AppUserToken>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -109,12 +110,12 @@ namespace BookReader.Data
             builder.ApplyConfiguration<InvoicePayment>(new InvoicePaymentMap());
             builder.ApplyConfiguration<InvoiceTerm>(new InvoiceTermMap());
             builder.ApplyConfiguration<RequestMoney>(new RequestMoneyMap());
-            builder.ApplyConfiguration < RolePermission>(new RolePermissionMap());
+            builder.ApplyConfiguration <RolePermission>(new RolePermissionMap());
             builder.ApplyConfiguration<ScoreLog>(new ScoreLogMap());
             builder.ApplyConfiguration<ScoreType>(new ScoreTypeMap());
             builder.ApplyConfiguration<ScoreTypeItem>(new ScoreTypeItemMap());
             builder.ApplyConfiguration<Shelves>(new ShelvesMap());
-            builder.ApplyConfiguration < SubscriptionInvoice>(new SubscriptionInvoiceMap());
+            builder.ApplyConfiguration <SubscriptionInvoice>(new SubscriptionInvoiceMap());
             builder.ApplyConfiguration<SubscriptionInvoiceItem>(new SubscriptionInvoiceItemMap());
             builder.ApplyConfiguration<SubscriptionInvoicePayment>(new SubscriptionInvoicePaymentMap());
             builder.ApplyConfiguration<SubscriptionType>(new SubscriptionTypeMap());
