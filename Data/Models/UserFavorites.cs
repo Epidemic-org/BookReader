@@ -13,7 +13,7 @@ namespace BookReader.Data.Models
 
         public int ProductId { get; set; }
         public DateTime CreationDate{ get; set; }
-        public User User { get; set; }
+        public AppUser User { get; set; }
         public Product Product { get; set; }
     }
 }

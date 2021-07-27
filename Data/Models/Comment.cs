@@ -21,7 +21,7 @@ namespace BookReader.Data.Models
         public double RateValue { get; set; }
         public ICollection<CommentLikes> CommentLikes { get; set; }
         public ICollection<Comment> Comments { get; set; }
-        public User User { get; set; }
+        public AppUser User { get; set; }
         public Comment Parent { get; set; }
         public Product Product { get; set; }
     }

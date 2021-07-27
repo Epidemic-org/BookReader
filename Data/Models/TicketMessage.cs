@@ -14,8 +14,8 @@ namespace BookReader.Data.Models
         public string Text { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime SeenDate { get; set; }
-        public User Admin { get; set; }
-        public User User { get; set; }
+        public AppUser Admin { get; set; }
+        public AppUser User { get; set; }
         public Ticket Ticket { get; set; }
     }
 }

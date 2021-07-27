@@ -19,7 +19,7 @@ namespace BookReader.Data.Models
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public User Admin { get; set; }
+        public AppUser Admin { get; set; }
         public ICollection<ScoreLog> ScoreLogs { get; set; }
         public ICollection<ScoreTypeItem> ScoreTypeItems { get; set; }
 

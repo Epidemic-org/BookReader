@@ -11,7 +11,7 @@ namespace BookReader.Data.Models
         public int UserId { get; set; }
         public int PermitId { get; set; }
 
-        public User User { get; set; }
+        public AppUser User { get; set; }
         public Permit Permit { get; set; }
     }
 }

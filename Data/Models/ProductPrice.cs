@@ -15,7 +15,7 @@ namespace BookReader.Data.Models
         public DateTime CreationDate { get; set; }
         public bool IsActive { get; set; }
         public int AdminId { get; set; }
-        public User Admin { get; set; }
+        public AppUser Admin { get; set; }
         public Product Product { get; set; }
 
     }

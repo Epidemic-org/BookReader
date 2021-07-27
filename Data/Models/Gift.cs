@@ -16,8 +16,8 @@ namespace BookReader.Data.Models
         public DateTime RecieveDate { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public User GiftGiver { get; set; }
-        public User GiftRecipient { get; set; }
+        public AppUser GiftGiver { get; set; }
+        public AppUser GiftRecipient { get; set; }
         public WalletLog WalletLog { get; set; }
         public Invoice Invoice { get; set; }
 

@@ -20,7 +20,7 @@ namespace BookReader.Data.Models
         public DateTime EndDate { get; set; }
         public DateTime CreationDate { get; set; }        
         public TermType TermType { get; set; }
-        public User Admin { get; set; }        
+        public AppUser Admin { get; set; }        
         public ICollection<PermitGeneration> PermitGenerations { get; set; }
         public ICollection<PermitUser> PermitUsers { get; set; }
     }

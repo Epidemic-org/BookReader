@@ -16,7 +16,7 @@ namespace BookReader.Data.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime CreationDate { get; set; }
-        public User User { get; set; }
+        public AppUser User { get; set; }
         public Permit Permit { get; set; }
         public ICollection<Invoice> Invoices { get; set; }
         public ICollection<SubscriptionInvoice> SubscriptionInvoice { get; set; }

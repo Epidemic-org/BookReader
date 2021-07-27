@@ -16,6 +16,6 @@ namespace BookReader.Data.Models
 
         public ScoreType ScoreType { get; set; }
 
-        public User User { get; set; }
+        public AppUser User { get; set; }
     }
 }

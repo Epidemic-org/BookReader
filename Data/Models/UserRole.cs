@@ -10,8 +10,8 @@ namespace BookReader.Data.Models
         public int UserId { get; set; }
         public int RoleId { get; set; }
 
-        public User User { get; set; }
-        public Role Role { get; set; }
+        public AppUser User { get; set; }
+        public AppRole Role { get; set; }
 
     }
 }

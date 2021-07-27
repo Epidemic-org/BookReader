@@ -17,7 +17,7 @@ namespace BookReader.Data.Models
         public int AmountType { get; set; }
         public decimal AmountValue { get; set; }
         public bool IsActive { get; set; }
-        public User Admin { get; set; }
+        public AppUser Admin { get; set; }
         public ICollection<CampaignItem> CampaignItems { get; set; }
 
     }

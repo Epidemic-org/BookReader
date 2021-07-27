@@ -19,7 +19,7 @@ namespace BookReader.Data.Models
         public bool IsGlobal { get; set; }
         public DateTime CreationDate { get; set; }        
         public GroupField GroupField { get; set; }
-        public User Admin { get; set; }
+        public AppUser Admin { get; set; }
         public ICollection<FieldValue> FieldValues { get; set; }
         public ICollection<ProductCategoryField> ProductCategoryFields { get; set; }
         public ICollection<ProductFieldValue> ProductFieldValues{ get; set; }

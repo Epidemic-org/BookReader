@@ -19,7 +19,7 @@ namespace BookReader.Data.Models
         public DateTime? EndDate { get; set; }
         public string SubscriptionTypeDescription { get; set; }
         public string SubscriptionTypeTitle { get; set; }
-        public User User { get; set; }
+        public AppUser User { get; set; }
         public PermitGeneration PermitGeneration { get; set; }
         public ICollection<SubscriptionInvoiceItem> SubscriptionInvoiceItems { get; set; }
         public ICollection<SubscriptionInvoicePayment> SubscriptionInvoicePayments { get; set; }

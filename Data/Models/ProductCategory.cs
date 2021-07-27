@@ -21,7 +21,7 @@ namespace BookReader.Data.Models
         public int ProductType { get; set; }
 
 
-        public User Admin { get; set; }
+        public AppUser Admin { get; set; }
         public ProductCategory Parent { get; set; }
 
 

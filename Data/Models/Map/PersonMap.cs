@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BookReader.Data.Models.Map
 {
-    public class PeopleMap : IEntityTypeConfiguration<People>
+    public class PersonMap : IEntityTypeConfiguration<Person>
     {
-        public void Configure(EntityTypeBuilder<People> builder)
+        public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.Property(e => e.Id).ValueGeneratedNever();
 
@@ -26,9 +26,9 @@ namespace BookReader.Data.Models.Map
 
             builder.Property(e => e.Phone).HasMaxLength(11);
 
-            builder.HasOne(d => d.User)
-                .WithMany(p => p.Peoples)
-                .HasForeignKey(d => d.UserId)
+            builder.HasOne<AppUser>(d => d.User)
+                .WithOne(p => p.Person)
+                .HasForeignKey<Person>(d=> d.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasIndex(d => new { d.UserId}).IsUnique();

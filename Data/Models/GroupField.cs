@@ -13,7 +13,7 @@ namespace BookReader.Data.Models
         public int AdminId { get; set; }
         public DateTime CreationDate { get; set; }
         public ICollection<Field> Fields { get; set; }
-        public User Admin { get; set; }
+        public AppUser Admin { get; set; }
 
     }
 }

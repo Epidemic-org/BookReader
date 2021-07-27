@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class UserMap : IEntityTypeConfiguration<User>
+    public class UserMap : IEntityTypeConfiguration<AppUser>
     {
 
-        public void Configure(EntityTypeBuilder<User> builder) {
+        public void Configure(EntityTypeBuilder<AppUser> builder) {
             builder.HasKey(t => t.Id);
             builder.Property(d => d.UserName).HasMaxLength(50).IsRequired(true).IsUnicode(true);
             builder.Property(d => d.NormalizedUserName).HasMaxLength(50).IsRequired(true).IsUnicode(true);
@@ -20,7 +20,7 @@ namespace BookReader.Data.Models.Map
             builder.Property(d => d.PhoneNumber).HasMaxLength(50).IsRequired(true).IsUnicode(true);
             builder.Property(d => d.LockoutEnd).HasColumnType("datetime2(7)");
 
-
+            
         }
     }
 }

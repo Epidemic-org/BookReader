@@ -8,6 +8,7 @@ namespace BookReader.Data.Models
     public class Person
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
@@ -19,7 +20,7 @@ namespace BookReader.Data.Models
         public int IsAcceptRules { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public User User { get; set; }
+        public AppUser User { get; set; }
         public ICollection<ProductAuthor> ProductAuthors { get; set; }
         public ICollection<ProductFileNarrator> ProductFileNarrators { get; set; }
         public ICollection<ProductPublisher> ProductPublishers { get; set; }

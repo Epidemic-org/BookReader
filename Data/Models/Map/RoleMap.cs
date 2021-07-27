@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class RoleMap : IEntityTypeConfiguration<Role>
+    public class RoleMap : IEntityTypeConfiguration<AppRole>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<AppRole> builder)
         {
             builder.HasKey(q => q.Id);
             builder.Property(q => q.RoleType).HasColumnType("tinyint");
