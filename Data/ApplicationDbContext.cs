@@ -81,6 +81,13 @@ namespace BookReader.Data
             builder.ApplyConfiguration<CommentLike>(new CommentLikeMap());
             builder.ApplyConfiguration<CreditType>(new CreditTypeMap());
             builder.ApplyConfiguration<Field>(new FieldMap());
+            builder.ApplyConfiguration<FieldValue>(new FieldValueMap());
+            builder.ApplyConfiguration<FormAction>(new FormActionMap());
+            builder.ApplyConfiguration<Gift>(new GiftMap());
+            builder.ApplyConfiguration<GroupField>(new GroupFieldMap());
+            builder.ApplyConfiguration<Invoice>(new InvoiceMap());
+            builder.ApplyConfiguration<InvoicePayment>(new InvoicePaymentMap());
+            builder.ApplyConfiguration<InvoiceTerm>(new InvoiceTermMap());
 
 
             base.OnModelCreating(builder);
