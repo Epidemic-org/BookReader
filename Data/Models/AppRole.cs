@@ -13,7 +13,7 @@ namespace BookReader.Data.Models
 
        
         public ICollection<RolePermission> RolePermissions { get; set; }
-        public ICollection<RoleClaim> RoleClaims { get; set; }
+        public ICollection<AppRoleClaim> AppRoleClaims { get; set; }
        
     }
 }

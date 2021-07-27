@@ -17,7 +17,7 @@ namespace BookReader.Data.Models.Map
             builder.HasOne(d => d.Role).
                 WithMany(d => d.AppRoleClaims).
                 HasForeignKey(d => d.RoleId).
-                OnDelete(DeleteBehavior.NoAction;
+                OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
