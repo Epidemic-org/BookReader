@@ -1,4 +1,6 @@
-﻿using BookReader.ViewModels;
+﻿using BookReader.Data;
+using BookReader.Repositories.Interfaces;
+using BookReader.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,22 +8,13 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories.Base
 {
-    public interface IBaseRepository<T>
-    {
-        IQueryable<T> GetAll();
 
-        Task<T> FindById(int id);
-
-        Task<ResultObjectVm> Create(T entity);
-
-        Task<ResultObjectVm> Edit(T entity);
-
-
-        Task<ResultObjectVm> Delete(int id);
-
-    }
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
+        private readonly ApplicationDbContext _context;
+        public BaseRepository(ApplicationDbContext context) {
+            _context = context;
+        }
         public virtual Task<ResultObjectVm> Create(T entity)
         {
             throw new NotImplementedException();

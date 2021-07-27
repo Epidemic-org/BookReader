@@ -1,0 +1,15 @@
+﻿using BookReader.Data.Models;
+using BookReader.Interfaces;
+using BookReader.Repositories.Base;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BookReader.Interfaces
+{
+    public interface IProductRepository : IBaseRepository<Product>
+    {
+
+    }
+}

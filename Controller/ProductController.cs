@@ -1,5 +1,5 @@
 ﻿using BookReader.Data.Models;
-using BookReader.Repositories;
+using BookReader.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
