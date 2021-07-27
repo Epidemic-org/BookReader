@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BookReader.Data.Models.Map
 {
@@ -11,22 +11,19 @@ namespace BookReader.Data.Models.Map
     {
         public void Configure(EntityTypeBuilder<ScoreType> builder)
         {
-            builder.HasKey(d => d.Id);
-
-            builder.HasOne(d => d.Admin)
-                .WithMany(s => s.ScoreTypes)
-                .HasForeignKey(d => d.AdminId)
-                .IsRequired()
+            builder.HasKey(q => q.Id);
+            builder.Property(q => q.Title).IsUnicode();
+            builder.Property(q => q.ScoreValue).HasColumnType("int");
+            builder.Property(q => q.IsActive).HasColumnType("bit");
+            builder.Property(q => q.ActionType).HasColumnType("tinyint");
+            builder.Property(q => q.CreationDate).HasColumnType("datatime2(7)");
+            builder.Property(q => q.MinAmount).HasColumnType("decimal(18,0)").IsRequired(false);
+            builder.Property(q => q.StartDate).HasColumnType("datatime2(7)").IsRequired(false);
+            builder.Property(q => q.EndDate).HasColumnType("datatime2(7)").IsRequired(false);
+            builder.HasOne(q => q.Admin)
+                .WithMany(q => q.ScoreTypes)
+                .HasForeignKey(q => q.AdminId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Property(d => d.Title).IsRequired().IsUnicode();
-            builder.Property(d => d.ScoreValue).IsRequired().IsUnicode();
-            builder.Property(d => d.IsActive).IsRequired().IsUnicode().HasColumnType("bit");
-            builder.Property(d => d.ActionType).IsRequired().HasColumnType("tinyint");
-            builder.Property(d => d.CreationDate).IsRequired().IsUnicode().HasColumnType("datetime2").HasMaxLength(7);
-            builder.Property(d => d.MinAmount).IsUnicode().HasPrecision(18,0);
-            builder.Property(d => d.StartDate).IsUnicode().HasColumnType("datetime2").HasMaxLength(7);
-            builder.Property(d => d.EndDate).IsUnicode().HasColumnType("datetime2").HasMaxLength(7);
         }
     }
 }

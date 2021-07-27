@@ -9,10 +9,11 @@ namespace BookReader.Data.Models
     public class UserFavorites
     {
         public int Id { get; set; }
-        [ForeignKey ("1")]
         public int UserId { get; set; }
-        [ForeignKey("2")]
+
         public int ProductId { get; set; }
         public DateTime CreationDate{ get; set; }
+        public User User { get; set; }
+        public Product Product { get; set; }
     }
 }

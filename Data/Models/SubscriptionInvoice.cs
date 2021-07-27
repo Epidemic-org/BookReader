@@ -10,18 +10,18 @@ namespace BookReader.Data.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public int DayCount { get; set; }
-        public int PermitGenerationId { get; set; }
+        public int? PermitGenerationId { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal TotalTerms { get; set; }
         public decimal PayableAmount { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string SubscriptionTypeDescription { get; set; }
         public string SubscriptionTypeTitle { get; set; }
         public User User { get; set; }
         public PermitGeneration PermitGeneration { get; set; }
-        public ICollection<SubscriptionInvoiceItem> SubscriptionInvoiceItem { get; set; }
+        public ICollection<SubscriptionInvoiceItem> SubscriptionInvoiceItems { get; set; }
         public ICollection<SubscriptionInvoicePayment> SubscriptionInvoicePayments { get; set; }
 
     }

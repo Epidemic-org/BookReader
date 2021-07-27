@@ -9,11 +9,14 @@ namespace BookReader.Data.Models
     public class UserLogs
     {
         public int Id{ get; set; }
-        [ForeignKey ("1")]
         public int UserId { get; set; }
         public DateTime CreationDate{ get; set; }
         public string UserIp { get; set; }
         public string UserDevice { get; set; }
         public int IsLogin { get; set; }
+
+
+        public User User { get; set; }
+
     }
 }

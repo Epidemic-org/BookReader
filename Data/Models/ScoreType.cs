@@ -15,9 +15,9 @@ namespace BookReader.Data.Models
         public bool IsActive { get; set; }
         public int ActionType { get; set; }
         public DateTime CreationDate { get; set; }
-        public decimal MinAmount { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public decimal? MinAmount { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public User Admin { get; set; }
         public ICollection<ScoreLog> ScoreLogs { get; set; }

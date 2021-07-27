@@ -52,8 +52,17 @@ namespace BookReader.Data.Models
         public ICollection<Shelves> Shelves { get; set; }
         public ICollection<SubscriptionInvoice> SubscriptionInvoices { get; set; }
         public ICollection<SubscriptionType> SubscriptionTypes { get; set; }
+        public ICollection<SubscriptionType> SubscriptionTypeItems { get; set; }
         public ICollection<TermType> TermTypes { get; set; }
         public ICollection<TicketMessage> TicketMessages { get; set; }
+        public ICollection<UserClaim> UserClaims{ get; set; }
+        public ICollection<UserFavorites> UserFavorites{ get; set; }
+        public ICollection<UserLogin> UserLogins { get; set; }
+        public ICollection<UserLogs> UserLogs { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<UserShelves> UserShelves { get; set; }
+        public ICollection<UserToken> UserTokens{ get; set; }
+        public ICollection<WalletLog> WalletLogs{ get; set; }
 
 
     }
