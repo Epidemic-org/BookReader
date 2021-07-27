@@ -15,7 +15,7 @@ namespace BookReader.Data
         {
         }
 
-        public DbSet<Product> Products { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Campaingn> Campaigns { get; set; }
         public virtual DbSet<CampaignItem> CampaignItems { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
@@ -70,7 +70,6 @@ namespace BookReader.Data
         public virtual DbSet<UserShelves> UserShelves { get; set; }
         public virtual DbSet<WalletLog> WalletLogs { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration<Product>(new ProductMap());
@@ -81,7 +80,27 @@ namespace BookReader.Data
             builder.ApplyConfiguration<CommentLike>(new CommentLikeMap());
             builder.ApplyConfiguration<CreditType>(new CreditTypeMap());
             builder.ApplyConfiguration<Field>(new FieldMap());
-<<<<<<< Updated upstream
+            builder.ApplyConfiguration<Order>(new OrderMap());
+            builder.ApplyConfiguration<OrderItem>(new OrderItemMap());
+            builder.ApplyConfiguration<PermitGeneration>(new PermitGenerationMap());
+            builder.ApplyConfiguration<Permit>(new PermitMap());
+            builder.ApplyConfiguration<PermitUser>(new PermitUserMap());
+            builder.ApplyConfiguration<Person>(new PersonMap());
+            builder.ApplyConfiguration<ProductAuthor>(new ProductAuthorMap());
+            builder.ApplyConfiguration<ProductCategoryField>(new ProductCategoryFieldMap());
+            builder.ApplyConfiguration<ProductCategory>(new ProductCategoryMap());
+            builder.ApplyConfiguration<ProductDownload>(new ProductDownloadMap());
+            builder.ApplyConfiguration<ProductFieldValue>(new ProductFieldValueMap());
+            builder.ApplyConfiguration<ProductFile>(new ProductFileMap());
+            builder.ApplyConfiguration<ProductFileNarrator>(new ProductFileNarratorMap());
+            builder.ApplyConfiguration<ProductPlay>(new ProductPlayMap());
+            builder.ApplyConfiguration<ProductPrice>(new ProductPriceMap());
+            builder.ApplyConfiguration<ProductPrice>(new ProductPriceMap());
+            builder.ApplyConfiguration(new ProductPublisherMap());
+            builder.ApplyConfiguration(new ProductRateMap());
+            builder.ApplyConfiguration(new ProductRelationMap());
+            builder.ApplyConfiguration(new ProductTranslatorMap());
+            builder.ApplyConfiguration(new ProductVisitMap());
             builder.ApplyConfiguration<FieldValue>(new FieldValueMap());
             builder.ApplyConfiguration<FormAction>(new FormActionMap());
             builder.ApplyConfiguration<Gift>(new GiftMap());
@@ -89,8 +108,6 @@ namespace BookReader.Data
             builder.ApplyConfiguration<Invoice>(new InvoiceMap());
             builder.ApplyConfiguration<InvoicePayment>(new InvoicePaymentMap());
             builder.ApplyConfiguration<InvoiceTerm>(new InvoiceTermMap());
-
-=======
             builder.ApplyConfiguration<RequestMoney>(new RequestMoneyMap());
             builder.ApplyConfiguration < RolePermission>(new RolePermissionMap());
             builder.ApplyConfiguration<ScoreLog>(new ScoreLogMap());
@@ -110,8 +127,6 @@ namespace BookReader.Data
             builder.ApplyConfiguration(new UserLogMap());
             builder.ApplyConfiguration(new UserShelveMap());
             builder.ApplyConfiguration(new WalletMap());
->>>>>>> Stashed changes
-
             base.OnModelCreating(builder);
         }
     }
