@@ -13,7 +13,7 @@ namespace BookReader.Data.Models
         public Person Person { get; set; }
 
         public ICollection<Campaingn> Campaingns { get; set; }
-        public ICollection<CommentLikes> CommentLikes { get; set; }
+        public ICollection<CommentLike> CommentLikes { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<CreditType> CreditTypes { get; set; }
         public ICollection<Field> Fields { get; set; }
