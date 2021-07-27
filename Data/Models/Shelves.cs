@@ -11,7 +11,7 @@ namespace BookReader.Data.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public string ShelfName { get; set; }
-        public int IsGlobal { get; set; }
+        public bool IsGlobal { get; set; }
         public DateTime  CreationDate { get; set; }
         public AppUser User { get; set; }
         public ICollection<UserShelves> UserShelves { get; set; }

@@ -19,7 +19,7 @@ namespace BookReader.Data.Models.Map
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(q => q.RelatedProduct)
-                .WithMany(q => q.ProductRelations)
+                .WithMany(q => q.RelatedProductRelations)
                 .HasForeignKey(q => q.RelatedProductId)
                 .OnDelete(DeleteBehavior.NoAction);
         }

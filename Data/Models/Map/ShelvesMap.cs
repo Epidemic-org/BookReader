@@ -13,7 +13,7 @@ namespace BookReader.Data.Models.Map
         {
             builder.HasKey(q => q.Id);
             builder.Property(q => q.ShelfName).IsUnicode().HasMaxLength(100);
-            builder.Property(q => q.CreationDate).HasColumnType("datatime2(7)");
+            builder.Property(q => q.CreationDate).HasColumnType("datetime2(7)");
             builder.Property(q => q.IsGlobal).HasColumnType("bit");
             builder.HasOne(q => q.User)
                 .WithMany(q => q.Shelves)

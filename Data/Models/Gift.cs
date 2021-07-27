@@ -13,7 +13,7 @@ namespace BookReader.Data.Models
         public int WalletLogId{ get; set; }
         public int InvoiceId { get; set; }
         public string GiftCode { get; set; }
-        public DateTime RecieveDate { get; set; }
+        public DateTime? RecieveDate { get; set; }
         public DateTime CreationDate { get; set; }
 
         public AppUser GiftGiver { get; set; }

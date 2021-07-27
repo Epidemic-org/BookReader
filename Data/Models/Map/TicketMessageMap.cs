@@ -16,14 +16,14 @@ namespace BookReader.Data.Models.Map
             builder.Property(d => d.SeenDate).HasColumnType("datetime2(7)");
 
             builder.HasOne(t => t.Admin)
-            .WithMany(u => u.TicketMessages)
+            .WithMany(u => u.AdminTicketMessages)
             .HasForeignKey(t => t.AdminId)
             .IsRequired(true)
             .OnDelete(DeleteBehavior.NoAction)
             ;
 
             builder.HasOne(t => t.User)
-            .WithMany(u => u.TicketMessages)
+            .WithMany(u => u.UserTicketMessages)
             .HasForeignKey(t => t.UserId)
             .IsRequired(true)
             .OnDelete(DeleteBehavior.NoAction)

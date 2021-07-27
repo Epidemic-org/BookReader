@@ -12,7 +12,7 @@ namespace BookReader.Data.Models.Map
         public void Configure(EntityTypeBuilder<SubscriptionInvoicePayment> builder)
         {
             builder.HasKey(q => q.Id);
-            builder.Property(q => q.CreationDate).HasColumnType("datatime2(7)");
+            builder.Property(q => q.CreationDate).HasColumnType("datetime2(7)");
             builder.Property(q => q.PayAmount).HasColumnType("decimal(18,0)");
             builder.HasOne(q => q.Transaction)
                 .WithMany(q => q.SubscriptionInvoicePayments)

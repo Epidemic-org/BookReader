@@ -11,7 +11,7 @@ namespace BookReader.Data.Models
         public int Id{ get; set; }
         public int UserId { get; set; }        
         public int CommentId { get; set; }
-        public int IsLike { get; set; }
+        public bool IsLike { get; set; }
         public DateTime CreationDate { get; set; }
         public AppUser User { get; set; }
         public Comment Comment { get; set; }

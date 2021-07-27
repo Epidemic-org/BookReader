@@ -13,9 +13,9 @@ namespace BookReader.Data.Models.Map
         {
             builder.HasKey(q => q.Id);
             builder.Property(q => q.IsActive).HasColumnType("bit");
-            builder.Property(q => q.StartDate).HasColumnType("datatime2(7)");
-            builder.Property(q => q.EndDate).HasColumnType("datatime2(7)");
-            builder.Property(q => q.CreationDate).HasColumnType("datatime2(7)");
+            builder.Property(q => q.StartDate).HasColumnType("datetime2(7)");
+            builder.Property(q => q.EndDate).HasColumnType("datetime2(7)");
+            builder.Property(q => q.CreationDate).HasColumnType("datetime2(7)");
             builder.Property(q => q.ProductPriceValue).HasColumnType("decimal(18,0)");
             builder.HasOne(q => q.Product)
                 .WithMany(q => q.ProductPrices)

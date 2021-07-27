@@ -24,13 +24,13 @@ namespace BookReader.Data.Models.Map
             builder.Property(d => d.Tags).IsRequired(false).IsUnicode(true);
 
             builder.HasOne(d => d.User)
-            .WithMany(w => w.Products)
+            .WithMany(w => w.UserProducts)
             .HasForeignKey(d => d.UserId)
             .IsRequired(true)
             .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(d => d.Admin)
-            .WithMany(w => w.Products)
+            .WithMany(w => w.AdminProducts)
             .HasForeignKey(d => d.AdminId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.NoAction);

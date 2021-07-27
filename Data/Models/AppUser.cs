@@ -32,7 +32,8 @@ namespace BookReader.Data.Models
         public ICollection<ProductPrice> ProductPrices{ get; set; }
         public ICollection<ProductRate> ProductRates{ get; set; }
         public ICollection<ProductVisit> ProductVisits{ get; set; }
-        public ICollection<Product> Products{ get; set; }
+        public ICollection<Product> UserProducts{ get; set; }
+        public ICollection<Product> AdminProducts{ get; set; }
         public ICollection<RequestMoney> RequestMoneys{ get; set; }
         public ICollection<ScoreLog> ScoreLogs{ get; set; }
         public ICollection<ScoreType> ScoreTypes { get; set; }
@@ -41,7 +42,9 @@ namespace BookReader.Data.Models
         public ICollection<SubscriptionType> SubscriptionTypes { get; set; }
         public ICollection<SubscriptionType> SubscriptionTypeItems { get; set; }
         public ICollection<TermType> TermTypes { get; set; }
-        public ICollection<TicketMessage> TicketMessages { get; set; }
+        public ICollection<TicketMessage> UserTicketMessages { get; set; }
+        public ICollection<TicketMessage> AdminTicketMessages { get; set; }
+
         public ICollection<AppUserClaim> AppUserClaims{ get; set; }
         public ICollection<UserFavorites> UserFavorites{ get; set; }
         public ICollection<AppUserLogin> UserLogins { get; set; }

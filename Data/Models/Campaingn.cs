@@ -11,7 +11,7 @@ namespace BookReader.Data.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public DateTime CreationDate { get; set; }
         public int AdminId { get; set; }
         public int AmountType { get; set; }

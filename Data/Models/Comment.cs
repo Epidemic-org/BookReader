@@ -17,7 +17,7 @@ namespace BookReader.Data.Models
         public DateTime CreationDate { get; set; }
 
         public int ParentId { get; set; }
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
         public double RateValue { get; set; }
         public ICollection<CommentLike> CommentLikes { get; set; }
         public ICollection<Comment> Comments { get; set; }

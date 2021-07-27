@@ -37,7 +37,7 @@ namespace BookReader
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             //services.AddTransient();
             //services.AddSingleton();
 
@@ -66,9 +66,16 @@ namespace BookReader
             app.UseAuthentication();
             app.UseAuthorization();
 
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapRazorPages();
+            //});
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Product}/{action=GetAll}/{id?}");
             });
         }
     }

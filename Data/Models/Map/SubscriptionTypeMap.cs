@@ -15,7 +15,7 @@ namespace BookReader.Data.Models.Map
             builder.Property(q => q.DayCount).HasColumnType("int");
             builder.Property(q => q.Title).IsUnicode();
             builder.Property(q => q.Description).IsRequired(false).IsUnicode();
-            builder.Property(q => q.CreationDate).HasColumnType("datatime2(7)");
+            builder.Property(q => q.CreationDate).HasColumnType("datetime2(7)");
             builder.Property(q => q.PriceAmount).HasColumnType("decimal(18,0)");
             builder.Property(q => q.IsActive).HasColumnType("bit");
             builder.Property(q => q.Icon).IsRequired(false).IsUnicode();

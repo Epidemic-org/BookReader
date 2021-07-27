@@ -13,12 +13,12 @@ namespace BookReader.Data.Models.Map
         {
             builder.HasKey(q => q.Id);
             builder.Property(q => q.DayCount).HasColumnType("int");
-            builder.Property(q => q.CreationDate).HasColumnType("datatime2(7)");
+            builder.Property(q => q.CreationDate).HasColumnType("datetime2(7)");
             builder.Property(q => q.TotalAmount).HasColumnType("decimal(18,0)");
             builder.Property(q => q.TotalTerms).HasColumnType("decimal(18,0)");
             builder.Property(q => q.PayableAmount).HasColumnType("decimal(18,0)");
-            builder.Property(q => q.StartDate).HasColumnType("datatime2(7)");
-            builder.Property(q => q.EndDate).HasColumnType("datatime2(7)").IsRequired(false);
+            builder.Property(q => q.StartDate).HasColumnType("datetime2(7)");
+            builder.Property(q => q.EndDate).HasColumnType("datetime2(7)").IsRequired(false);
             builder.Property(q => q.SubscriptionTypeDescription).IsRequired(false).IsUnicode();
             builder.Property(q => q.SubscriptionTypeTitle).IsUnicode();
             builder.HasOne(q => q.User)

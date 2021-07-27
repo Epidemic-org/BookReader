@@ -15,9 +15,9 @@ namespace BookReader.Data.Models
         public int UserId { get; set; }
         public int AdminId { get; set; }
         public bool IsConfirmed { get; set; }
-        public DateTime ConfirmDate { get; set; }
+        public DateTime? ConfirmDate { get; set; }
         public DateTime CreationDate { get; set; }
-        public DateTime EditionDate { get; set; }
+        public DateTime? EditionDate { get; set; }
         public int  ProductType { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public AppUser User { get; set; }

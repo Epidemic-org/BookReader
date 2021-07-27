@@ -12,7 +12,7 @@ namespace BookReader.Data.Models.Map
         public void Configure(EntityTypeBuilder<ProductVisit> builder)
         {
             builder.HasKey(q => q.Id);
-            builder.Property(q => q.CreationDate).HasColumnType("datatime");
+            builder.Property(q => q.CreationDate).HasColumnType("datetime");
             builder.HasOne(q => q.Product)
                 .WithMany(q => q.ProductVisits)
                 .HasForeignKey(q => q.ProductId)

@@ -16,7 +16,7 @@ namespace BookReader.Data.Models.Map
 
             builder.Property(d => d.Title).IsRequired(true).HasMaxLength(75).IsUnicode(true);
 
-            builder.Property(d => d.StartDate).HasColumnType("datetime2").HasMaxLength(7).IsRequired(false);
+            builder.Property(d => d.StartDate).HasColumnType("datetime2").HasMaxLength(7).IsRequired(true);
 
             builder.Property(d => d.EndDate).HasColumnType("datetime2").HasMaxLength(7).IsRequired(false);
 
