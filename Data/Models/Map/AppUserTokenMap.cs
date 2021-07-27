@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class UserTokenMap : IEntityTypeConfiguration<UserToken>
+    public class AppUserTokenMap : IEntityTypeConfiguration<AppUserToken>
     {
-        public void Configure(EntityTypeBuilder<UserToken> builder) {
+        public void Configure(EntityTypeBuilder<AppUserToken> builder) {
             builder.HasKey(u => new { u.UserId, u.LoginProvider, u.Name});
             builder.Property(d => d.LoginProvider).HasMaxLength(50).IsRequired(true).IsUnicode(true);
             builder.Property(d => d.Name).HasMaxLength(50).IsRequired(true).IsUnicode(true);
