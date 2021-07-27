@@ -102,7 +102,13 @@ namespace BookReader.Data
             builder.ApplyConfiguration(new ProductTranslatorMap());
             builder.ApplyConfiguration(new ProductVisitMap());
 
-
+            builder.ApplyConfiguration<FieldValue>(new FieldValueMap());
+            builder.ApplyConfiguration<FormAction>(new FormActionMap());
+            builder.ApplyConfiguration<Gift>(new GiftMap());
+            builder.ApplyConfiguration<GroupField>(new GroupFieldMap());
+            builder.ApplyConfiguration<Invoice>(new InvoiceMap());
+            builder.ApplyConfiguration<InvoicePayment>(new InvoicePaymentMap());
+            builder.ApplyConfiguration<InvoiceTerm>(new InvoiceTermMap());
 
             base.OnModelCreating(builder);
         }
