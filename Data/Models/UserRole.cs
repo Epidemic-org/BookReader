@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookReader.Data.Models
 {
-    public class UserRole
+    public class UserRole : IdentityUserRole<int>
     {
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
-
         public AppUser User { get; set; }
         public AppRole Role { get; set; }
 
