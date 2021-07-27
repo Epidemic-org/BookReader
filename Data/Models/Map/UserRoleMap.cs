@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class UserRoleMap : IEntityTypeConfiguration<UserRole>
+    public class UserRoleMap : IEntityTypeConfiguration<AppUserRole>
     {
-        public void Configure(EntityTypeBuilder<UserRole> builder) {
+        public void Configure(EntityTypeBuilder<AppUserRole> builder) {
             builder.HasKey(t => new { t.UserId, t.RoleId });
             builder.HasOne(t => t.User)
             .WithMany(u => u.UserRoles)
@@ -19,7 +19,7 @@ namespace BookReader.Data.Models.Map
             ;
 
             builder.HasOne(t => t.Role)
-            .WithMany(u => u.UserRoles)
+            .WithMany(u => u.AppUserRoles)
             .HasForeignKey(t => t.RoleId)
             .IsRequired(true)
             .OnDelete(DeleteBehavior.NoAction)
