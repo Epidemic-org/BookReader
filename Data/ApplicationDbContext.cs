@@ -81,6 +81,7 @@ namespace BookReader.Data
             builder.ApplyConfiguration<CommentLike>(new CommentLikeMap());
             builder.ApplyConfiguration<CreditType>(new CreditTypeMap());
             builder.ApplyConfiguration<Field>(new FieldMap());
+<<<<<<< Updated upstream
             builder.ApplyConfiguration<FieldValue>(new FieldValueMap());
             builder.ApplyConfiguration<FormAction>(new FormActionMap());
             builder.ApplyConfiguration<Gift>(new GiftMap());
@@ -89,6 +90,27 @@ namespace BookReader.Data
             builder.ApplyConfiguration<InvoicePayment>(new InvoicePaymentMap());
             builder.ApplyConfiguration<InvoiceTerm>(new InvoiceTermMap());
 
+=======
+            builder.ApplyConfiguration<RequestMoney>(new RequestMoneyMap());
+            builder.ApplyConfiguration < RolePermission>(new RolePermissionMap());
+            builder.ApplyConfiguration<ScoreLog>(new ScoreLogMap());
+            builder.ApplyConfiguration<ScoreType>(new ScoreTypeMap());
+            builder.ApplyConfiguration<ScoreTypeItem>(new ScoreTypeItemMap());
+            builder.ApplyConfiguration<Shelves>(new ShelvesMap());
+            builder.ApplyConfiguration < SubscriptionInvoice>(new SubscriptionInvoiceMap());
+            builder.ApplyConfiguration<SubscriptionInvoiceItem>(new SubscriptionInvoiceItemMap());
+            builder.ApplyConfiguration<SubscriptionInvoicePayment>(new SubscriptionInvoicePaymentMap());
+            builder.ApplyConfiguration<SubscriptionType>(new SubscriptionTypeMap());
+            builder.ApplyConfiguration<SubscriptionTypeItem>(new SubscriptionTypeItemMap());
+            builder.ApplyConfiguration<TermType>(new TermTypeMap());
+            builder.ApplyConfiguration(new TicketMap());
+            builder.ApplyConfiguration(new TicketMessageMap());
+            builder.ApplyConfiguration(new TransactionMap());
+            builder.ApplyConfiguration(new UserFavoiteMap());
+            builder.ApplyConfiguration(new UserLogMap());
+            builder.ApplyConfiguration(new UserShelveMap());
+            builder.ApplyConfiguration(new WalletMap());
+>>>>>>> Stashed changes
 
             base.OnModelCreating(builder);
         }
