@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models
 {
-    public class Order
+    public class Order 
     {
         public int Id { get; set; }
         public int UserId { get; set; }
