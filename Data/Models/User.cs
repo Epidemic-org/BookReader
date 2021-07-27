@@ -23,7 +23,7 @@ namespace BookReader.Data.Models
         public DateTime LockoutEnd { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
-
+        public Person Person { get; set; }
 
         public ICollection<Campaingn> Campaingns { get; set; }
         public ICollection<CommentLikes> CommentLikes { get; set; }
@@ -35,7 +35,7 @@ namespace BookReader.Data.Models
         public ICollection<GroupField> GroupFields { get; set; }
         public ICollection<Invoice> Invoices { get; set; }
         public ICollection<Order> Orders { get; set; }
-        public ICollection<People> Peoples { get; set; }
+        
         public ICollection<PermitGeneration> PermitGenerations { get; set; }
         public ICollection<Permit> Permits { get; set; }
         public ICollection<PermitUser> PermitUsers { get; set; }

@@ -12,7 +12,7 @@ namespace BookReader.Data.Models
         public int ProductFileId { get; set; }
         public int NarratorId { get; set; }
         public decimal ProductNarrorateWagePercent { get; set; }
-        public People Narrator { get; set; }
+        public Person Narrator { get; set; }
         public ProductFile ProductFile { get; set; }
     }
 }

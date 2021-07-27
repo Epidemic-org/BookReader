@@ -14,6 +14,6 @@ namespace BookReader.Data.Models
         public decimal TranslatorWagePercent { get; set; }
 
         public Product Product { get; set; }
-        public People Translator { get; set; }
+        public Person Translator { get; set; }
     }
 }

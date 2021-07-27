@@ -14,6 +14,6 @@ namespace BookReader.Data.Models
         public decimal ProductAuthorWagePercent { get; set; }
 
         public Product Product { get; set; }
-        public People People { get; set; }
+        public Person People { get; set; }
     }
 }

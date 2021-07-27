@@ -25,8 +25,6 @@ namespace BookReader.Data.Models.Map
             .OnDelete(DeleteBehavior.NoAction)
             ;
 
-
-
         }
     }
 }
