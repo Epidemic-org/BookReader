@@ -8,9 +8,7 @@ namespace BookReader.Data.Models
 {
     public class AppRole : IdentityRole<int>
     {
-        public int RoleType { get; set; }
-        
-
+        public int RoleType { get; set; }       
        
         public ICollection<RolePermission> RolePermissions { get; set; }
         public ICollection<AppRoleClaim> AppRoleClaims { get; set; }

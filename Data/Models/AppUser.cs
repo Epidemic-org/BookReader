@@ -42,7 +42,7 @@ namespace BookReader.Data.Models
         public ICollection<SubscriptionType> SubscriptionTypeItems { get; set; }
         public ICollection<TermType> TermTypes { get; set; }
         public ICollection<TicketMessage> TicketMessages { get; set; }
-        public ICollection<UserClaim> UserClaims{ get; set; }
+        public ICollection<AppUserClaim> AppUserClaims{ get; set; }
         public ICollection<UserFavorites> UserFavorites{ get; set; }
         public ICollection<UserLogin> UserLogins { get; set; }
         public ICollection<UserLogs> UserLogs { get; set; }
