@@ -11,7 +11,7 @@ namespace BookReader.Data.Models.Map
     {
         public void Configure(EntityTypeBuilder<CampaignItem> builder)
         {
-            builder.HasKey(f => f.Id);
+            
 
             builder.HasOne(s =>s.Campaingn)
             .WithMany(g => g.CampaignItems)
