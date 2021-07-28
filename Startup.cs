@@ -52,6 +52,10 @@ namespace BookReader
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                });
             }
             else
             {
@@ -68,9 +72,10 @@ namespace BookReader
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => {
-                endpoints.MapRazorPages();
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapRazorPages();
+            //});
 
             //app.UseEndpoints(endpoints =>
             //{
@@ -80,11 +85,6 @@ namespace BookReader
             //});
 
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-            });
 
         }
     }
