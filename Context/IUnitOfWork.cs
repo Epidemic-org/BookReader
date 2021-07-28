@@ -1,5 +1,6 @@
 ﻿using BookReader.Data.Models;
 using BookReader.Interfaces;
+using BookReader.Repositories;
 using BookReader.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;

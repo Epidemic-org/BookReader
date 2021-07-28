@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories
 {
-    public class OrderRepository : BaseRepository<Order>,  IOrderRepository
+    public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
-        ApplicationDbContext _db;
-        public OrderRepository(ApplicationDbContext db):base(db) {
+        private readonly ApplicationDbContext _db;
+        public OrderRepository(ApplicationDbContext db) : base(db) {
             _db = db;
         }
     }

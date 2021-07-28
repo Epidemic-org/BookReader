@@ -25,7 +25,7 @@ namespace BookReader.Controller
         [HttpGet]
         public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10)
         {
-            var q = _db.GnrOrders.GetAll();
+            var q = _db.Products.GetAll();
             if (!string.IsNullOrWhiteSpace(search))
             {
                 q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
@@ -38,7 +38,7 @@ namespace BookReader.Controller
         [HttpGet]
         public async Task<IActionResult> FindById(int id)
         {
-            var product = await _db.GnrProducts.FindById(id);
+            var product = await _db.Products.FindById(id);
             return Ok(product);
         }
 
@@ -49,7 +49,7 @@ namespace BookReader.Controller
             {
                 return BadRequest(ModelState);
             }
-            var result = await _db.GnrProducts.Create(product);            
+            var result = await _db.Products.Create(product);            
             return Ok(result);
         }
 
@@ -60,15 +60,15 @@ namespace BookReader.Controller
             {
                 return BadRequest(ModelState);
             }
-
-            var result = await _db.GnrProducts.Edit(product);
+            
+            var result = await _db.Products.Edit(product);
             return Ok(result);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _db.GnrProducts.Delete(id);
+            var result = await _db.Products.Delete(id);
             return Ok(result);
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories.Interfaces
 {
-    public interface IBaseRepository<T>
+    public interface IBaseRepository<T> where T : class
     {
         IQueryable<T> GetAll();
 

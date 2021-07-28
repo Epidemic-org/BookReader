@@ -18,8 +18,9 @@ namespace test_book_repository_webapi.Context
             _db = db;
         }
 
+
         private IProductRepository _productRepository;
-        public IProductRepository Products {
+        public IProductRepository Producs { 
             get {
                 if(_productRepository == null) {
                     _productRepository = new ProductRepository(_db);
@@ -27,6 +28,7 @@ namespace test_book_repository_webapi.Context
                 return _productRepository;
             }
         }
+
 
         private IOrderRepository _orderRepository;
         public IOrderRepository Orders {
@@ -37,6 +39,7 @@ namespace test_book_repository_webapi.Context
                 return _orderRepository;
             }
         }
+
 
         public void Dispose() {
             _db.Dispose();

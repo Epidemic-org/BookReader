@@ -1,6 +1,7 @@
 ﻿using BookReader.Data.Models;
 using BookReader.Interfaces;
 using BookReader.Repositories.Base;
+using BookReader.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
