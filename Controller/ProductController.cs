@@ -69,7 +69,16 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
+
+            //product.UserId = User.GetUserId();
+            product.UserId = 1;
+            product.AdminId = 1;
+            product.CreationDate = DateTime.Now;
+            product.IsConfirmed = false;
+
             var result = await _db.Products.CreateAsync(product);
+            result.Id = product.Id;
+            result.Extra = product;
             return Ok(result);
         }
 
@@ -89,7 +98,15 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var result = await _db.Products.EditAsync(product);
+
+            var old = await _db.Products.FindById(product.Id);
+
+            old.ProductCategoryId = product.Id;
+            old.Title = product.Title;
+            old.Description = product.Description;
+
+
+            var result = await _db.Products.EditAsync(old);
             return Ok(result);
         }
 
