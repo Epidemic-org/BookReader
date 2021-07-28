@@ -11,8 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace test_book_repository_webapi.Context
 {
-    public class UnitOfWork : IUnitOfWork
-    {
+    public class UnitOfWork : IUnitOfWork, IDisposable {
         ApplicationDbContext _db;
         public UnitOfWork(ApplicationDbContext db) {
             _db = db;
@@ -20,9 +19,9 @@ namespace test_book_repository_webapi.Context
 
 
         private IProductRepository _productRepository;
-        public IProductRepository Producs { 
+        public IProductRepository Products {
             get {
-                if(_productRepository == null) {
+                if (_productRepository == null) {
                     _productRepository = new ProductRepository(_db);
                 }
                 return _productRepository;
@@ -39,7 +38,6 @@ namespace test_book_repository_webapi.Context
                 return _orderRepository;
             }
         }
-
 
         public void Dispose() {
             _db.Dispose();

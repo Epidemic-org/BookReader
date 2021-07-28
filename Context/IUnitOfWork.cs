@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Context
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork 
     {
         public IProductRepository Products { get; }
         public IOrderRepository Orders { get; }
