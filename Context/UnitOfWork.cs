@@ -85,8 +85,6 @@ namespace BookReader.Context
             }
         }
 
-        public void Dispose()
-        {
         private ICommentRepository _commentRepository;
         public ICommentRepository Comments
         {
