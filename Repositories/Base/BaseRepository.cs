@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BookReader.Repositories.Base
@@ -18,8 +19,7 @@ namespace BookReader.Repositories.Base
             _db = db;
             _dbset = _db.Set<T>();
         }
-        public virtual async Task<ResultObjectVm> Create(T entity)
-        {
+        public virtual async Task<ResultObjectVm> Create(T entity) {
             try {
                 await _dbset.AddAsync(entity);
                 await _db.SaveChangesAsync();
@@ -31,8 +31,7 @@ namespace BookReader.Repositories.Base
             }
         }
 
-        public virtual async Task<ResultObjectVm> Delete(int id)
-        {
+        public virtual async Task<ResultObjectVm> Delete(int id) {
             try {
                 var entity = await _dbset.FindAsync(id);
                 await Delete(entity);
@@ -54,8 +53,7 @@ namespace BookReader.Repositories.Base
             }
         }
 
-        public virtual async Task<ResultObjectVm> Edit(T entity)
-        {
+        public virtual async Task<ResultObjectVm> Edit(T entity) {
             try {
                 _dbset.Update(entity);
                 await _db.SaveChangesAsync();
@@ -66,14 +64,16 @@ namespace BookReader.Repositories.Base
             }
         }
 
-        public virtual async Task<T> FindById(int id)
-        {
+        public virtual async Task<T> FindById(int id) {
             return await _dbset.FindAsync(id);
         }
 
-        public virtual IQueryable<T> GetAll()
-        {
-            return _dbset;
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> where = null) {
+            IQueryable<T> query = _dbset;
+            if (where != null) {
+                query = query.Where(where);
+            }
+            return query;
         }
     }
 }

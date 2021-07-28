@@ -25,12 +25,8 @@ namespace BookReader.Controller
         [HttpGet]
         public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10)
         {
-            var q = _db.Products.GetAll();
-            if (!string.IsNullOrWhiteSpace(search))
-            {
-                q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
-            }
-            q = Utils.PaginateObjects<Order>(q, page, pageSize);
+            var q = _db.Products.GetAllBySearch(search);            
+            q = Utils.PaginateObjects<Product>(q, page, pageSize);
             var products = q.ToList();
             return Ok(products);
         }
@@ -40,7 +36,7 @@ namespace BookReader.Controller
         {
             var product = await _db.Products.FindById(id);
             return Ok(product);
-        }
+        } 
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Product product)
@@ -59,8 +55,7 @@ namespace BookReader.Controller
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-            
+            }            
             var result = await _db.Products.Edit(product);
             return Ok(result);
         }

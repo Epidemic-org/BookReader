@@ -18,9 +18,13 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOrders(int page = 1, int pageSize = 10) {
-            var q = _db.GnrOrders.GetAll();
+        public async Task<IActionResult> GetOrders(string search = "", int page = 1, int pageSize = 10) {
+            var q = _db.Orders.GetAll();
+            if (!string.IsNullOrEmpty(search)) {
 
+            }
+
+            return Ok(orders);
         }
 
     }
