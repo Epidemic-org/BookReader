@@ -14,7 +14,7 @@ namespace BookReader.Data.Models.Map
             builder.HasKey(f => f.Id);
 
             builder.HasOne(s => s.Invoice)
-           .WithMany(g => g.invoicePayments)
+           .WithMany(g => g.InvoicePayments)
            .HasForeignKey(s => s.InvoiceId)
            .IsRequired(true)
            .OnDelete(DeleteBehavior.NoAction);

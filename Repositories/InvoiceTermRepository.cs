@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories
 {
-    public class InvoiceTermRepository:BaseRepository<InvoiceTerm>, IInvoiceTermRepository
+    public class InvoiceTermRepository : BaseRepository<InvoiceTerm>, IInvoiceTermRepository
     {
         private readonly ApplicationDbContext _db;
-    public InvoiceTermRepository(ApplicationDbContext db) : base(db)
-    {
-        _db = db;
+        public InvoiceTermRepository(ApplicationDbContext db) : base(db)
+        {
+            _db = db;
+        }
+
     }
-    
 }
