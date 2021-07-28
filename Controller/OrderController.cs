@@ -12,8 +12,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
-    public class OrderController : ControllerBase
-    {
+    public class OrderController : ControllerBase {
         private readonly IUnitOfWork _db;
         public OrderController(IUnitOfWork db) {
             _db = db;
@@ -27,14 +26,13 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public  async Task<IActionResult> FindById([FromRoute] int id) {
+        public async Task<IActionResult> FindById([FromRoute] int id) {
             if (!await _db.Orders.IsExists(id)) {
                 return NotFound();
             }
             var order = await _db.Orders.FindById(id);
-            return Ok(order);            
+            return Ok(order);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> PostOrder([FromBody] Order order) {

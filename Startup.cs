@@ -1,3 +1,4 @@
+using BookReader.Context;
 using BookReader.Data;
 using BookReader.Data.Models;
 using BookReader.Interfaces;
@@ -40,6 +41,8 @@ namespace BookReader
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddSwaggerGen();         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,17 +68,24 @@ namespace BookReader
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseEndpoints(endpoints => {
+                endpoints.MapRazorPages();
+            });
+
             //app.UseEndpoints(endpoints =>
             //{
-            //    endpoints.MapRazorPages();
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Product}/{action=GetAll}/{id?}");
             //});
 
-            app.UseEndpoints(endpoints =>
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Product}/{action=GetAll}/{id?}");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
+
         }
     }
 }
