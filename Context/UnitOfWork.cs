@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-namespace test_book_repository_webapi.Context
+namespace BookReader.Context
 {
     public class UnitOfWork : IUnitOfWork, IDisposable {
         ApplicationDbContext _db;
@@ -36,6 +36,19 @@ namespace test_book_repository_webapi.Context
                     _orderRepository = new OrderRepository(_db);
                 }
                 return _orderRepository;
+            }
+        }
+
+        private ICommentRepository _commentRepository;
+        public ICommentRepository Comments
+        {
+            get
+            {
+                if (_commentRepository == null)
+                {
+                    _commentRepository = new CommentRepository(_db);
+                }
+                return _commentRepository;
             }
         }
 

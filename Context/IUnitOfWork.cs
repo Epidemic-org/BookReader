@@ -14,5 +14,6 @@ namespace BookReader.Context
     {
         public IProductRepository Products { get; }
         public IOrderRepository Orders { get; }
+        public ICommentRepository Comments { get; }
     }
 }
