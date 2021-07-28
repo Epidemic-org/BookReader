@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using test_book_repository_webapi.Context;
+using BookReader.Utillities;
 
 namespace BookReader.Controller
 {
@@ -25,13 +25,13 @@ namespace BookReader.Controller
         [HttpGet]
         public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10)
         {
-            var q = _db.GnrProducts.GetAll();
+            var q = _db.GnrOrders.GetAll();
             if (!string.IsNullOrWhiteSpace(search))
             {
                 q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
             }
+            q = Utils.PaginateObjects<Order>(q, page, pageSize);
             var products = q.ToList();
-
             return Ok(products);
         }
 

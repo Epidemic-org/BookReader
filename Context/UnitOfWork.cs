@@ -18,52 +18,27 @@ namespace test_book_repository_webapi.Context
             _db = db;
         }
 
-
-        private IBaseRepository<Product> _gnrProductRespository;
-        public IBaseRepository<Product> GnrProducts {
-            get {
-                if (_gnrProductRespository == null) {
-                    _gnrProductRespository = new BaseRepository<Product>(_db);
-                }
-                return _gnrProductRespository;
-            }
-        }
-
-        private IProductRepository _productRespository;
+        private IProductRepository _productRepository;
         public IProductRepository Products {
             get {
-                if (_productRespository == null) {
-                    _productRespository = new ProductRepository(_db);
+                if(_productRepository == null) {
+                    _productRepository = new ProductRepository(_db);
                 }
-                return _productRespository;
+                return _productRepository;
             }
         }
 
-
-
-        private IBaseRepository<Order> _gnrOrderRespository;
-        public IBaseRepository<Order> GnrOrders {
-            get {
-                if (_gnrOrderRespository == null) {
-                    _gnrOrderRespository = new BaseRepository<Order>(_db);
-                }
-                return _gnrOrderRespository;
-            }
-        }
-
-        private IOrderRepository _orderRespository;
+        private IOrderRepository _orderRepository;
         public IOrderRepository Orders {
             get {
-                if (_orderRespository == null) {
-                    _orderRespository = new OrderRepository(_db);
+                if (_orderRepository == null) {
+                    _orderRepository = new OrderRepository(_db);
                 }
-                return _orderRespository;
+                return _orderRepository;
             }
         }
 
-
-        public void Dispose()
-        {
+        public void Dispose() {
             _db.Dispose();
         }
     }

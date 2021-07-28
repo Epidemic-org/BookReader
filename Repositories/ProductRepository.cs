@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
-        private readonly ApplicationDbContext _context;
-        public ProductRepository(ApplicationDbContext context) {
-            _context = context;
+        private readonly ApplicationDbContext _db;
+        public ProductRepository(ApplicationDbContext db) : base(db) {
+            _db = db;
         }
     }
 }
