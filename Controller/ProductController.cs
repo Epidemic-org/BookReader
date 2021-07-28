@@ -1,4 +1,5 @@
-﻿using BookReader.Data.Models;
+﻿using BookReader.Context;
+using BookReader.Data.Models;
 using BookReader.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using test_book_repository_webapi.Context;
 
 namespace BookReader.Controller
 {
@@ -14,17 +16,16 @@ namespace BookReader.Controller
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductRepository _productRepository;
-        public ProductController(IProductRepository productRepository)
+        private readonly IUnitOfWork _db;
+        public ProductController(IUnitOfWork db)
         {
-            _productRepository = productRepository;
+            _db = db;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10)
         {
-            var q = _productRepository.GetAll();
-
+            var q = _db.GnrProducts.GetAll();
             if (!string.IsNullOrWhiteSpace(search))
             {
                 q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
@@ -33,14 +34,13 @@ namespace BookReader.Controller
             //var products = await q.Skip((page - 1) * pageSize)
             // .Take(pageSize).OrderByDescending(o => o.CreationDate)
             // .ToListAsync();
-
             return Ok(products);
         }
 
         [HttpGet]
         public async Task<IActionResult> FindById(int id)
         {
-            var product = await _productRepository.FindById(id);
+            var product = await _db.GnrProducts.FindById(id);
             return Ok(product);
         }
 
@@ -51,9 +51,7 @@ namespace BookReader.Controller
             {
                 return BadRequest(ModelState);
             }
-
-            var result = await _productRepository.Create(product);
-            
+            var result = await _db.GnrProducts.Create(product);            
             return Ok(result);
         }
 
@@ -65,14 +63,14 @@ namespace BookReader.Controller
                 return BadRequest(ModelState);
             }
 
-            var result = await _productRepository.Edit(product);
+            var result = await _db.GnrProducts.Edit(product);
             return Ok(result);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _productRepository.Delete(id);
+            var result = await _db.GnrProducts.Delete(id);
             return Ok(result);
         }
     }

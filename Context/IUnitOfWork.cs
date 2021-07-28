@@ -1,14 +1,18 @@
-﻿using System;
+﻿using BookReader.Data.Models;
+using BookReader.Interfaces;
+using BookReader.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using test_book_repository_webapi.Contracts;
-using test_book_repository_webapi.Models;
 
-namespace test_book_repository_webapi.Context
+
+namespace BookReader.Context
 {
     public interface IUnitOfWork : IDisposable
     {
-        public IGenericRepository<Book> GnrBookRepository { get; }        
+        public IBaseRepository<Product> GnrProducts { get;  }
+        public IProductRepository Products { get; }
+        public void Dispose();
     }
 }

@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using test_book_repository_webapi.Context;
 
 namespace BookReader
 {
@@ -38,10 +39,7 @@ namespace BookReader
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddScoped<IProductRepository, ProductRepository>();
-            //services.AddTransient();
-            //services.AddSingleton();
-
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
