@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Controller
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
     public class CommentController : ControllerBase
     {
@@ -29,7 +29,7 @@ namespace BookReader.Controller
             return Ok(products);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> FindById(int id)
         {
             if (!await _db.Comments.IsExists(id)) {
@@ -50,7 +50,7 @@ namespace BookReader.Controller
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put(int id, [FromBody] Comment comment)
         {
             if (!ModelState.IsValid)
@@ -61,7 +61,7 @@ namespace BookReader.Controller
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _db.Comments.DeleteAsync(id);

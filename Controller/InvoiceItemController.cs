@@ -1,8 +1,10 @@
 ﻿using BookReader.Context;
 using BookReader.Data.Models;
 using BookReader.Utillities;
+using BookReader.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +23,21 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public IActionResult GetAll(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
         {
-            var q = _db.InvoiceItem.GetAll();
-            q = Utils.PaginateObjects<InvoiceItem>(q);
-            return Ok(q.ToList());
+            var list = await _db.InvoiceItem.GetAll().
+                Select(s => new InvoiceItemVm
+                {
+                    Id = s.Id,
+                    InvoiceID = s.InvoiceID,
+                    Price = s.Price,
+                    ProductId = s.ProductId,
+                    Quantity = s.Quantity,
+                    TermAMount = s.TermAMount
+                }
+                ).
+                PaginateObjects().ToListAsync();
+            return Ok(list);
         }
 
         [HttpGet]
@@ -41,7 +53,7 @@ namespace BookReader.Controller
 
 
         [HttpPost]
-        public async Task<IActionResult> PostInvoiceItem([FromBody] InvoiceItem invoiceItem)
+        public async Task<IActionResult> Create([FromBody] InvoiceItem invoiceItem)
         {
             if (!ModelState.IsValid)
             {
@@ -53,7 +65,7 @@ namespace BookReader.Controller
 
 
         [HttpPut]
-        public async Task<IActionResult> PutInvoiceItem([FromBody] InvoiceItem invoiceItem)
+        public async Task<IActionResult> Edit([FromBody] InvoiceItem invoiceItem)
         {
             if (!ModelState.IsValid)
             {
@@ -64,7 +76,7 @@ namespace BookReader.Controller
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteInvoiceItem([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (!await _db.InvoiceItem.IsExists(id))
             {

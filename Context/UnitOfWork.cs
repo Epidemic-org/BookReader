@@ -111,6 +111,17 @@ namespace BookReader.Context
                 return _productCategories;
             }
         }
+        private IAppRoleRepository _appRole;
+        public IAppRoleRepository AppRole {
+            get
+            {
+                if (_productCategories == null)
+                {
+                    _appRole = new AppRoleRepository(_db);
+                }
+                return _appRole;
+            }
+        }
 
         public void Dispose() {
             _db.Dispose();
