@@ -23,5 +23,19 @@ namespace BookReader.Repositories
                 );
         }
 
+        public IQueryable<Product> GetAll(string search)
+        {
+            if (string.IsNullOrWhiteSpace(search))
+                return base.GetAll();
+
+            return base.GetAll().Where(w => w.Title.Contains(search));
+        }
+
+
+        public IQueryable<Product> GetAll(int userId)
+        {
+            return base.GetAll().Where(w => w.UserId == userId);
+        }
+
     }
 }

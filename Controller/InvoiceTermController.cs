@@ -49,7 +49,7 @@ namespace BookReader.Controller
             {
                 return BadRequest(ModelState);
             }
-            var result = await _db.InvoiceTerm.Create(invoiceTerm);
+            var result = await _db.InvoiceTerm.CreateAsync(invoiceTerm);
             return Ok(result);
         }
 
@@ -60,14 +60,14 @@ namespace BookReader.Controller
             {
                 return BadRequest(ModelState);
             }
-            var result = await _db.InvoiceTerm.Edit(invoiceTerm);
+            var result = await _db.InvoiceTerm.EditAsync(invoiceTerm);
             return Ok(result);
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteInvoiceTerm(int id)
         {
-            var result = await _db.InvoiceTerm.Delete(id);
+            var result = await _db.InvoiceTerm.DeleteAsync(id);
             return Ok(result);
         }
     }

@@ -3,6 +3,7 @@ using BookReader.Data.Models;
 using BookReader.Utillities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,55 +22,62 @@ namespace BookReader.Controller
         {
             _db = db;
         }
+
         [HttpGet]
-        public IActionResult GetAll(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
         {
-            var q = _db.Invoice.GetAll();
-            q = Utils.PaginateObjects<Invoice>(q);
-            return Ok(q.ToList());
+            var list = await _db.Invoice.GetAll().PaginateObjects().ToListAsync();
+            return Ok(list);
         }
 
         [HttpGet]
         public async Task<IActionResult> FindById(int id)
         {
-            if (await _db.Invoice.IsExists(id))
-            {
-
-                var Invoice = await _db.Invoice.FindById(id);
-                return Ok(Invoice);
-            }
-            else
+            var invoice = await _db.Invoice.FindById(id);
+            if (invoice == null)
             {
                 return NotFound();
             }
+
+            return Ok(invoice);
+
+            //if (await _db.Invoice.IsExists(id))
+            //{
+            //    var Invoice = await _db.Invoice.FindById(id);
+            //    return Ok(Invoice);
+            //}
+            //else
+            //{
+            //    return NotFound();
+            //}
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateInvoice([FromBody] Invoice invoice)
+        public async Task<IActionResult> Create([FromBody] Invoice invoice)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _db.Invoice.Create(invoice);
+            var result = await _db.Invoice.CreateAsync(invoice);
             return Ok(result);
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditInvoice([FromBody] Invoice invoice)
+        public async Task<IActionResult> Edit([FromBody] Invoice invoice)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _db.Invoice.Edit(invoice);
+            var result = await _db.Invoice.EditAsync(invoice);
             return Ok(result);
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteInvoice(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var result = await _db.Invoice.Delete(id);
+            var result = await _db.Invoice.DeleteAsync(id);
             return Ok(result);
         }
     }

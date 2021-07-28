@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,7 +15,14 @@ namespace BookReader.Data.Models
         public string Description { get; set; }
         public int DisplayOrder { get; set; }
         public string Pic { get; set; }
+
+        //[NotMapped]
+        //public IFormFile PicFile { get; set; }
+
         public string Icon { get; set; }
+        //[NotMapped]
+        //public IFormFile IconFile { get; set; }
+
         public bool IsActive { get; set; }
         public int AdminId { get; set; }
         public DateTime CreationDate { get; set; }

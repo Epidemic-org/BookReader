@@ -85,6 +85,7 @@ namespace BookReader.Context
             }
         }
 
+       
         private ICommentRepository _commentRepository;
         public ICommentRepository Comments
         {
@@ -95,6 +96,19 @@ namespace BookReader.Context
                     _commentRepository = new CommentRepository(_db);
                 }
                 return _commentRepository;
+            }
+        }
+
+        private IProductCategoryRepository _productCategories;
+        public IProductCategoryRepository ProductCategories
+        {
+            get
+            {
+                if(_productCategories == null)
+                {
+                    _productCategories = new ProductCategoryRepository(_db);
+                }
+                return _productCategories;
             }
         }
 

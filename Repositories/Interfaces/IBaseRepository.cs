@@ -13,13 +13,13 @@ namespace BookReader.Repositories.Interfaces
 
         Task<T> FindById(int id);
 
-        Task<ResultObjectVm> Create(T entity);
+        Task<ResultObjectVm> CreateAsync(T entity);
 
-        Task<ResultObjectVm> Edit(T entity);
+        Task<ResultObjectVm> EditAsync(T entity);
 
 
-        Task<ResultObjectVm> Delete(int id);
-        Task<ResultObjectVm> Delete(T entity);
+        Task<ResultObjectVm> DeleteAsync(int id);
+        Task<ResultObjectVm> DeleteAsync(T entity);
 
 
         Task<bool> IsExists(int id);

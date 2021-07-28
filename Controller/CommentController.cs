@@ -46,7 +46,7 @@ namespace BookReader.Controller
             {
                 return BadRequest(ModelState);
             }
-            var result = await _db.Comments.Create(comment);
+            var result = await _db.Comments.CreateAsync(comment);
             return Ok(result);
         }
 
@@ -57,14 +57,14 @@ namespace BookReader.Controller
             {
                 return BadRequest(ModelState);
             }
-            var result = await _db.Comments.Edit(comment);
+            var result = await _db.Comments.EditAsync(comment);
             return Ok(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _db.Comments.Delete(id);
+            var result = await _db.Comments.DeleteAsync(id);
             return Ok(result);
         }
     }

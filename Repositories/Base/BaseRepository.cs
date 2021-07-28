@@ -19,7 +19,7 @@ namespace BookReader.Repositories.Base
             _db = db;
             _dbset = _db.Set<T>();
         }
-        public virtual async Task<ResultObjectVm> Create(T entity) {
+        public virtual async Task<ResultObjectVm> CreateAsync(T entity) {
             try {
                 await _dbset.AddAsync(entity);
                 await _db.SaveChangesAsync();
@@ -31,10 +31,10 @@ namespace BookReader.Repositories.Base
             }
         }
 
-        public virtual async Task<ResultObjectVm> Delete(int id) {
+        public virtual async Task<ResultObjectVm> DeleteAsync(int id) {
             try {
                 var entity = await _dbset.FindAsync(id);
-                await Delete(entity);
+                await DeleteAsync(entity);
                 return new ResultObjectVm { Success = true, Message = "با موفقیت حذف شد" };
             }
             catch (Exception) {
@@ -42,7 +42,7 @@ namespace BookReader.Repositories.Base
             }
         }
 
-        public virtual async Task<ResultObjectVm> Delete(T entity) {
+        public virtual async Task<ResultObjectVm> DeleteAsync(T entity) {
             try {
                 _dbset.Remove(entity);
                 await _db.SaveChangesAsync();
@@ -53,7 +53,7 @@ namespace BookReader.Repositories.Base
             }
         }
 
-        public virtual async Task<ResultObjectVm> Edit(T entity) {
+        public virtual async Task<ResultObjectVm> EditAsync(T entity) {
             try {
                 _dbset.Update(entity);
                 await _db.SaveChangesAsync();

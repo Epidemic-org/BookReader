@@ -2,6 +2,7 @@
 using BookReader.Interfaces;
 using BookReader.Repositories.Base;
 using BookReader.Repositories.Interfaces;
+using BookReader.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,8 @@ using System.Threading.Tasks;
 
 namespace BookReader.Interfaces
 {
-    public interface IProductRepository : IBaseRepository<Product>
+    public interface IProductCategoryRepository : IBaseRepository<ProductCategory>
     {
-        IQueryable<Product> GetAllBySearch(string search = "");
-
-        IQueryable<Product> GetAll(string search);
-
-        IQueryable<Product> GetAll(int userId);
+        Task<ResultObjectVm> CreateAsync(ProductCategoryVm categoryVm);
     }
 }

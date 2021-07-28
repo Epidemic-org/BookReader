@@ -9,7 +9,7 @@ namespace BookReader.Utillities
 {
     public static class Utils
     {
-        public static IQueryable<T> PaginateObjects<T>(IQueryable<T> q = null, int page = 1, int pageSize = 10) {
+        public static IQueryable<T> PaginateObjects<T>(this IQueryable<T> q , int page = 1, int pageSize = 10) {
             return q.Skip((page - 1) * pageSize)
              .Take(pageSize);
         }

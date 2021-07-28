@@ -9,11 +9,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookReader.Utillities;
+using BookReader.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
+
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _db;
@@ -22,11 +25,31 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public IActionResult GetAll(string search, int page = 1, int pageSize = 10) {
-            var q = _db.Products.GetAllBySearch(search);
-            q = Utils.PaginateObjects<Product>(q, page, pageSize);
-            var products = q.ToList();
-            return Ok(products);
+       
+        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10) {
+            //var q = _db.Products.GetAllBySearch(search);
+            //q = Utils.PaginateObjects<Product>(q, page, pageSize);
+            //var products = q.ToList();
+
+
+            var list = await _db.Products.GetAll(search)
+                .Select(s=> new ProductListVm
+                {
+                    CreationDate = s.CreationDate,
+                    Description = s.Description,
+                    EditionDate = s.EditionDate,
+                    Id = s.Id,
+                    ProductCategoryId = s.ProductCategoryId,
+                    CategoryName = s.ProductCategory.Name,
+                    ProductType = s.ProductType,
+                    Tags = s.Tags,
+                    Title = s.Title,
+                    UserFullName = s.User.Person.FirstName + " " + s.User.Person.LastName,
+                    UserId = s.UserId,
+                })
+                .PaginateObjects(page, pageSize).ToListAsync();
+            
+            return Ok(list);
         }
 
         [HttpGet]
@@ -46,7 +69,18 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var result = await _db.Products.Create(product);
+            var result = await _db.Products.CreateAsync(product);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create2([FromBody] Product product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _db.Products.CreateAsync(product);
             return Ok(result);
         }
 
@@ -55,13 +89,13 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var result = await _db.Products.Edit(product);
+            var result = await _db.Products.EditAsync(product);
             return Ok(result);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id) {
-            var result = await _db.Products.Delete(id);
+            var result = await _db.Products.DeleteAsync(id);
             return Ok(result);
         }
     }

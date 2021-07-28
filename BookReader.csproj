@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Helper\" />
     <Folder Include="Migrations\" />
     <Folder Include="Context\" />
   </ItemGroup>

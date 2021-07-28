@@ -40,8 +40,9 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            await _db.Orders.Create(order);            
-            return Ok(order);
+            var result = await _db.Orders.CreateAsync(order);
+            result.Extra = order;
+            return Ok(result);
         }
 
 
@@ -50,7 +51,8 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            var result = _db.Orders.Edit(order);
+            var result = await _db.Orders.EditAsync(order);
+
             return Ok(result);
         }
 
@@ -59,7 +61,7 @@ namespace BookReader.Controller
             if(!await _db.Orders.IsExists(id)) {
                 return NotFound();
             }
-            var result = await _db.Orders.Delete(id);
+            var result = await _db.Orders.DeleteAsync(id);
             return Ok(result);
         }
     }

@@ -47,7 +47,7 @@ namespace BookReader.Controller
             {
                 return BadRequest();
             }
-            await _db.InvoiceItem.Create(invoiceItem);
+            await _db.InvoiceItem.CreateAsync(invoiceItem);
             return Ok(invoiceItem);
         }
 
@@ -59,7 +59,7 @@ namespace BookReader.Controller
             {
                 return BadRequest();
             }
-            var result = _db.InvoiceItem.Edit(invoiceItem);
+            var result = await _db.InvoiceItem.EditAsync(invoiceItem);
             return Ok(result);
         }
 
@@ -70,7 +70,7 @@ namespace BookReader.Controller
             {
                 return NotFound();
             }
-            var result = await _db.InvoiceItem.Delete(id);
+            var result = await _db.InvoiceItem.DeleteAsync(id);
             return Ok(result);
         }
     }
