@@ -85,7 +85,6 @@ namespace BookReader.Context
             }
         }
 
-        
         private ICommentRepository _commentRepository;
         public ICommentRepository Comments
         {
