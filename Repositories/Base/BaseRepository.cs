@@ -75,5 +75,9 @@ namespace BookReader.Repositories.Base
             }
             return query;
         }
+
+        public virtual async Task<bool> IsExists(int id) {
+            return await _dbset.FindAsync(id) == null ? false : true;
+        }
     }
 }

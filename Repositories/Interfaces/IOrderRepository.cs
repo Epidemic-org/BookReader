@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories.Interfaces
 {
-    public interface IOrderRepository
+    public interface IOrderRepository : IBaseRepository<Order>
     {
 
     }

@@ -1,4 +1,6 @@
 ﻿using BookReader.Context;
+using BookReader.Data.Models;
+using BookReader.Utillities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,14 +20,48 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOrders(string search = "", int page = 1, int pageSize = 10) {
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
             var q = _db.Orders.GetAll();
-            if (!string.IsNullOrEmpty(search)) {
-
-            }
-
-            return Ok(orders);
+            q = Utils.PaginateObjects<Order>(q);
+            return Ok(q.ToList());
         }
 
+        [HttpGet]
+        public  async Task<IActionResult> FindById([FromRoute] int id) {
+            if (!await _db.Orders.IsExists(id)) {
+                return NotFound();
+            }
+            var order = await _db.Orders.FindById(id);
+            return Ok(order);            
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> PostOrder([FromBody] Order order) {
+            if (!ModelState.IsValid) {
+                return BadRequest();
+            }
+            await _db.Orders.Create(order);            
+            return Ok(order);
+        }
+
+
+        [HttpPut]
+        public async Task<IActionResult> PutOrder([FromBody] Order order) {
+            if (!ModelState.IsValid) {
+                return BadRequest();
+            }
+            var result = _db.Orders.Edit(order);
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteOrder([FromRoute] int id) {
+            if(!await _db.Orders.IsExists(id)) {
+                return NotFound();
+            }
+            var result = await _db.Orders.Delete(id);
+            return Ok(result);
+        }
     }
 }

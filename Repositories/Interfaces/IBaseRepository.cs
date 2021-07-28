@@ -21,5 +21,8 @@ namespace BookReader.Repositories.Interfaces
         Task<ResultObjectVm> Delete(int id);
         Task<ResultObjectVm> Delete(T entity);
 
+
+        Task<bool> IsExists(int id);
+
     }
 }

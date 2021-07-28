@@ -17,52 +17,50 @@ namespace BookReader.Controller
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _db;
-        public ProductController(IUnitOfWork db)
-        {
+        public ProductController(IUnitOfWork db) {
             _db = db;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10)
-        {
-            var q = _db.Products.GetAllBySearch(search);            
+        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10) {
+            var q = _db.Products.GetAllBySearch(search);
             q = Utils.PaginateObjects<Product>(q, page, pageSize);
             var products = q.ToList();
             return Ok(products);
         }
 
         [HttpGet]
-        public async Task<IActionResult> FindById(int id)
-        {
-            var product = await _db.Products.FindById(id);
-            return Ok(product);
-        } 
+        public async Task<IActionResult> FindById(int id) {
+            if (await _db.Products.IsExists(id)) {
+
+                var product = await _db.Products.FindById(id);
+                return Ok(product);
+            }
+            else {
+                return NotFound();
+            }
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Product product)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Create([FromBody] Product product) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var result = await _db.Products.Create(product);            
+            var result = await _db.Products.Create(product);
             return Ok(result);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] Product product)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Edit([FromBody] Product product) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
-            }            
+            }
             var result = await _db.Products.Edit(product);
             return Ok(result);
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
+        public async Task<IActionResult> Delete(int id) {
             var result = await _db.Products.Delete(id);
             return Ok(result);
         }
