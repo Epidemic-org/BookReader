@@ -12,6 +12,7 @@ namespace BookReader.ViewModels
         public int Id { get; set; }
         public int UserId { get; set; }
         [Display(Name= "نام و نام خانوادگی")]
+        [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         public string UserFullName { get; set; }
         [Display(Name = "تاریخ ثبت سفارش")]
 
@@ -30,6 +31,7 @@ namespace BookReader.ViewModels
         }
         [Display(Name ="آدرس")]
         [StringLength(maximumLength: 50)]
+        [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         public string Address { get; set; }
     }
 }
