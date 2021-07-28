@@ -22,7 +22,7 @@ namespace BookReader.Controller
             _db = db;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
+        public IActionResult GetAll(int page = 1, int pageSize = 10)
         {
             var q = _db.Invoice.GetAll();
             q = Utils.PaginateObjects<Invoice>(q);
