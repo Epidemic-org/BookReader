@@ -19,7 +19,7 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
+        public IActionResult GetAll(int page = 1, int pageSize = 10) {
             var q = _db.Orders.GetAll();
             q = Utils.PaginateObjects<Order>(q);
             return Ok(q.ToList());

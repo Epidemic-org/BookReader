@@ -22,7 +22,7 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10) {
+        public IActionResult GetAll(string search, int page = 1, int pageSize = 10) {
             var q = _db.Products.GetAllBySearch(search);
             q = Utils.PaginateObjects<Product>(q, page, pageSize);
             var products = q.ToList();

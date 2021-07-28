@@ -32,7 +32,11 @@ namespace BookReader.Controller
         [HttpGet("{id}")]
         public async Task<IActionResult> FindById(int id)
         {
-            return Ok();
+            if (!await _db.Comments.IsExists(id)) {
+                return NotFound();
+            }
+            var comment = await _db.Comments.FindById(id);
+            return Ok(comment);
         }
 
         [HttpPost]
