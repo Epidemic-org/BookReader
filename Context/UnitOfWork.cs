@@ -17,7 +17,8 @@ namespace test_book_repository_webapi.Context
         public UnitOfWork(ApplicationDbContext db) {
             _db = db;
         }
-        
+
+
         private IBaseRepository<Product> _gnrProductRespository;
         public IBaseRepository<Product> GnrProducts {
             get {
@@ -37,6 +38,29 @@ namespace test_book_repository_webapi.Context
                 return _productRespository;
             }
         }
+
+
+
+        private IBaseRepository<Order> _gnrOrderRespository;
+        public IBaseRepository<Order> GnrOrders {
+            get {
+                if (_gnrOrderRespository == null) {
+                    _gnrOrderRespository = new BaseRepository<Order>(_db);
+                }
+                return _gnrOrderRespository;
+            }
+        }
+
+        private IOrderRepository _orderRespository;
+        public IOrderRepository Orders {
+            get {
+                if (_orderRespository == null) {
+                    _orderRespository = new OrderRepository(_db);
+                }
+                return _orderRespository;
+            }
+        }
+
 
         public void Dispose()
         {

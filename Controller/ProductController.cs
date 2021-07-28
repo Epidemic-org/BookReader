@@ -31,9 +31,7 @@ namespace BookReader.Controller
                 q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
             }
             var products = q.ToList();
-            //var products = await q.Skip((page - 1) * pageSize)
-            // .Take(pageSize).OrderByDescending(o => o.CreationDate)
-            // .ToListAsync();
+
             return Ok(products);
         }
 
