@@ -1,8 +1,10 @@
 ﻿using BookReader.Context;
 using BookReader.Data.Models;
 using BookReader.Utillities;
+using BookReader.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +22,21 @@ namespace BookReader.Controller
             _db = db;
         }
         [HttpGet]
-        public IActionResult GetAll(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
         {
-            var q = _db.InvoiceTerm.GetAll();
-            q = Utils.PaginateObjects<InvoiceTerm>(q);
-            return Ok(q.ToList());
+            var list = await _db.InvoiceTerm.GetAll().
+                Select(s => new InvoiceTermVm
+                {
+                    Id = s.Id,
+                    InvoiceId = s.InvoiceId,
+                    TermAmount = s.TermAmount,
+                    TermTypeId = s.TermTypeId
+
+                }
+                ).
+                PaginateObjects().ToListAsync();
+            return Ok(list);
+
         }
 
         [HttpGet]
