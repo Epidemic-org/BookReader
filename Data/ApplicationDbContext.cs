@@ -128,6 +128,10 @@ namespace BookReader.Data
             builder.ApplyConfiguration(new UserLogMap());
             builder.ApplyConfiguration(new UserShelveMap());
             builder.ApplyConfiguration(new WalletMap());
+
+            builder.ApplyConfiguration(new UserMap());
+
+
             base.OnModelCreating(builder);
         }
     }

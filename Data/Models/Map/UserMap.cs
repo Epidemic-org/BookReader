@@ -10,17 +10,26 @@ namespace BookReader.Data.Models.Map
     public class UserMap : IEntityTypeConfiguration<AppUser>
     {
 
-        public void Configure(EntityTypeBuilder<AppUser> builder) {
-            builder.HasKey(t => t.Id);
-            builder.Property(d => d.UserName).HasMaxLength(50).IsRequired(true).IsUnicode(true);
-            builder.Property(d => d.NormalizedUserName).HasMaxLength(50).IsRequired(true).IsUnicode(true);
-            builder.Property(d => d.Email).HasMaxLength(50).IsRequired(true).IsUnicode(true);
-            builder.Property(d => d.NormalizedEmail).HasMaxLength(50).IsRequired(true).IsUnicode(true);
-            builder.Property(d => d.PasswordHash).HasMaxLength(50).IsRequired(true).IsUnicode(true);
-            builder.Property(d => d.PhoneNumber).HasMaxLength(50).IsRequired(true).IsUnicode(true);
-            builder.Property(d => d.LockoutEnd).HasColumnType("datetime2(7)");
+        public void Configure(EntityTypeBuilder<AppUser> builder)
+        {
 
+            var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<AppUser>();
             
+            builder.HasData(new AppUser
+            {
+                Id = 1,
+                
+                IsActive = true,
+                TwoFactorEnabled = false,
+                Email = "AbbasKashi69@gmail.com",
+                UserName = "09132602521",
+                NormalizedUserName = "09132602521",
+                NormalizedEmail = "09132602521",
+                PhoneNumberConfirmed = true,
+                PhoneNumber = "09132602521",
+                PasswordHash = hasher.HashPassword(null, "Abbas1369"),
+                SecurityStamp = Guid.NewGuid().ToString()
+            });
         }
     }
 }
