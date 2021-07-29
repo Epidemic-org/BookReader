@@ -11,7 +11,6 @@ namespace BookReader.Interfaces
 {
     public interface IProductRepository : IBaseRepository<Product>
     {
-        IQueryable<Product> GetAllBySearch(string search = "");
 
         IQueryable<Product> GetAll(string search);
 

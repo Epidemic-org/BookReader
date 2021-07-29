@@ -48,7 +48,7 @@ namespace BookReader.Controller
         [HttpGet]
         public async Task<IActionResult> FindById(int id)
         {
-            var invoice = await _db.Invoice.FindById(id);
+            var invoice = await _db.Invoice.Find(id);
             if (invoice == null)
             {
                 return NotFound();

@@ -56,7 +56,7 @@ namespace BookReader.Controller
         public async Task<IActionResult> FindById(int id) {
             if (await _db.Products.IsExists(id)) {
 
-                var product = await _db.Products.FindById(id);
+                var product = await _db.Products.Find(id);
                 return Ok(product);
             }
             else {
@@ -99,7 +99,7 @@ namespace BookReader.Controller
                 return BadRequest(ModelState);
             }
 
-            var old = await _db.Products.FindById(product.Id);
+            var old = await _db.Products.Find(product.Id);
 
             old.ProductCategoryId = product.Id;
             old.Title = product.Title;

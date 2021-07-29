@@ -8,6 +8,7 @@ namespace BookReader.Repositories.Interfaces
 {
     public interface IUserRepository:IBaseRepository<AppUser>
     {
+        Task<AppUser> Find(string username);
 
     }
 }

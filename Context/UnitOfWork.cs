@@ -146,7 +146,7 @@ namespace BookReader.Context
 
 
         private IUserRepository _userRepository;
-        public IUserRepository Users {
+        public IUserRepository AppUsers {
             get {
                 if (_userRepository == null) {
                     _userRepository = new UserRepository(_db);

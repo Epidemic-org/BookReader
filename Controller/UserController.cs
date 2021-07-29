@@ -29,7 +29,7 @@ namespace BookReader.Controller
 
         [HttpGet]
         public async Task<IActionResult> Get([FromRoute] int id) {
-            var user = await _db.Users.FindById(id);
+            var user = await _db.Users.Find(id);
             if(user == null) {
                 return NotFound();
             }
@@ -48,7 +48,7 @@ namespace BookReader.Controller
 
         [HttpDelete]
         public async Task<IActionResult> Delete([FromRoute] int id) {
-            var user = await _db.Users.FindById(id);
+            var user = await _db.Users.Find(id);
             if(user == null) {
                 return NotFound();
             }

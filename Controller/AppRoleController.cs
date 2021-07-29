@@ -33,7 +33,7 @@ namespace BookReader.Controller
             {
                 return NotFound();
             }
-            var order = await _db.Orders.FindById(id);
+            var order = await _db.Orders.Find(id);
             return Ok(order);
         }
 

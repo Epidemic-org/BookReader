@@ -45,7 +45,7 @@ namespace BookReader.Controller
             if (await _db.InvoiceTerm.IsExists(id))
             {
 
-                var invoiceTerm = await _db.InvoiceTerm.FindById(id);
+                var invoiceTerm = await _db.InvoiceTerm.Find(id);
                 return Ok(invoiceTerm);
             }
             else

@@ -65,7 +65,7 @@ namespace BookReader.Repositories.Base
             }
         }
 
-        public virtual async Task<T> FindById(int id) {
+        public virtual async Task<T> Find(object id) {
             return await _dbset.FindAsync(id);
         }
 
@@ -80,5 +80,6 @@ namespace BookReader.Repositories.Base
         public virtual async Task<bool> IsExists(int id) {
             return await _dbset.FindAsync(id) == null ? false : true;
         }
+
     }
 }

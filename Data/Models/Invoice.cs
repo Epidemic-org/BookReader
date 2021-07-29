@@ -19,7 +19,6 @@ namespace BookReader.Data.Models
 
         public AppUser User { get; set; }
         public PermitGeneration PermitGeneration { get; set; }
-        
 
         public ICollection<Gift> Gifts { get; set; }
         public ICollection<InvoiceItem> InvoiceItems { get; set; }

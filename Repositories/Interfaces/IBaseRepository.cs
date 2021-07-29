@@ -11,7 +11,7 @@ namespace BookReader.Repositories.Interfaces
     {
         IQueryable<T> GetAll(Expression<Func<T, bool>> where = null);
 
-        Task<T> FindById(int id);
+        Task<T> Find(int id);
 
         Task<ResultObjectVm> CreateAsync(T entity);
 
@@ -20,8 +20,6 @@ namespace BookReader.Repositories.Interfaces
 
         Task<ResultObjectVm> DeleteAsync(int id);
         Task<ResultObjectVm> DeleteAsync(T entity);
-
-
         Task<bool> IsExists(int id);
 
     }

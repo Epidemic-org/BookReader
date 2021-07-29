@@ -47,7 +47,7 @@ namespace BookReader.Controller
             {
                 return NotFound();
             }
-            var invoiceItem = await _db.InvoiceItem.FindById(id);
+            var invoiceItem = await _db.InvoiceItem.Find(id);
             return Ok(invoiceItem);
         }
 

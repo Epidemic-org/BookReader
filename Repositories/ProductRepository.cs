@@ -17,12 +17,7 @@ namespace BookReader.Repositories
             _db = db;
         }
 
-        public virtual IQueryable<Product> GetAllBySearch(string search="") {
-            return base.GetAll(
-                p => p.Title.Contains(search) || p.Description.Contains(search)
-                );
-        }
-
+        
         public IQueryable<Product> GetAll(string search)
         {
             if (string.IsNullOrWhiteSpace(search))
@@ -31,11 +26,9 @@ namespace BookReader.Repositories
             return base.GetAll().Where(w => w.Title.Contains(search));
         }
 
-
         public IQueryable<Product> GetAll(int userId)
         {
             return base.GetAll().Where(w => w.UserId == userId);
-        }
-
+        }       
     }
 }

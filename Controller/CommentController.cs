@@ -35,7 +35,7 @@ namespace BookReader.Controller
             if (!await _db.Comments.IsExists(id)) {
                 return NotFound();
             }
-            var comment = await _db.Comments.FindById(id);
+            var comment = await _db.Comments.Find(id);
             return Ok(comment);
         }
 
