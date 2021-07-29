@@ -16,6 +16,5 @@ namespace BookReader.Repositories
         {
             _db = db;
         }
-
     }
 }

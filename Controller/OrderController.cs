@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Controller
 {
-    [Route("api/[controller]/[action]/")]
+    [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
     public class OrderController : ControllerBase {
         private readonly IUnitOfWork _db;
@@ -19,10 +19,11 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public IActionResult GetAll(int page = 1, int pageSize = 10) {
-            var q = _db.Orders.GetAll();
-            q = Utils.PaginateObjects<Order>(q);
-            return Ok(q.ToList());
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
+            //var list = await _db.Orders.GetAll().PaginateObjects().ToListAsync();
+            //return Ok(list);
+            //TODO:PROMLEM WITH PAGINATION EX METHOD.
+            return Ok();
         }
 
         [HttpGet("{id}")]

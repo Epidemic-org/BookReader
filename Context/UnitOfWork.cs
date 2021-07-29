@@ -112,6 +112,17 @@ namespace BookReader.Context
             }
         }
 
+        private IUserRepository _userRepository;
+        public IUserRepository Users {
+            get {
+                if (_userRepository == null) {
+                    _userRepository = new UserRepository(_db);
+                }
+                return _userRepository;
+            }
+        }
+
+
         public void Dispose() {
             _db.Dispose();
         }
