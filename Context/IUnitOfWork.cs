@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Context
 {
-    public interface IUnitOfWork 
+    public interface IUnitOfWork
     {
         public IProductRepository Products { get; }
         public IOrderRepository Orders { get; }
@@ -19,6 +19,8 @@ namespace BookReader.Context
         public IInvoiceTermRepository InvoiceTerm { get; }
         public ICommentRepository Comments { get; }
         public IUserRepository Users { get; }
-        public IProductCategoryRepository ProductCategories { get;  }
+        public IAppRoleRepository AppRole { get; }
+        public IProductCategoryRepository ProductCategories { get; }
+        public IInvoicePaymentRepository InvoicePayments { get; set; }
     }
 }

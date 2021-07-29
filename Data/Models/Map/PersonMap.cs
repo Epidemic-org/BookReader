@@ -11,7 +11,7 @@ namespace BookReader.Data.Models.Map
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            builder.Property(e => e.Id).ValueGeneratedNever();
+            builder.Property(e => e.Id);
 
             builder.Property(e => e.BirthDate).HasColumnType("date");
 
@@ -32,7 +32,20 @@ namespace BookReader.Data.Models.Map
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasIndex(d => new { d.UserId}).IsUnique();
-            
+
+
+            builder.HasData(new Person
+            {
+                Id = 1,
+                UserId = 1,
+                FirstName = "Abbas",
+                LastName = "Kashi",
+                BirthDate = new DateTime(1990, 12, 20),
+                CreationDate = DateTime.Now,
+                GenderType = 1,
+                IsAcceptRules = 1,
+                NationalCode = "1250001112",
+            });
         }
     }
 }

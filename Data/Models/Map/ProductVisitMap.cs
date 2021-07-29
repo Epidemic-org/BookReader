@@ -22,6 +22,8 @@ namespace BookReader.Data.Models.Map
                 .WithMany(q => q.ProductVisits)
                 .HasForeignKey(q => q.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            //builder.HasIndex(d => new { d.UserId, d.ProductId }).IsUnique(true);
         }
     }
 }

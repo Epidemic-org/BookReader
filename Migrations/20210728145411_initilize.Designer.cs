@@ -4,14 +4,16 @@ using BookReader.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookReader.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210728145411_initilize")]
+    partial class initilize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,17 +155,17 @@ namespace BookReader.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0396e11d-6d67-44eb-8da5-e67c95bda1ee",
+                            ConcurrencyStamp = "9beee876-b0cd-4e0c-9822-1d818e34e377",
                             Email = "AbbasKashi69@gmail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "09132602521",
                             NormalizedUserName = "09132602521",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKW/ILNEdMLuQYmbNOfgvvhJBPlzvFvpBmhF6G7dpB5mJ/x+h4rnVQYPmpZViXvS1A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMz4CK0pv30dyAFJ3Hrx/Zk14fwd+Q3TTXETjEBqxAgYi3ZOKWMtJ6AlpqcsP8We/Q==",
                             PhoneNumber = "09132602521",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "cfc8f9aa-5513-479d-bdbd-95519b35a783",
+                            SecurityStamp = "c5c36f6c-8fc3-4c76-b78e-6fecd2d684b2",
                             TwoFactorEnabled = false,
                             UserName = "09132602521"
                         });
@@ -997,7 +999,7 @@ namespace BookReader.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(1990, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreationDate = new DateTime(2021, 7, 28, 19, 35, 46, 475, DateTimeKind.Local).AddTicks(2228),
+                            CreationDate = new DateTime(2021, 7, 28, 19, 24, 10, 567, DateTimeKind.Local).AddTicks(2563),
                             FirstName = "Abbas",
                             GenderType = 1,
                             IsAcceptRules = 1,
@@ -1132,7 +1134,7 @@ namespace BookReader.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("ParentId")
+                    b.Property<int>("ParentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Pic")

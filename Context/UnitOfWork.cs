@@ -47,6 +47,8 @@ namespace BookReader.Context
             }
         }
 
+
+
         private IInvoiceRepository _invoiceRepository;
         public IInvoiceRepository Invoice
         {
@@ -60,6 +62,8 @@ namespace BookReader.Context
             }
         }
 
+
+
         private IInvoiceItemRepository _invoiceItemRepository;
         public IInvoiceItemRepository InvoiceItem
         {
@@ -72,6 +76,8 @@ namespace BookReader.Context
                 return _invoiceItemRepository;
             }
         }
+
+
         private IInvoiceTermRepository _invoiceTermRepository;
         public IInvoiceTermRepository InvoiceTerm
         {
@@ -85,7 +91,13 @@ namespace BookReader.Context
             }
         }
 
-       
+
+
+        private IInvoicePaymentRepository _invoicePayment;
+        public IInvoicePaymentRepository InvoicePayments { get; set; }
+
+
+
         private ICommentRepository _commentRepository;
         public ICommentRepository Comments
         {
@@ -98,6 +110,8 @@ namespace BookReader.Context
                 return _commentRepository;
             }
         }
+
+
 
         private IProductCategoryRepository _productCategories;
         public IProductCategoryRepository ProductCategories
@@ -112,6 +126,25 @@ namespace BookReader.Context
             }
         }
 
+
+        private IAppRoleRepository _appRole;
+        public IAppRoleRepository AppRole {
+            get
+            {
+                if (_productCategories == null)
+                {
+                    _appRole = new AppRoleRepository(_db);
+                }
+                return _appRole;
+            }
+        }
+
+
+        public void Dispose() {
+            _db.Dispose();
+        }
+
+
         private IUserRepository _userRepository;
         public IUserRepository Users {
             get {
@@ -121,12 +154,6 @@ namespace BookReader.Context
                 return _userRepository;
             }
         }
-
-
-        public void Dispose() {
-            _db.Dispose();
-        }
+        
     }
 }
-
-
