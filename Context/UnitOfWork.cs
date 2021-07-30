@@ -14,19 +14,15 @@ namespace BookReader.Context
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         ApplicationDbContext _db;
-        public UnitOfWork(ApplicationDbContext db)
-        {
+        public UnitOfWork(ApplicationDbContext db) {
             _db = db;
         }
 
 
         private IProductRepository _productRepository;
-        public IProductRepository Products
-        {
-            get
-            {
-                if (_productRepository == null)
-                {
+        public IProductRepository Products {
+            get {
+                if (_productRepository == null) {
                     _productRepository = new ProductRepository(_db);
                 }
                 return _productRepository;
@@ -35,12 +31,9 @@ namespace BookReader.Context
 
 
         private IOrderRepository _orderRepository;
-        public IOrderRepository Orders
-        {
-            get
-            {
-                if (_orderRepository == null)
-                {
+        public IOrderRepository Orders {
+            get {
+                if (_orderRepository == null) {
                     _orderRepository = new OrderRepository(_db);
                 }
                 return _orderRepository;
@@ -50,12 +43,9 @@ namespace BookReader.Context
 
 
         private IInvoiceRepository _invoiceRepository;
-        public IInvoiceRepository Invoice
-        {
-            get
-            {
-                if (_invoiceRepository == null)
-                {
+        public IInvoiceRepository Invoice {
+            get {
+                if (_invoiceRepository == null) {
                     _invoiceRepository = new InvoiceRepository(_db);
                 }
                 return _invoiceRepository;
@@ -65,12 +55,9 @@ namespace BookReader.Context
 
 
         private IInvoiceItemRepository _invoiceItemRepository;
-        public IInvoiceItemRepository InvoiceItem
-        {
-            get
-            {
-                if (_invoiceItemRepository == null)
-                {
+        public IInvoiceItemRepository InvoiceItem {
+            get {
+                if (_invoiceItemRepository == null) {
                     _invoiceItemRepository = new InvoiceItemRepository(_db);
                 }
                 return _invoiceItemRepository;
@@ -79,12 +66,9 @@ namespace BookReader.Context
 
 
         private IInvoiceTermRepository _invoiceTermRepository;
-        public IInvoiceTermRepository InvoiceTerm
-        {
-            get
-            {
-                if (_invoiceTermRepository == null)
-                {
+        public IInvoiceTermRepository InvoiceTerm {
+            get {
+                if (_invoiceTermRepository == null) {
                     _invoiceTermRepository = new InvoiceTermRepository(_db);
                 }
                 return _invoiceTermRepository;
@@ -105,12 +89,9 @@ namespace BookReader.Context
 
 
         private ICommentRepository _commentRepository;
-        public ICommentRepository Comments
-        {
-            get
-            {
-                if (_commentRepository == null)
-                {
+        public ICommentRepository Comments {
+            get {
+                if (_commentRepository == null) {
                     _commentRepository = new CommentRepository(_db);
                 }
                 return _commentRepository;
@@ -120,12 +101,9 @@ namespace BookReader.Context
 
 
         private IProductCategoryRepository _productCategories;
-        public IProductCategoryRepository ProductCategories
-        {
-            get
-            {
-                if(_productCategories == null)
-                {
+        public IProductCategoryRepository ProductCategories {
+            get {
+                if (_productCategories == null) {
                     _productCategories = new ProductCategoryRepository(_db);
                 }
                 return _productCategories;
@@ -135,10 +113,8 @@ namespace BookReader.Context
 
         private IAppRoleRepository _appRole;
         public IAppRoleRepository AppRole {
-            get
-            {
-                if (_productCategories == null)
-                {
+            get {
+                if (_productCategories == null) {
                     _appRole = new AppRoleRepository(_db);
                 }
                 return _appRole;
@@ -163,17 +139,16 @@ namespace BookReader.Context
 
 
         private ICommentLikeRepository _commentLike;
-        public ICommentLikeRepository CommentLikes
-        {
+        public ICommentLikeRepository CommentLikes {
             get {
-                if (_commentLike == null)
-                {
+                if (_commentLike == null) {
                     _commentLike = new CommentLikeRepository(_db);
                 }
-                return _commentLike; 
+                return _commentLike;
             }
         }
 
+<<<<<<< HEAD
         private IWalletLogRepository _walletLogRepository;
         public IWalletLogRepository WalletLogs {
             get {
@@ -269,13 +244,14 @@ namespace BookReader.Context
             }
         }
 
-        private ICreditTypeRepository _creditTypeRepository;
+        private ICreditTypeRepository _creditType;
         public ICreditTypeRepository CreditTypes {
             get {
-                if (_creditTypeRepository == null) {
-                    _creditTypeRepository = new CreditTypeRepository(_db);
+                if (_creditType == null) {
+                    _creditType = new CreditTypeRepository(_db);
                 }
-                return _creditTypeRepository;
+                return _creditType;
+
             }
         }
     }
