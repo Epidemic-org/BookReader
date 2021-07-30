@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories.Interfaces
 {
-    public interface IUserRepository:IBaseRepository<AppUser>
+    public interface IProductDownloadRepository : IBaseRepository<ProductDownload>
     {
-         Task<AppUser> Find(object username);
-
     }
 }

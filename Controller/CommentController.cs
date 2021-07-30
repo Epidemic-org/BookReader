@@ -1,7 +1,9 @@
 ﻿using BookReader.Context;
 using BookReader.Data.Models;
 using BookReader.Utillities;
+using BookReader.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,22 +23,50 @@ namespace BookReader.Controller
             _db = db;
         }
         [HttpGet]
-        public IActionResult GetAll( int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
         {
-            IQueryable<Comment> q = null;
-            q = Utils.PaginateObjects<Comment>(q, page, pageSize);
-            var products = q.ToList();
-            return Ok(products);
+            //IQueryable<Comment> q = null;
+            //q = Utils.PaginateObjects<Comment>(q, page, pageSize);
+            //var products = q.ToList();
+            //return Ok(products);
+            var commentList = await _db.Comments.GetAll().
+                Select(s => new CommentVm
+                {
+                    Id = s.Id,
+                    CreationDate = s.CreationDate,
+                    ProductId = s.ProductId,
+                    Text = s.Text,
+                    UserId = s.UserId
+                     
+                }
+                )
+                .PaginateObjects().
+                ToListAsync();
+            return Ok(commentList);
         }
 
         [HttpGet]
         public async Task<IActionResult> FindById(int id)
         {
-            if (!await _db.Comments.IsExists(id)) {
+            if (await _db.Comments.IsExists(id))
+            {
+
+                var comment = await _db.Comments.Find(id);
+                var test = new CommentVm
+                {
+                    CreationDate = comment.CreationDate,
+                    Id = comment.Id,
+                    ProductId = comment.ProductId,
+                    Text = comment.Text,
+                    UserId = comment.UserId
+                }
+                ;
+                return Ok(test);
+            }
+            else
+            {
                 return NotFound();
             }
-            var comment = await _db.Comments.Find(id);
-            return Ok(comment);
         }
 
         [HttpPost]

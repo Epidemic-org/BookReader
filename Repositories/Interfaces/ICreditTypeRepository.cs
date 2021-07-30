@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories.Interfaces
 {
-    public interface ICreditTypeRepository :IBaseRepository<CreditType>
+    public interface ICreditTypeRepository : IBaseRepository<CreditType>
     {
+
     }
 }

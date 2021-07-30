@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories
 {
-    public class CreditTypeRepository : BaseRepository<CreditType> ,ICreditTypeRepository
+    public class CreditTypeRepository : BaseRepository<CreditType>, ICreditTypeRepository
     {
+
         private readonly ApplicationDbContext _db;
-        public CreditTypeRepository(ApplicationDbContext db) : base(db)
-        {
             _db = db;
         }
     }

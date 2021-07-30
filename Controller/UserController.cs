@@ -2,6 +2,7 @@
 using BookReader.Context;
 using BookReader.Data.Models;
 using BookReader.Utillities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _db;
@@ -23,13 +25,13 @@ namespace BookReader.Controller
 
         [HttpGet]
         public async Task<IActionResult> GetAll(int page = 1, int pageSize=10) {       
-            var list = await _db.Users.GetAll().PaginateObjects().ToListAsync();
+            var list = await _db.AppUsers.GetAll().PaginateObjects().ToListAsync();
             return Ok(list);
         }
 
         [HttpGet]
         public async Task<IActionResult> Get([FromRoute] int id) {
-            var user = await _db.Users.Find(id);
+            var user = await _db.AppUsers.Find(id);
             if(user == null) {
                 return NotFound();
             }
@@ -42,13 +44,13 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            var result = await _db.Users.CreateAsync(user);
+            var result = await _db.AppUsers.CreateAsync(user);
             return Ok(result);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete([FromRoute] int id) {
-            var user = await _db.Users.Find(id);
+            var user = await _db.AppUsers.Find(id);
             if(user == null) {
                 return NotFound();
             }
@@ -60,7 +62,7 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            await _db.Users.EditAsync(user);
+            await _db.AppUsers.EditAsync(user);
             return Ok(user);
         }
 

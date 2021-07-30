@@ -49,7 +49,7 @@ namespace BookReader
                        ValidateLifetime = true,
                        ValidateIssuerSigningKey = true,
                        ValidIssuer = "http://localhost:32937",
-                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Kasian"))
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisimycustomSecretkeforauthnetication"))
                    };
                });
 
@@ -94,14 +94,12 @@ namespace BookReader
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "api/{controller}/{action}/{id?}");
             });
-
-
-
         }
     }
 }
