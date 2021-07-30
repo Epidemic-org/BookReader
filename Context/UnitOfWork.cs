@@ -158,7 +158,7 @@ namespace BookReader.Context
 
         private ICommentLikeRepository _commentLike;
 
-        public ICommentLikeRepository CommentLike
+        public ICommentLikeRepository CommentLikes
         {
             get {
                 if (_commentLike == null)
@@ -169,5 +169,17 @@ namespace BookReader.Context
             }
         }
 
+        private ICreditTypeRepository _creditType;
+        public ICreditTypeRepository CreditTypes
+        {
+            get
+            {
+                if (_creditType == null)
+                {
+                    _creditType = new CreditTypeRepository(_db);
+                }
+                return _creditType;
+            }
+        }
     }
 }
