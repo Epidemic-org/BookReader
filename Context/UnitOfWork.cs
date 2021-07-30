@@ -148,7 +148,6 @@ namespace BookReader.Context
             }
         }
 
-<<<<<<< HEAD
         private IWalletLogRepository _walletLogRepository;
         public IWalletLogRepository WalletLogs {
             get {
