@@ -13,7 +13,7 @@ namespace BookReader.Repositories
     {
 
         private readonly ApplicationDbContext _db;
-        public CreditTypeRepository(ApplicationDbContext db) {
+        public CreditTypeRepository(ApplicationDbContext db):base(db) {
             _db = db;
         }
     }
