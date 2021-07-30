@@ -158,7 +158,7 @@ namespace BookReader.Context
 
         private ICommentLikeRepository _commentLike;
 
-        public ICommentLikeRepository CommentLike
+        public ICommentLikeRepository CommentLikes
         {
             get {
                 if (_commentLike == null)
