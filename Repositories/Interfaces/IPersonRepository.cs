@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories.Interfaces
 {
-    public interface IAppRoleRepository :IBaseRepository<AppRole>
+    public interface IPersonRepository : IBaseRepository<Person>
     {
-
     }
 }
