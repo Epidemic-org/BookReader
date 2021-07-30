@@ -21,6 +21,7 @@ namespace BookReader.Context
         public IUserRepository AppUsers { get; }
         public IAppRoleRepository AppRole { get; }
         public IProductCategoryRepository ProductCategories { get; }
-        public IInvoicePaymentRepository InvoicePayments { get; set; }
+        public IInvoicePaymentRepository InvoicePayments { get; }
+        public ICommentLikeRepository CommentLikes { get; }
     }
 }
