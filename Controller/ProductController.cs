@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using BookReader.Utillities;
 using BookReader.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BookReader.Controller
 {
@@ -25,7 +26,7 @@ namespace BookReader.Controller
             _db = db;
         }
 
-        [HttpGet]       
+        [HttpGet]
         public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10) {
             //var q = _db.Products.GetAllBySearch(search);
             //q = Utils.PaginateObjects<Product>(q, page, pageSize);
@@ -33,8 +34,7 @@ namespace BookReader.Controller
 
 
             var list = await _db.Products.GetAll(search)
-                .Select(s=> new ProductListVm
-                {
+                .Select(s => new ProductListVm {
                     CreationDate = s.CreationDate,
                     Description = s.Description,
                     EditionDate = s.EditionDate,
@@ -48,7 +48,7 @@ namespace BookReader.Controller
                     UserId = s.UserId,
                 })
                 .PaginateObjects(page, pageSize).ToListAsync();
-            
+
             return Ok(list);
         }
 
@@ -69,7 +69,6 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-
             //product.UserId = User.GetUserId();
             product.UserId = 1;
             product.AdminId = 1;
@@ -83,10 +82,8 @@ namespace BookReader.Controller
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create2([FromBody] Product product)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Create2([FromBody] Product product) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
             var result = await _db.Products.CreateAsync(product);

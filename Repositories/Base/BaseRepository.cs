@@ -15,6 +15,7 @@ namespace BookReader.Repositories.Base
     {
         private readonly ApplicationDbContext _db;
         private DbSet<T> _dbset;
+        
         public BaseRepository(ApplicationDbContext db) {
             _db = db;
             _dbset = _db.Set<T>();
@@ -29,6 +30,7 @@ namespace BookReader.Repositories.Base
                 //TODO: Check For Errros !
                 return new ResultObjectVm { Success = false, Message = "خطا در افزودن رخ داد" };
             }
+            //TODO: save model to extra ?! for controller 
         }
 
         public virtual async Task<ResultObjectVm> DeleteAsync(int id) {

@@ -1,9 +1,5 @@
-﻿//TODO:Remove Order model 
-using BookReader.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Security.Claims;
 
 namespace BookReader.Utillities
 {
@@ -14,5 +10,9 @@ namespace BookReader.Utillities
              .Take(pageSize);
         }
 
+        //TODO: impelement authorized user id getter
+        public static int GetUserId(this ClaimsPrincipal user) {
+            return int.Parse(user.Claims.First(i => i.Type == "UserId").Value);
+        }
     }
 }

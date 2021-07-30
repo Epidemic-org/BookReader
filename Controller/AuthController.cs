@@ -51,10 +51,9 @@ namespace EshopApi.Controllers
                 },
                 expires:DateTime.Now.AddMinutes(30),
                 signingCredentials:signinCredentials
-            );
+            );;
             
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
-
             return Ok(new {token = tokenString});
         }
 
