@@ -26,7 +26,7 @@ namespace BookReader.Controller
             return Ok();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> FindById([FromRoute] int id) {
             if (!await _db.Orders.IsExists(id)) {
                 return NotFound();

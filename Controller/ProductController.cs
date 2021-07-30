@@ -16,16 +16,16 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
-
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _db;
+
         public ProductController(IUnitOfWork db) {
             _db = db;
         }
 
-        [HttpGet]
-       
+        [HttpGet]       
         public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10) {
             //var q = _db.Products.GetAllBySearch(search);
             //q = Utils.PaginateObjects<Product>(q, page, pageSize);

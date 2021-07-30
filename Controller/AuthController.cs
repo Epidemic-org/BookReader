@@ -14,7 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace EshopApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -25,18 +25,20 @@ namespace EshopApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AppUser user) {
+        public async Task<IActionResult> Post([FromBody] LoginVM login) {
             if (!ModelState.IsValid) {
                 return BadRequest("The Model Is Not Valid");
             }
-            AppUser appUser = await _db.AppUsers.Find(user.UserName);
-
-            if (user.UserName.ToLower() != appUser.UserName || user.PasswordHash.ToLower() !=appUser.PasswordHash || appUser == null)
+            AppUser appUser = await _db.AppUsers.Find(login.UserName);
+            if(appUser == null) {
+                return NotFound();
+            }
+            if (login.UserName.ToLower() != appUser.UserName.ToLower() || login.Password.ToLower() != appUser.PasswordHash.ToLower())
             {
                 return Unauthorized();
             }
 
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Kasian"));
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisimycustomSecretkeforauthnetication"));
 
             var signinCredentials=new SigningCredentials(secretKey,SecurityAlgorithms.HmacSha256);
 
@@ -44,7 +46,7 @@ namespace EshopApi.Controllers
                 issuer: "http://localhost:32937",
                 claims:new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name,user.UserName),
+                    new Claim(ClaimTypes.Name,login.UserName),
                     new Claim(ClaimTypes.Role,"Admin")
                 },
                 expires:DateTime.Now.AddMinutes(30),
