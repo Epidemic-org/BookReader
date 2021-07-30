@@ -154,6 +154,20 @@ namespace BookReader.Context
                 return _userRepository;
             }
         }
-        
+
+
+        private ICommentLikeRepository _commentLike;
+
+        public ICommentLikeRepository CommentLike
+        {
+            get {
+                if (_commentLike == null)
+                {
+                    _commentLike = new CommentLikeRepository(_db);
+                }
+                return _commentLike; 
+            }
+        }
+
     }
 }
