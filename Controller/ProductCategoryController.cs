@@ -22,6 +22,10 @@ namespace BookReader.Controller
             _db = db;
         }
 
+        /// <summary>
+        /// Returns list of product categories
+        /// </summary>
+        /// <returns>List of type product category VM</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll() {
             //var list = await _db.ProductCategories.GetAll().ToListAsync();
@@ -41,7 +45,11 @@ namespace BookReader.Controller
         }
 
      
-
+        /// <summary>
+        /// Insert new product category 
+        /// </summary>
+        /// <param name="productCategory"></param>
+        /// <returns>ResultObject</returns>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProductCategory productCategory) {
             if (!ModelState.IsValid) {
@@ -57,6 +65,12 @@ namespace BookReader.Controller
             result.Extra = productCategory;
             return Ok(result);
         }
+
+        /// <summary>
+        /// Edit product category 
+        /// </summary>
+        /// <param name="productCategory">Gets a product category as parameter</param>
+        /// <returns>ResultObject</returns>
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody] ProductCategory productCategory)
         {
@@ -69,10 +83,22 @@ namespace BookReader.Controller
             result.Extra = productCategory;
             return Ok(result);
         }
+
+
+        /// <summary>
+        /// Deletes product category 
+        /// </summary>
+        /// <param name="id">Gets product category id as parameter</param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
+            var productCToDelete = _db.ProductCategories.Find(id);
+            if(productCToDelete == null) {
+                return NotFound();
+            }
             var result = await _db.ProductCategories.DeleteAsync(id);
+            result.Id = id;
             return Ok(result);
         }
     }

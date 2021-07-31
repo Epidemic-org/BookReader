@@ -46,6 +46,11 @@ namespace BookReader.Controller
                 ToListAsync();
             return Ok(commentList);
         }
+        /// <summary>
+        /// Finds a comment like by id
+        /// </summary>
+        /// <param name="id">the id corresponding to a comment like</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> FindById(int id)
         {
@@ -53,9 +58,14 @@ namespace BookReader.Controller
             {
                 return NotFound();
             }
-            var comment = await _db.CommentLikes.Find(id);
+            var comment = await _db.CommentLikes.Find(id);            
             return Ok(comment);
         }
+        /// <summary>
+        /// Create new comment like
+        /// </summary>
+        /// <param name="commentLike">Gets a comment like object as parameter</param>
+        /// <returns>ResultObject</returns>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CommentLike commentLike)
         {
@@ -64,27 +74,44 @@ namespace BookReader.Controller
                 return BadRequest(ModelState);
             }
             commentLike.CreationDate = DateTime.Now;
-            //commentLike.UserId = User.GetUserId();
-            commentLike.UserId = 1;
+            commentLike.UserId = User.GetUserId();
             var result = await _db.CommentLikes.CreateAsync(commentLike);
+            result.Id = commentLike.Id;
+            result.Extra = commentLike;
             return Ok(result);
         }
 
+        /// <summary>
+        /// Edit a comment like object 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="commentLike">Gets a comment like object as parameter</param>
+        /// <returns>ResultObject</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit(int id, [FromBody] CommentLike commentLike)
+        public async Task<IActionResult> Edit([FromBody] CommentLike commentLike)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var result = await _db.CommentLikes.EditAsync(commentLike);
+            result.Id = commentLike.Id;
+            result.Extra = commentLike;
             return Ok(result);
         }
 
+        /// <summary>
+        /// Deletes a comment like object
+        /// </summary>
+        /// <param name="id">Gets the id correspond to comment like object</param>
+        /// <returns>ResultObject</returns>
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _db.Comments.DeleteAsync(id);
+            var commentLikeToDelete = await _db.CommentLikes.Find(id);
+            var result = await _db.CommentLikes.DeleteAsync(commentLikeToDelete);
+            result.Id = id;
+            result.Extra = commentLikeToDelete;
             return Ok(result);
         }
     }
