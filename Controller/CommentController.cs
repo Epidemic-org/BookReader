@@ -18,30 +18,23 @@ namespace BookReader.Controller
     public class CommentController : ControllerBase
     {
         public IUnitOfWork _db;
-        public CommentController(IUnitOfWork db)
-        {
+        public CommentController(IUnitOfWork db) {
             _db = db;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
-        {
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
             //IQueryable<Comment> q = null;
             //q = Utils.PaginateObjects<Comment>(q, page, pageSize);
             //var products = q.ToList();
             //return Ok(products);
             var commentList = await _db.Comments.GetAll().
-                Select(s => new CommentVm
-                {
+                Select(s => new CommentVm {
                     Id = s.Id,
                     CreationDate = s.CreationDate,
                     ProductId = s.ProductId,
-                    Text = s.Text,
-<<<<<<< HEAD
-                    UserId = s.UserId                     
-=======
+                    Text = s.Text,        
+                    UserId = s.UserId,
                     UserFullName = s.User.Person.FirstName + "" + s.User.Person.LastName
-
->>>>>>> 61d53b8edd688029121105a425e9362b7adc4062
                 }
                 )
                 .PaginateObjects().
@@ -50,13 +43,10 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> FindById(int id)
-        {
-            if (await _db.Comments.IsExists(id))
-            {
+        public async Task<IActionResult> FindById(int id) {
+            if (await _db.Comments.IsExists(id)) {
                 var comment = await _db.Comments.Find(id);
-                var test = new CommentVm
-                {
+                var test = new CommentVm {
                     CreationDate = comment.CreationDate,
                     Id = comment.Id,
                     ProductId = comment.ProductId,
@@ -66,17 +56,14 @@ namespace BookReader.Controller
                 ;
                 return Ok(test);
             }
-            else
-            {
+            else {
                 return NotFound();
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Comment comment)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Post([FromBody] Comment comment) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
             var result = await _db.Comments.CreateAsync(comment);
@@ -84,10 +71,8 @@ namespace BookReader.Controller
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(int id, [FromBody] Comment comment)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Put(int id, [FromBody] Comment comment) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
             var result = await _db.Comments.EditAsync(comment);
@@ -95,8 +80,7 @@ namespace BookReader.Controller
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
+        public async Task<IActionResult> Delete(int id) {
             var result = await _db.Comments.DeleteAsync(id);
             return Ok(result);
         }

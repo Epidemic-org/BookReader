@@ -71,7 +71,11 @@ namespace BookReader.Controller
                 return BadRequest();
             }
             user.IsActive = false;
-            user.Person = user.Person;
+            Person person = new Person();
+            await _db.People.CreateAsync(person);
+            user.Person = person;
+            await _db.AppUsers.CreateAsync(user);
+            person.UserId = user.Id;
             var result = await _db.AppUsers.CreateAsync(user);
             return Ok(result);
         }

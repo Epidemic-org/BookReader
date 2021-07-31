@@ -9,7 +9,7 @@ namespace BookReader.ViewModels
     public class CommentVm
     {
         public int Id { get; set; }
-
+        public int UserId { get; set; }
         public int ProductId { get; set; }
 
         [Display(Name = "نام و نام خانوادگی کاربر")]
