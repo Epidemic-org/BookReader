@@ -36,8 +36,8 @@ namespace BookReader.Controller
                     CreationDate = s.CreationDate,
                     ProductId = s.ProductId,
                     Text = s.Text,
-                    UserId = s.UserId
-                     
+                    UserFullName = s.User.Person.FirstName + "" + s.User.Person.LastName
+
                 }
                 )
                 .PaginateObjects().
@@ -57,7 +57,7 @@ namespace BookReader.Controller
                     Id = comment.Id,
                     ProductId = comment.ProductId,
                     Text = comment.Text,
-                    UserId = comment.UserId
+                    UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
                 }
                 ;
                 return Ok(test);
