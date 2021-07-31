@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using BookReader.Data.Models;
+using System.Linq;
 using System.Security.Claims;
 
 namespace BookReader.Utillities
@@ -12,6 +13,9 @@ namespace BookReader.Utillities
         public static int GetUserId(this ClaimsPrincipal user) {
             var suser = user;
             return int.Parse(user.FindFirst(ClaimTypes.NameIdentifier).Value);
+        }
+        public static decimal TermAmountCalculate(this InvoiceItem invoiceItem) {
+            return invoiceItem.Price * invoiceItem.Quantity;
         }
     }
 }

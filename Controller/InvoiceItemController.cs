@@ -48,6 +48,7 @@ namespace BookReader.Controller
                 return NotFound();
             }
             var invoiceItem = await _db.InvoiceItem.Find(id);
+            invoiceItem.TermAMount = invoiceItem.TermAmountCalculate();
             return Ok(invoiceItem);
         }
 
@@ -59,6 +60,7 @@ namespace BookReader.Controller
             {
                 return BadRequest();
             }
+            
             await _db.InvoiceItem.CreateAsync(invoiceItem);
             return Ok(invoiceItem);
         }
