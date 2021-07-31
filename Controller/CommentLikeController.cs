@@ -61,6 +61,7 @@ namespace BookReader.Controller
             var comment = await _db.CommentLikes.Find(id);            
             return Ok(comment);
         }
+
         /// <summary>
         /// Create new comment like
         /// </summary>
@@ -109,6 +110,9 @@ namespace BookReader.Controller
         public async Task<IActionResult> Delete(int id)
         {
             var commentLikeToDelete = await _db.CommentLikes.Find(id);
+            if (commentLikeToDelete == null) {
+                return NotFound();
+            }
             var result = await _db.CommentLikes.DeleteAsync(commentLikeToDelete);
             result.Id = id;
             result.Extra = commentLikeToDelete;

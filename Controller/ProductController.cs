@@ -60,26 +60,25 @@ namespace BookReader.Controller
         /// <returns>Product</returns>
         [HttpGet]
         public async Task<IActionResult> FindById([FromRoute] int id) {
-            if (await _db.Products.IsExists(id)) {
-                var product = await _db.Products.Find(id);
-                //TODO: get then fill VM ?
-                //ProductListVm productListVm = new ProductListVm();
-                //productListVm.Id = product.Id;
-                //productListVm.ProductCategoryId = product.ProductCategoryId;
-                //productListVm.CategoryName = product.ProductCategory.Name;
-                //productListVm.Title = product.Title;
-                //productListVm.Description = product.Description;
-                //productListVm.Tags = product.Tags;
-                //productListVm.UserId = product.UserId;
-                //productListVm.UserFullName = product.User.Person.FirstName + " " + product.User.Person.LastName;
-                //productListVm.CreationDate = product.CreationDate;
-                //productListVm.EditionDate = product.EditionDate;
-                //productListVm.ProductType = product.ProductType;
-                return Ok(product);
-            }
-            else {
+            if (!await _db.Products.IsExists(id)) {
                 return NotFound();
+
             }
+            var product = await _db.Products.Find(id);
+            //TODO: get then fill VM ?
+            //ProductListVm productListVm = new ProductListVm();
+            //productListVm.Id = product.Id;
+            //productListVm.ProductCategoryId = product.ProductCategoryId;
+            //productListVm.CategoryName = product.ProductCategory.Name;
+            //productListVm.Title = product.Title;
+            //productListVm.Description = product.Description;
+            //productListVm.Tags = product.Tags;
+            //productListVm.UserId = product.UserId;
+            //productListVm.UserFullName = product.User.Person.FirstName + " " + product.User.Person.LastName;
+            //productListVm.CreationDate = product.CreationDate;
+            //productListVm.EditionDate = product.EditionDate;
+            //productListVm.ProductType = product.ProductType;
+            return Ok(product);
         }
 
         /// <summary>
@@ -135,7 +134,7 @@ namespace BookReader.Controller
         [HttpDelete]
         public async Task<IActionResult> Delete(int id) {
             var productToDelete = await _db.Products.Find(id);
-            if(productToDelete == null) {
+            if (productToDelete == null) {
                 return NotFound();
             }
             var result = await _db.Products.DeleteAsync(productToDelete);
