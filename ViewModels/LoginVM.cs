@@ -9,12 +9,9 @@ namespace BookReader.ViewModels
 {
 
     public class LoginVM
-    {
-        [Required]
-        [NotMapped]
+    {        
         public string UserName { get; set; }
-        [Required]
-        [NotMapped]
         public string Password { get; set; }
+
     }
 }

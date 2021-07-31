@@ -1,4 +1,5 @@
 using BookReader.Context;
+using BookReader.Context.Services;
 using BookReader.Data;
 using BookReader.Data.Models;
 using BookReader.Interfaces;
@@ -6,6 +7,7 @@ using BookReader.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -40,27 +42,31 @@ namespace BookReader
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-               .AddJwtBearer(options => {
-                   options.TokenValidationParameters = new TokenValidationParameters() {
-                       ValidateIssuer = true,
-                       ValidateAudience = true,
-                       ValidateLifetime = true,
-                       ValidateIssuerSigningKey = true,
-                       ValidIssuer = "http://localhost:32937",
-                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisimycustomSecretkeforauthnetication"))
-                   };
-               });
-
-            services.AddCors();
+            services.AddMvc()
+                 .AddSessionStateTempDataProvider();
+            services.AddSession();
             services.AddControllers();
 
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-
-
             services.AddSwaggerGen();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+                options.TokenValidationParameters = new TokenValidationParameters {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new
+                     SymmetricSecurityKey
+                    (Encoding.UTF8.GetBytes
+                    (Configuration["Jwt:Key"]))
+                }
+            );
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,17 +85,19 @@ namespace BookReader
                 app.UseHsts();
             }
 
+            app.UseSession();
+            app.Use(async (context, next) => {
+                var token = context.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token)) {
+                    context.Request.Headers.Add("Authorization", "Bearer " + token);
+                }
+                await next();
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseCors(x => x
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true)
-                .AllowCredentials());
-
 
             app.UseAuthentication();
             app.UseAuthorization();

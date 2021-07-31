@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using BookReader.Context;
-using BookReader.Data.Models;
+using BookReader.Context.Services;
 using BookReader.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+
 
 namespace EshopApi.Controllers
 {
@@ -18,44 +13,39 @@ namespace EshopApi.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-
         private IUnitOfWork _db;
-        public AuthController(IUnitOfWork db) {
+        private readonly IConfiguration _config;
+        private readonly ITokenService _tokenService;
+        private string generatedToken = null;
+
+
+        public AuthController(IUnitOfWork db, IConfiguration configuration, ITokenService tokenService) {
             _db = db;
+            _config = configuration;
+            _tokenService = tokenService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] LoginVM login) {
+        public IActionResult Post([FromBody] LoginVM userVM) {
             if (!ModelState.IsValid) {
-                return BadRequest("The Model Is Not Valid");
+                return BadRequest();
             }
-            AppUser appUser = await _db.AppUsers.Find(login.UserName);
-            if(appUser == null) {
-                return NotFound();
+            IActionResult response = Unauthorized();
+            var validUser = _db.AppUsers.GetUser(userVM);
+            if (validUser != null) {
+                generatedToken = _tokenService.BuildToken(key: _config["Jwt:Key"].ToString(),
+                    issuer: _config["Jwt:Issuer"].ToString(), validUser);
+                if (generatedToken != null) {
+                    HttpContext.Session.SetString("Token", generatedToken);
+                    return Ok(new { token = generatedToken });
+                }
+                else {
+                    return NotFound("Token Buil Failed");
+                }
             }
-            if (login.UserName.ToLower() != appUser.UserName.ToLower() || login.Password.ToLower() != appUser.PasswordHash.ToLower())
-            {
-                return Unauthorized();
+            else {
+                return NotFound("Valid User is null");
             }
-
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisimycustomSecretkeforauthnetication"));
-
-            var signinCredentials=new SigningCredentials(secretKey,SecurityAlgorithms.HmacSha256);
-
-            var tokenOption = new JwtSecurityToken(
-                issuer: "http://localhost:32937",
-                claims:new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name,login.UserName),
-                    new Claim(ClaimTypes.Role,"Admin")
-                },
-                expires:DateTime.Now.AddMinutes(30),
-                signingCredentials:signinCredentials
-            );;
-            
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOption);
-            return Ok(new {token = tokenString});
         }
-
     }
 }
