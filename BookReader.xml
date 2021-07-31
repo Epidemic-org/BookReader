@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BookReader</name>
+    </assembly>
+    <members>
+        <member name="M:BookReader.Controller.ProductController.GetAll(System.String,System.Int32,System.Int32)">
+            <summary>
+            Returns list of products
+            </summary>
+            <param name="search">Filters products which Title and Descriptions contains search text</param>
+            <param name="page">Set number of pages to paginate</param>
+            <param name="pageSize">Set products count to display on each page</param>
+            <returns>List Of Products></returns>
+        </member>
+        <member name="M:BookReader.Controller.ProductController.FindById(System.Int32)">
+            <summary>
+            Returns a specified product by id
+            </summary>
+            <param name="id">Gets id of product to find from url</param>
+            <returns>Product</returns>
+        </member>
+        <member name="M:BookReader.Controller.ProductController.Create(BookReader.Data.Models.Product)">
+            <summary>
+            Insert new product
+            </summary>
+            <param name="product">Product entitiy gets from body</param>
+            <returns>ResultObject</returns>
+        </member>
+        <member name="M:BookReader.Controller.ProductController.Edit(BookReader.Data.Models.Product)">
+            <summary>
+            Edit a product
+            </summary>
+            <param name="product">Product to delete which gets from body</param>
+            <returns>ResultObject</returns>
+        </member>
+        <member name="M:BookReader.Controller.ProductController.Delete(System.Int32)">
+            <summary>
+            Deletes a product
+            </summary>
+            <param name="id"></param>
+            <returns>ResultObject</returns>
+        </member>
+    </members>
+</doc>

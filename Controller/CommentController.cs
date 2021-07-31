@@ -36,8 +36,12 @@ namespace BookReader.Controller
                     CreationDate = s.CreationDate,
                     ProductId = s.ProductId,
                     Text = s.Text,
+<<<<<<< HEAD
+                    UserId = s.UserId                     
+=======
                     UserFullName = s.User.Person.FirstName + "" + s.User.Person.LastName
 
+>>>>>>> 61d53b8edd688029121105a425e9362b7adc4062
                 }
                 )
                 .PaginateObjects().
