@@ -72,17 +72,22 @@ namespace BookReader.Controller
                 return BadRequest();
             }
             var result = await _db.InvoiceItem.EditAsync(invoiceItem);
+            result.Id = invoiceItem.Id;
+            result.Extra = invoiceItem;
             return Ok(result);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            if (!await _db.InvoiceItem.IsExists(id))
+            var invoiceItem = _db.InvoiceItem.Find(id);
+            if (invoiceItem == null)
             {
                 return NotFound();
             }
             var result = await _db.InvoiceItem.DeleteAsync(id);
+            result.Id = id;
+            result.Extra = invoiceItem;
             return Ok(result);
         }
     }
