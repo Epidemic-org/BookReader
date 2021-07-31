@@ -118,6 +118,5 @@ namespace BookReader.Controller
             result.Extra = user;
             return Ok(result);
         }
-
     }
 }
