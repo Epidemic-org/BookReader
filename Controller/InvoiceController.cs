@@ -74,6 +74,8 @@ namespace BookReader.Controller
             {
                 return BadRequest(ModelState);
             }
+            invoice.CreationDate = DateTime.Now;
+            invoice.UserId = User.GetUserId();
             var result = await _db.Invoice.CreateAsync(invoice);
             return Ok(result);
         }
