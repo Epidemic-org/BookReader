@@ -16,5 +16,4 @@ namespace BookReader.Data.Models
         public AppUser User { get; set; }
         public Comment Comment { get; set; }
     }
-
 }

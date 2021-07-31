@@ -22,6 +22,8 @@ namespace BookReader.Controller
         {
             _db = db;
         }
+
+
         [HttpGet]
         public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
         {
@@ -50,7 +52,6 @@ namespace BookReader.Controller
             if (!await _db.CommentLikes.IsExists(id))
             {
                 return NotFound();
-
             }
             var comment = await _db.CommentLikes.Find(id);
             return Ok(comment);
@@ -63,7 +64,8 @@ namespace BookReader.Controller
                 return BadRequest(ModelState);
             }
             commentLike.CreationDate = DateTime.Now;
-            commentLike.UserId = User.GetUserId();
+            //commentLike.UserId = User.GetUserId();
+            commentLike.UserId = 1;
             var result = await _db.CommentLikes.CreateAsync(commentLike);
             return Ok(result);
         }

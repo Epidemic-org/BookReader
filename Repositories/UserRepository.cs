@@ -18,10 +18,11 @@ namespace BookReader.Repositories
         public UserRepository(ApplicationDbContext db) : base(db) {
             _db = db;
         }
-        //TODO:Overload ask
-        public  async Task<AppUser> Find(object username) {
+
+        public async Task<AppUser> Find(string username) {
             return await _db.Users.Where(u => u.UserName == username).FirstOrDefaultAsync();
         }
+
         public AppUser GetUser(LoginVM userVM) {
             return base.GetAll().Where(x => x.UserName.ToLower() == userVM.UserName.ToLower()
                 && x.PasswordHash == userVM.Password).FirstOrDefault();

@@ -34,21 +34,22 @@ namespace BookReader.Controller
         public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
             var list = await _db.AppUsers.GetAll()
                 .Select(u => new UserListVM {
-                    Id =u.Id,
-                    BirthDate =u.Person.BirthDate,
+                    Id = u.Id,
+                    BirthDate = u.Person.BirthDate,
                     CreationDate = u.Person.CreationDate,
                     IsActive = u.IsActive,
                     GenderType = u.Person.GenderType,
-                    Name=u.Person.FirstName,
+                    Name = u.Person.FirstName,
                     LastName = u.Person.LastName,
-                    JobType =u.Person.JobType,
+                    JobType = u.Person.JobType,
                     NationalCode = u.Person.NationalCode,
-                    Phone = u.Person.Phone                    
+                    Phone = u.Person.Phone
                 })
-            .ToListAsync();           
+            .PaginateObjects()
+            .ToListAsync();
             return Ok(list);
         }
-        
+
 
         /// <summary>
         /// Returns a user with specifid id 
@@ -56,7 +57,7 @@ namespace BookReader.Controller
         /// <param name="id">Gets user id from url</param>
         /// <returns>AppUser</returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromRoute] int id) {
+        public async Task<IActionResult> FindById([FromRoute] int id) {
             var user = await _db.AppUsers.Find(id);
             if (user == null) {
                 return NotFound();
@@ -64,7 +65,11 @@ namespace BookReader.Controller
             return Ok(user);
         }
 
-
+        /// <summary>
+        /// Insert new user with person 
+        /// </summary>
+        /// <param name="user">Gets a user as parameter</param>
+        /// <returns>ResultObject</returns>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AppUser user) {
             if (!ModelState.IsValid) {
@@ -74,28 +79,44 @@ namespace BookReader.Controller
             Person person = new Person();
             await _db.People.CreateAsync(person);
             user.Person = person;
+
             await _db.AppUsers.CreateAsync(user);
             person.UserId = user.Id;
             var result = await _db.AppUsers.CreateAsync(user);
             return Ok(result);
         }
 
+        /// <summary>
+        /// Deletes a user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> Delete([FromRoute] int id) {
             var user = await _db.AppUsers.Find(id);
             if (user == null) {
                 return NotFound();
             }
-            return Ok(user);
+            var result = await _db.AppUsers.DeleteAsync(user);
+            result.Id = user.Id;
+            result.Extra = user;
+            return Ok(result);
         }
 
+        /// <summary>
+        /// Returns an editied user
+        /// </summary>
+        /// <param name="user">Gets a user as parameter</param>
+        /// <returns>ResultObject</returns>
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] AppUser user) {
+        public async Task<IActionResult> Edit([FromBody] AppUser user) {
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            await _db.AppUsers.EditAsync(user);
-            return Ok(user);
+            var result = await _db.AppUsers.EditAsync(user);
+            result.Id = user.Id;
+            result.Extra = user;
+            return Ok(result);
         }
 
     }

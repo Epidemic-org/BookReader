@@ -2,6 +2,7 @@
 using BookReader.Data.Models;
 using BookReader.Utillities;
 using BookReader.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,30 +10,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
+    [Authorize]
     public class CommentController : ControllerBase
     {
         public IUnitOfWork _db;
         public CommentController(IUnitOfWork db) {
             _db = db;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
-            //IQueryable<Comment> q = null;
-            //q = Utils.PaginateObjects<Comment>(q, page, pageSize);
-            //var products = q.ToList();
-            //return Ok(products);
             var commentList = await _db.Comments.GetAll().
                 Select(s => new CommentVm {
                     Id = s.Id,
                     CreationDate = s.CreationDate,
                     ProductId = s.ProductId,
-                    Text = s.Text,        
+                    Text = s.Text,
                     UserId = s.UserId,
                     UserFullName = s.User.Person.FirstName + "" + s.User.Person.LastName
                 }
@@ -46,12 +44,13 @@ namespace BookReader.Controller
         public async Task<IActionResult> FindById(int id) {
             if (await _db.Comments.IsExists(id)) {
                 var comment = await _db.Comments.Find(id);
-                var test = new CommentVm {
+                var test = new CommentVm
+                {
                     CreationDate = comment.CreationDate,
                     Id = comment.Id,
                     ProductId = comment.ProductId,
                     Text = comment.Text,
-                    UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
+                    //UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
                 }
                 ;
                 return Ok(test);

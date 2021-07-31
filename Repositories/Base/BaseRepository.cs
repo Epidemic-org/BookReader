@@ -66,7 +66,7 @@ namespace BookReader.Repositories.Base
             }
         }
 
-        public virtual async Task<T> Find(object id) {
+        public virtual async Task<T> Find(int id) {
             return await _dbset.FindAsync(id);
         }
 

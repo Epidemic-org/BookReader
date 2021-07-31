@@ -41,5 +41,41 @@
             <param name="id"></param>
             <returns>ResultObject</returns>
         </member>
+        <member name="M:BookReader.Controller.UserController.GetAll(System.Int32,System.Int32)">
+            <summary>
+            Returns list of users information
+            </summary>
+            <param name="page"></param>
+            <param name="pageSize">Number of users each page contains</param>
+            <returns>List of type UserListVM</returns>
+        </member>
+        <member name="M:BookReader.Controller.UserController.FindById(System.Int32)">
+            <summary>
+            Returns a user with specifid id 
+            </summary>
+            <param name="id">Gets user id from url</param>
+            <returns>AppUser</returns>
+        </member>
+        <member name="M:BookReader.Controller.UserController.Create(BookReader.Data.Models.AppUser)">
+            <summary>
+            Insert new user with person 
+            </summary>
+            <param name="user">Gets a user as parameter</param>
+            <returns>ResultObject</returns>
+        </member>
+        <member name="M:BookReader.Controller.UserController.Delete(System.Int32)">
+            <summary>
+            Deletes a user
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookReader.Controller.UserController.Edit(BookReader.Data.Models.AppUser)">
+            <summary>
+            Returns an editied user
+            </summary>
+            <param name="user">Gets a user as parameter</param>
+            <returns>ResultObject</returns>
+        </member>
     </members>
 </doc>
