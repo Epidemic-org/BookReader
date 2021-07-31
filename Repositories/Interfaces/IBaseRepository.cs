@@ -11,7 +11,7 @@ namespace BookReader.Repositories.Interfaces
     {
         IQueryable<T> GetAll(Expression<Func<T, bool>> where = null);
 
-        Task<T> Find(object id);
+        Task<T> Find(int id);
 
         Task<ResultObjectVm> CreateAsync(T entity);
 

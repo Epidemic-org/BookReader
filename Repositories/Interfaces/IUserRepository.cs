@@ -9,7 +9,8 @@ namespace BookReader.Repositories.Interfaces
 {
     public interface IUserRepository : IBaseRepository<AppUser>
     {
-        Task<AppUser> Find(object username);
+        Task<AppUser> Find(int id);
+        Task<AppUser> Find(string id);
         AppUser GetUser(LoginVM userVM);
     }
 }

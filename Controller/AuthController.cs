@@ -26,11 +26,10 @@ namespace EshopApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] LoginVM userVM) {
+        public IActionResult Login([FromBody] LoginVM userVM) {
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            IActionResult response = Unauthorized();
             var validUser = _db.AppUsers.GetUser(userVM);
             if (validUser != null) {
                 generatedToken = _tokenService.BuildToken(key: _config["Jwt:Key"].ToString(),

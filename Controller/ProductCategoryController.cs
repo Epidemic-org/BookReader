@@ -37,10 +37,6 @@ namespace BookReader.Controller
                     CreationDate = s.CreationDate,
                     ProductType = s.ProductType
                 }).ToListAsync();
-
-
-
-
             return Ok(PrdouctCategoryList);
         }
 
