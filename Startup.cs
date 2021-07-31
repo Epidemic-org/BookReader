@@ -52,7 +52,7 @@ namespace BookReader
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSwaggerGen(
                 Swagger => {
-                    Swagger.IncludeXmlComments(Path.Combine(Directory.GetCurrentDirectory(), "BookReader.xml"));
+                    Swagger.IncludeXmlComments(Path.Combine(Directory.GetCurrentDirectory(), @"bin\Debug\net5.0", "BookReader.xml"));
                     }
                 );
 
