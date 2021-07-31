@@ -68,10 +68,16 @@ namespace BookReader.Controller
             {
                 return BadRequest(ModelState);
             }
-            var old = await _db.ProductCategories.Find(productCategory.Id);
-            
-            return Ok();
+            var result = await _db.ProductCategories.EditAsync(productCategory);
+            result.Id = productCategory.Id;
+            result.Extra = productCategory;
+            return Ok(result);
         }
-     
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _db.ProductCategories.DeleteAsync(id);
+            return Ok(result);
+        }
     }
 }
