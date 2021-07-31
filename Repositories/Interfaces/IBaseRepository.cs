@@ -16,10 +16,9 @@ namespace BookReader.Repositories.Interfaces
         Task<ResultObjectVm> CreateAsync(T entity);
 
         Task<ResultObjectVm> EditAsync(T entity);
-
+        Task<ResultObjectVm> DeleteAsync(T entity);
 
         Task<ResultObjectVm> DeleteAsync(int id);
-        Task<ResultObjectVm> DeleteAsync(T entity);
         Task<bool> IsExists(int id);
 
     }

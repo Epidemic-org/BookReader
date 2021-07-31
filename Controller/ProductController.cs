@@ -134,7 +134,13 @@ namespace BookReader.Controller
         /// <returns>ResultObject</returns>
         [HttpDelete]
         public async Task<IActionResult> Delete(int id) {
-            var result = await _db.Products.DeleteAsync(id);
+            var productToDelete = await _db.Products.Find(id);
+            if(productToDelete == null) {
+                return NotFound();
+            }
+            var result = await _db.Products.DeleteAsync(productToDelete);
+            result.Id = id;
+            result.Extra = productToDelete;
             return Ok(result);
         }
     }

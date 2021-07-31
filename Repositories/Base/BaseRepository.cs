@@ -39,7 +39,7 @@ namespace BookReader.Repositories.Base
                 await DeleteAsync(entity);
                 return new ResultObjectVm { Success = true, Message = "با موفقیت حذف شد" };
             }
-            catch (Exception) {
+            catch (Exception exp) {
                 return new ResultObjectVm { Success = true, Message = "خطا در حذف رخ داد" };
             }
         }
@@ -50,7 +50,7 @@ namespace BookReader.Repositories.Base
                 await _db.SaveChangesAsync();
                 return new ResultObjectVm { Success = true, Message = "با موفقیت حذف شد" };
             }
-            catch (Exception) {
+            catch (Exception exp) {
                 return new ResultObjectVm { Success = true, Message = "خطا در حذف رخ داد" };
             }
         }
