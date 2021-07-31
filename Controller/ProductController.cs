@@ -17,7 +17,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _db;
@@ -28,27 +28,7 @@ namespace BookReader.Controller
 
         [HttpGet]
         public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10) {
-            //var q = _db.Products.GetAllBySearch(search);
-            //q = Utils.PaginateObjects<Product>(q, page, pageSize);
-            //var products = q.ToList();
-
-
-            var list = await _db.Products.GetAll(search)
-                .Select(s => new ProductListVm {
-                    CreationDate = s.CreationDate,
-                    Description = s.Description,
-                    EditionDate = s.EditionDate,
-                    Id = s.Id,
-                    ProductCategoryId = s.ProductCategoryId,
-                    CategoryName = s.ProductCategory.Name,
-                    ProductType = s.ProductType,
-                    Tags = s.Tags,
-                    Title = s.Title,
-                    UserFullName = s.User.Person.FirstName + " " + s.User.Person.LastName,
-                    UserId = s.UserId,
-                })
-                .PaginateObjects(page, pageSize).ToListAsync();
-
+            var list = await _db.Products.GetAll().ToListAsync();
             return Ok(list);
         }
 
@@ -69,7 +49,7 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            //product.UserId = User.GetUserId();
+            product.UserId = User.GetUserId();
             product.UserId = 1;
             product.AdminId = 1;
             product.CreationDate = DateTime.Now;

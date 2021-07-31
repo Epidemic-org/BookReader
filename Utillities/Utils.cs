@@ -9,10 +9,9 @@ namespace BookReader.Utillities
             return q.Skip((page - 1) * pageSize)
              .Take(pageSize);
         }
-
-        //TODO: impelement authorized user id getter
         public static int GetUserId(this ClaimsPrincipal user) {
-            return int.Parse(user.Claims.First(i => i.Type == "UserId").Value);
+            var suser = user;
+            return int.Parse(user.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
     }
 }

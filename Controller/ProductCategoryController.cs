@@ -24,13 +24,7 @@ namespace BookReader.Controller
 
         [HttpGet]
         public async Task<IActionResult> GetAll() {
-            //var q = _db.ProductCategorys.GetAllBySearch(search);
-            //q = Utils.PaginateObjects<ProductCategory>(q, page, pageSize);
-            //var ProductCategorys = q.ToList();
-
-
-            var list = await _db.ProductCategories.GetAll().ToListAsync();
-            
+            var list = await _db.ProductCategories.GetAll().ToListAsync();            
             return Ok(list);
         }
 
@@ -45,6 +39,6 @@ namespace BookReader.Controller
             return Ok(result);
         }
 
-       
+     
     }
 }

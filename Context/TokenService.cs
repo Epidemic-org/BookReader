@@ -20,7 +20,7 @@ namespace BookReader.Context
             new Claim(ClaimTypes.Name, user.UserName),
             new Claim(ClaimTypes.Role, "Admin"),
             new Claim(ClaimTypes.NameIdentifier,
-            Guid.NewGuid().ToString())
+            user.Id.ToString())
             };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));

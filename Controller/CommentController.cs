@@ -50,7 +50,6 @@ namespace BookReader.Controller
         {
             if (await _db.Comments.IsExists(id))
             {
-
                 var comment = await _db.Comments.Find(id);
                 var test = new CommentVm
                 {
