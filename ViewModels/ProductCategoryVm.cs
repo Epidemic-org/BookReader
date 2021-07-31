@@ -11,7 +11,7 @@ namespace BookReader.ViewModels
     {
         [Display(Name = "شناسه")]
         public int Id { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
 
         [Display(Name = "نام")]
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
