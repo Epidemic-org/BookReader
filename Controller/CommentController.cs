@@ -2,6 +2,7 @@
 using BookReader.Data.Models;
 using BookReader.Utillities;
 using BookReader.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,6 +16,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
+    [Authorize]
     public class CommentController : ControllerBase
     {
         public IUnitOfWork _db;
@@ -46,12 +48,13 @@ namespace BookReader.Controller
         public async Task<IActionResult> FindById(int id) {
             if (await _db.Comments.IsExists(id)) {
                 var comment = await _db.Comments.Find(id);
-                var test = new CommentVm {
+                var test = new CommentVm
+                {
                     CreationDate = comment.CreationDate,
                     Id = comment.Id,
                     ProductId = comment.ProductId,
                     Text = comment.Text,
-                    UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
+                    //UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
                 }
                 ;
                 return Ok(test);

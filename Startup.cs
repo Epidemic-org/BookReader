@@ -27,14 +27,16 @@ namespace BookReader
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) {
+        public Startup(IConfiguration configuration)
+        {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services) {
+        public void ConfigureServices(IServiceCollection services)
+        {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -51,13 +53,15 @@ namespace BookReader
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSwaggerGen(
-                Swagger => {
+                Swagger =>
+                {
                     Swagger.IncludeXmlComments(Path.Combine(Directory.GetCurrentDirectory(), "BookReader.xml"));
-                    }
+                }
                 );
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-                options.TokenValidationParameters = new TokenValidationParameters {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
@@ -70,30 +74,40 @@ namespace BookReader
                     (Configuration["Jwt:Key"]))
                 }
             );
+            services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
-            if (env.IsDevelopment()) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => {
+                app.UseSwaggerUI(c =>
+                {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                 });
             }
-            else {
+            else
+            {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseSession();
-            app.Use(async (context, next) => {
+            app.Use(async (context, next) =>
+            {
                 var token = context.Session.GetString("Token");
-                if (!string.IsNullOrEmpty(token)) {
+                if (!string.IsNullOrEmpty(token))
+                {
                     context.Request.Headers.Add("Authorization", "Bearer " + token);
                 }
                 await next();
@@ -108,7 +122,8 @@ namespace BookReader
             app.UseAuthorization();
 
 
-            app.UseEndpoints(endpoints => {
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "api/{controller}/{action}/{id?}");
