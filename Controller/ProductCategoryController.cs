@@ -30,12 +30,11 @@ namespace BookReader.Controller
         public async Task<IActionResult> GetAll() {
             //var list = await _db.ProductCategories.GetAll().ToListAsync();
             var PrdouctCategoryList = await _db.ProductCategories.GetAll().Select(
-                s => new ProductCategoryVm
-                {
+                s => new ProductCategoryVm {
                     Id = s.Id,
                     ParentId = s.ParentId,
-                    DisplayOrder = s.DisplayOrder ,
-                    Pic =s.Pic ,
+                    DisplayOrder = s.DisplayOrder,
+                    Pic = s.Pic,
                     Icon = s.Icon,
                     IsActive = s.IsActive,
                     CreationDate = s.CreationDate,
@@ -44,7 +43,7 @@ namespace BookReader.Controller
             return Ok(PrdouctCategoryList);
         }
 
-     
+
         /// <summary>
         /// Insert new product category 
         /// </summary>
@@ -72,10 +71,8 @@ namespace BookReader.Controller
         /// <param name="productCategory">Gets a product category as parameter</param>
         /// <returns>ResultObject</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] ProductCategory productCategory)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Edit([FromBody] ProductCategory productCategory) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
             var result = await _db.ProductCategories.EditAsync(productCategory);
@@ -91,14 +88,14 @@ namespace BookReader.Controller
         /// <param name="id">Gets product category id as parameter</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
+        public async Task<IActionResult> Delete(int id) {
             var productCToDelete = _db.ProductCategories.Find(id);
-            if(productCToDelete == null) {
+            if (productCToDelete == null) {
                 return NotFound();
             }
             var result = await _db.ProductCategories.DeleteAsync(id);
             result.Id = id;
+            result.Extra = productCToDelete;
             return Ok(result);
         }
     }
