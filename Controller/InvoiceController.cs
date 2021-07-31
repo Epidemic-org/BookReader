@@ -77,6 +77,8 @@ namespace BookReader.Controller
             invoice.CreationDate = DateTime.Now;
             invoice.UserId = User.GetUserId();
             var result = await _db.Invoice.CreateAsync(invoice);
+            result.Id = invoice.Id;
+            result.Extra = invoice;
             return Ok(result);
         }
 
@@ -88,13 +90,22 @@ namespace BookReader.Controller
                 return BadRequest(ModelState);
             }
             var result = await _db.Invoice.EditAsync(invoice);
+            result.Id = invoice.Id;
+            result.Extra = invoice;
             return Ok(result);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _db.Invoice.DeleteAsync(id);
+            var invoice = await _db.Invoice.Find(id);
+            if (invoice == null)
+            {
+                return NotFound();
+            }
+            var result = await _db.Invoice.DeleteAsync(invoice);
+            result.Id = invoice.Id;
+            result.Extra = invoice;
             return Ok(result);
         }
     }
