@@ -17,5 +17,8 @@ namespace BookReader.Utillities
         public static decimal TermAmountCalculate(this InvoiceItem invoiceItem) {
             return invoiceItem.Price * invoiceItem.Quantity;
         }
+        public static decimal GetLastPrice(this Product product) {
+            return product.ProductPrices.Where(p => p.IsActive == true).First().ProductPriceValue;
+        }
     }
 }
