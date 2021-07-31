@@ -18,6 +18,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,11 @@ namespace BookReader
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(
+                Swagger => {
+                    Swagger.IncludeXmlComments(Path.Combine(Directory.GetCurrentDirectory(), "BookReader.xml"));
+                    }
+                );
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 options.TokenValidationParameters = new TokenValidationParameters {

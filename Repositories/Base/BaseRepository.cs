@@ -58,7 +58,6 @@ namespace BookReader.Repositories.Base
         public virtual async Task<ResultObjectVm> EditAsync(T entity) {
             try {
                 _dbset.Update(entity);
-
                 await _db.SaveChangesAsync();
                 return new ResultObjectVm { Success = true, Message = "با موفقیت ویرایش شد" };
             }

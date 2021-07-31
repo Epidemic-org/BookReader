@@ -11,14 +11,12 @@ namespace BookReader.ViewModels
     {
         [Display(Name = "شناسه")]
         public int Id { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
 
         [Display(Name = "نام")]
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         [StringLength(maximumLength: 50, MinimumLength = 10)]
         public string Name { get; set; }
-
-
         public string Description { get; set; }
         public int DisplayOrder { get; set; }
         public string Pic { get; set; }
