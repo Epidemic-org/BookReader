@@ -54,8 +54,6 @@ namespace BookReader.Controller
                 }
                 ;
                 return Ok(test);
-                return Ok(comment);
-                //return Ok(comment);
             }
             else {
                 return NotFound();
