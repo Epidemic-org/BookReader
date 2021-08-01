@@ -70,10 +70,15 @@ namespace BookReader.Controller
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody] WalletLog walletLog)
         {
+            var oldWalletLog = await _db.WalletLogs.Find(walletLog.Id);
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
+            walletLog.UserId = oldWalletLog.UserId;
+            walletLog.TransactionId = oldWalletLog.TransactionId;
+            walletLog.Id = oldWalletLog.Id;
+            // change creationdate for modified date or not?
             var result = await _db.WalletLogs.EditAsync(walletLog);
             result.Id = walletLog.Id;
             result.Extra = walletLog;
