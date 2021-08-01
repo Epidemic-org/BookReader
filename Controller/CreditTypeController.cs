@@ -37,7 +37,7 @@ namespace BookReader.Controller
                     IsActive = s.IsActive ,
                     CreationDate=s.CreationDate,
                 }
-                ).PaginateObjects().ToListAsync();
+                ).PaginateObjects(page,pageSize).ToListAsync();
             return Ok(list);
         }
 

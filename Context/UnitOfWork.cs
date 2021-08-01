@@ -13,7 +13,7 @@ namespace BookReader.Context
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        ApplicationDbContext _db;
+        readonly ApplicationDbContext _db;
         public UnitOfWork(ApplicationDbContext db) {
             _db = db;
         }
