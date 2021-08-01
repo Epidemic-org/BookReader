@@ -39,7 +39,7 @@ namespace BookReader.Controller
                     CreationDate = p.CreationDate,
                     IsAcceptRules = p.IsAcceptRules
                 })
-                .PaginateObjects()
+                .PaginateObjects(page,pageSize)
                 .ToListAsync();
             return Ok(people);
         }

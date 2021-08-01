@@ -35,7 +35,7 @@ namespace BookReader.Controller
 
                 }
                 ).
-                PaginateObjects().ToListAsync();
+                PaginateObjects(page,pageSize).ToListAsync();
             return Ok(list);
         }
         [HttpGet]
