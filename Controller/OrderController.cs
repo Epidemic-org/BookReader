@@ -87,12 +87,14 @@ namespace BookReader.Controller
         [HttpDelete]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-
-            if (!await _db.Orders.IsExists(id))
+            var oldOrder = _db.Orders.Find(id);
+            if (oldOrder == null)
             {
                 return NotFound();
             }
             var result = await _db.Orders.DeleteAsync(id);
+            result.Id = id;
+            result.Extra = oldOrder;
             return Ok(result);
         }
     }
