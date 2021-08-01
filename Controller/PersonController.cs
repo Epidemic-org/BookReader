@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Controller
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
     public class PersonController : ControllerBase
     {
@@ -24,21 +24,23 @@ namespace BookReader.Controller
         /// </summary>
         /// <returns>List of type Person</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll() {
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
             var people = await _db.People.GetAll()
                 .Select(p => new Person() {
                     Id = p.Id,
                     FirstName = p.FirstName,
                     LastName = p.LastName,
-                    BirthDate  = p.BirthDate,
+                    BirthDate = p.BirthDate,
                     Phone = p.Phone,
                     NationalCode = p.NationalCode,
                     GenderType = p.GenderType,
-                    JobType  = p.JobType,
+                    JobType = p.JobType,
                     UserId = p.UserId,
                     CreationDate = p.CreationDate,
                     IsAcceptRules = p.IsAcceptRules
-                }).ToListAsync();
+                })
+                .PaginateObjects()
+                .ToListAsync();
             return Ok(people);
         }
 
