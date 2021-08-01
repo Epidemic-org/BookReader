@@ -92,5 +92,17 @@ namespace BookReader.Controller
             result.Extra = person;
             return Ok(person);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromRoute] int id) {
+            var person = await _db.People.Find(id);
+            if (person == null) {
+                return NotFound();
+            }
+            var result = await _db.People.DeleteAsync(person);
+            result.Id = id;
+            result.Extra = person;
+            return Ok(person);
+        }
     }
 }
