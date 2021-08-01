@@ -25,5 +25,6 @@ namespace BookReader.Context
         public IInvoicePaymentRepository InvoicePayments { get; }
         public ICommentLikeRepository CommentLikes { get; }
         public ICreditTypeRepository CreditTypes { get; }
+        public IProductRateRepository ProductRates { get; }
     }
 }
