@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BookReader.Controller
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
     public class CreditTypeController : ControllerBase
     {
