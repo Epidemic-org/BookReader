@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories.Interfaces
 {
-    public interface IProductPrice : IBaseRepository<ProductPrice>
+    public interface IProductPriceRepository : IBaseRepository<ProductPrice>
     {
-
+        IQueryable<ProductPrice> GetAll(string startDate, string endDate);
     }
 }
