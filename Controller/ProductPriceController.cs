@@ -2,6 +2,7 @@
 using BookReader.Data.Models;
 using BookReader.Utillities;
 using BookReader.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,8 @@ using System.Threading.Tasks;
 namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
-    [ApiController]
+    [ApiController]   
+    //[Authorize]
     public class ProductPriceController : ControllerBase {
         private readonly IUnitOfWork _db;
         public ProductPriceController(IUnitOfWork db) {
