@@ -20,12 +20,9 @@ namespace BookReader.ViewModels
         public string Description { get; set; }
         public int DisplayOrder { get; set; }
         public string Pic { get; set; }
-
         public IFormFile PicFile { get; set; }
-
         public string Icon { get; set; }
         public IFormFile IconFile { get; set; }
-
         public bool IsActive { get; set; }
         public int AdminId { get; set; }
         public DateTime CreationDate { get; set; }

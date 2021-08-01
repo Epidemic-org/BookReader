@@ -13,6 +13,7 @@ namespace BookReader.Context
     public interface IUnitOfWork
     {
         public IProductRepository Products { get; }
+        public IProductPriceRepository ProductPrices { get; }
         public IPersonRepository People { get; }
         public IOrderRepository Orders { get; }
         public IInvoiceRepository Invoice { get; }
@@ -25,5 +26,6 @@ namespace BookReader.Context
         public IInvoicePaymentRepository InvoicePayments { get; }
         public ICommentLikeRepository CommentLikes { get; }
         public ICreditTypeRepository CreditTypes { get; }
+        public IProductRateRepository ProductRates { get; }
     }
 }

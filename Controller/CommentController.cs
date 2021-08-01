@@ -40,7 +40,7 @@ namespace BookReader.Controller
                     UserFullName = s.User.Person.FirstName + "" + s.User.Person.LastName
                 }
                 )
-                .PaginateObjects().
+                .PaginateObjects(page,pageSize).
                 ToListAsync();
             return Ok(commentList);
         }

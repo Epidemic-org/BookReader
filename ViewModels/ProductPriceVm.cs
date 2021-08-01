@@ -9,6 +9,7 @@ namespace BookReader.ViewModels
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
+        public int AdminId { get; set; }
         public decimal ProductPriceValue { get; set; }
         public DateTime StartDate { get; set; }
         public string NStartDate

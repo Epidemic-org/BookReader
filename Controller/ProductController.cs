@@ -48,7 +48,7 @@ namespace BookReader.Controller
                     EditionDate = p.EditionDate,
                     ProductType = p.ProductType
                 })
-                .PaginateObjects()
+                .PaginateObjects(page,pageSize)
                 .ToListAsync();
             return Ok(list);
         }

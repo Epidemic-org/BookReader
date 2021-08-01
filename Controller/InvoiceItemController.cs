@@ -21,7 +21,7 @@ namespace BookReader.Controller
         {
             _db = db;
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
         {
@@ -36,9 +36,9 @@ namespace BookReader.Controller
                     TermAMount = s.TermAMount
                 }
                 ).
-                PaginateObjects().ToListAsync();
+                PaginateObjects(page,pageSize).ToListAsync();
             return Ok(list);
-        }
+        }       
 
         [HttpGet]
         public async Task<IActionResult> FindById([FromRoute] int id)

@@ -13,7 +13,7 @@ namespace BookReader.Context
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        ApplicationDbContext _db;
+        readonly ApplicationDbContext _db;
         public UnitOfWork(ApplicationDbContext db) {
             _db = db;
         }
@@ -221,8 +221,8 @@ namespace BookReader.Context
             }
         }
 
-        private IProductPrice _productPriceRepository;
-        public IProductPrice ProductPrices {
+        private IProductPriceRepository _productPriceRepository;
+        public IProductPriceRepository ProductPrices {
             get {
                 if (_productPriceRepository == null) {
                     _productPriceRepository = new ProductPriceRepository(_db);
