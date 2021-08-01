@@ -33,7 +33,7 @@ namespace BookReader.Controller
                     RateValue = s.RateValue,
                     CreationDate = s.CreationDate
                 }
-                ).PaginateObjects().ToListAsync();
+                ).ToListAsync();
             return Ok(list);
         }
 

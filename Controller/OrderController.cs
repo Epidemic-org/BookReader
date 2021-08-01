@@ -20,7 +20,7 @@ namespace BookReader.Controller
 
         [HttpGet]
         public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
-            //var list = await _db.Orders.GetAll().PaginateObjects().ToListAsync();
+            //var list = await _db.Orders.GetAll().PaginateObjects(page,pageSize).ToListAsync();
             //return Ok(list);
             //TODO:PROMLEM WITH PAGINATION EX METHOD.
             return Ok();
