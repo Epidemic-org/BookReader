@@ -18,18 +18,25 @@ namespace BookReader.Repositories
 
         public IQueryable<ProductPrice> GetAll(string startDate, string endDate) {
             IQueryable<ProductPrice> query = base.GetAll();
-            DateTime validStartDate = startDate.ToEnglishDateTime();
-            DateTime validEndDate = endDate.ToEnglishDateTime();
             if (query != null) {
-                if (validStartDate != default(DateTime)) {
-                    query = query.Where(p => p.StartDate >= validStartDate);
-                }
+                if (!string.IsNullOrEmpty(startDate) && !string.IsNullOrEmpty(endDate)) {
+                    DateTime validStartDate;
+                    DateTime validEndDate;
+                    if (DateTime.TryParse(startDate, out validStartDate)) {
+                        query = query.Where(p => p.StartDate >= validStartDate);
+                        var sc = query.Count();
 
-                if (validEndDate != default(DateTime)) {
-                    query = query.Where(p => p.EndDate <= validEndDate);
+                    }
+                    if (DateTime.TryParse(endDate, out validEndDate)) {
+                        query = query.Where(p => p.EndDate <= validEndDate);
+                        var ec = query.Count();
+
+                    }
                 }
             }
+            var a = query.Count();
             return query;
         }
+
     }
 }
