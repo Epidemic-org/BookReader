@@ -45,7 +45,7 @@ namespace BookReader.Controller
                     NationalCode = u.Person.NationalCode,
                     Phone = u.Person.Phone
                 })
-            .PaginateObjects()
+            .PaginateObjects(page,pageSize)
             .ToListAsync();
             return Ok(list);
         }

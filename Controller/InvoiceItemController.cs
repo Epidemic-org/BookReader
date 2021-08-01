@@ -36,7 +36,7 @@ namespace BookReader.Controller
                     TermAMount = s.TermAMount
                 }
                 ).
-                PaginateObjects().ToListAsync();
+                PaginateObjects(page,pageSize).ToListAsync();
             return Ok(list);
         }       
 
