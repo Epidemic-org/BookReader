@@ -47,7 +47,7 @@ namespace BookReader.Controller
 
             return Ok(transaction);
         }
-
+}
         
 }
 
