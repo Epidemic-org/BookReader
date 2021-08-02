@@ -89,6 +89,7 @@ namespace BookReader.Controller
             var result = await _db.UserLogs.DeleteAsync(userLog);
             result.Id = userLog.Id;
             result.Extra = userLog;
+
             return Ok(result);
         }
     }
