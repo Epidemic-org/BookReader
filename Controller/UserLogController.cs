@@ -2,6 +2,7 @@
 using BookReader.Data.Models;
 using BookReader.Utillities;
 using BookReader.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
+    [Authorize]
     public class UserLogController : ControllerBase
     {
         private readonly IUnitOfWork _db;
@@ -35,7 +37,7 @@ namespace BookReader.Controller
                     UserIp = s.UserIp,
                     UserFullName = s.User.Person.FirstName + " " + s.User.Person.LastName
                 })
-                .PaginateObjects().ToListAsync();
+                .PaginateObjects(page, pageSize).ToListAsync();
             return Ok(usersLog);
         }
         [HttpGet]
