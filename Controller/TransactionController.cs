@@ -29,7 +29,7 @@ namespace BookReader.Controller
             var transactions = await _db.Transactions.GetAll().
                 Select(s => new TransactionVm
                 {
-
+                    
                 })
                .PaginateObjects().ToListAsync();
             return Ok(transactions);
@@ -47,7 +47,7 @@ namespace BookReader.Controller
 
             return Ok(transaction);
         }
-
-    }
+}
+        
 }
 
