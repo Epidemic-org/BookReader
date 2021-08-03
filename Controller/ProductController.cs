@@ -17,7 +17,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _db;
@@ -33,7 +33,7 @@ namespace BookReader.Controller
         /// <param name="pageSize">Set products count to display on each page</param>
         /// <returns>List Of Products></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10) {
+        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10, int id = 0) {
             var list = await _db.Products.GetAll()
                 .Select(p => new ProductListVm {
                     Id = p.Id,
@@ -48,7 +48,7 @@ namespace BookReader.Controller
                     EditionDate = p.EditionDate,
                     ProductType = p.ProductType
                 })
-                .PaginateObjects(page,pageSize)
+                .PaginateObjects(page, pageSize)
                 .ToListAsync();
             return Ok(list);
         }
