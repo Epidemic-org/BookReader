@@ -30,5 +30,6 @@ namespace BookReader.Context
         public IWalletLogRepository WalletLogs { get; }
         public ITransactionRepository Transactions { get; }
         public IUserLogRepository UserLogs { get; }
+        public IUserFavoriteRepository UserFavorites { get; }
     }
 }
