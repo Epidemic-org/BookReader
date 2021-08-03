@@ -37,7 +37,7 @@ namespace BookReader.Controller
                     WalletValue = s.WalletValue,
                     UserFullName = s.User.Person.FirstName + " " + s.User.Person.LastName
                 }
-                ).PaginateObjects().ToListAsync();
+                ).PaginateObjects(page, pageSize).ToListAsync();
             return Ok(list);
 
         }
