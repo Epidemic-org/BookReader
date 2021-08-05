@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
@@ -21,6 +22,7 @@ namespace BookReader.Controller
         private readonly IUnitOfWork _db;
         public TransactionController(IUnitOfWork db)
         {
+
             _db = db;
         }
         [HttpGet]
@@ -29,7 +31,7 @@ namespace BookReader.Controller
             var transactions = await _db.Transactions.GetAll().
                 Select(s => new TransactionVm
                 {
-                    
+                    Amount = s.Amount,
                 })
                .PaginateObjects().ToListAsync();
             return Ok(transactions);
