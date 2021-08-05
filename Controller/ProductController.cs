@@ -33,8 +33,23 @@ namespace BookReader.Controller
         /// <param name="pageSize">Set products count to display on each page</param>
         /// <returns>List Of Products></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10, int id = 0) {
-            var list = await _db.Products.GetAll()
+        public async Task<IActionResult> GetAll(string search = "", int? categoryId = null, int page = 1, int pageSize = 10) {
+
+            var q = _db.Products.GetAll();
+
+            if(!string.IsNullOrWhiteSpace(search))
+            {
+                q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
+            }
+
+            //if(categoryId > 0)
+            //{
+            //    var ids = new List<int>();
+
+            //    q = q.Where(w => ids.Contains(w.ProductCategoryId));
+            //}
+
+            var list = await q
                 .Select(p => new ProductListVm {
                     Id = p.Id,
                     ProductCategoryId = p.ProductCategoryId,
