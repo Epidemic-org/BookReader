@@ -34,7 +34,7 @@ namespace BookReader.Repositories
 
         public IQueryable<Product> GetNewProducts(int num)
         {
-            return base.GetAll().OrderByDescending(w => w.CreationDate).Skip(0).Take(num);
+            return base.GetAll().OrderByDescending(w => w.CreationDate).Where(w=>w.IsConfirmed).Skip(0).Take(num);
         }
     }
 }
