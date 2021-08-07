@@ -19,7 +19,7 @@ namespace BookReader.Interfaces
 
         IEnumerable<Product> GetFreeProducts(int top);
 
-        IQueryable<Product> GetNewProducts(int num);
+        //IQueryable<Product> GetNewProducts(int num);
 
         decimal GetProductPrice(int productId);
     }
