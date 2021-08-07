@@ -133,21 +133,6 @@ namespace BookReader.Controller
             result.Extra = product;
             return Ok(result);
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Create2([FromBody] Product product) {
-        //    if (!ModelState.IsValid) {
-        //        return BadRequest(ModelState);
-        //    }
-        //    var result = await _db.Products.CreateAsync(product);
-        //    return Ok(result);
-        //}
-
-        /// <summary>
-        /// Edit a product
-        /// </summary>
-        /// <param name="product">Product to delete which gets from body</param>
-        /// <returns>ResultObject</returns>
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody] Product product) {
             if (!ModelState.IsValid) {
@@ -158,25 +143,6 @@ namespace BookReader.Controller
             result.Extra = product;
             return Ok(result);
         }
-
-        /// <summary>
-        /// Deletes a product
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>ResultObject</returns>
-        [HttpGet]
-        public async Task<IActionResult> GetProductsByCategoryId(int categoryId, int page = 1, int pageSize = 10) {
-            var products = _db.Products.GetProductsByCategoryId(categoryId)
-                .Select(p => new ProductListByCategoryVm() {
-                    Title = p.Title,
-                    ProductAuthors = p.ProductAuthors,
-                    ProductPrices = p.ProductPrices.First().ProductPriceValue,
-                });
-            return Ok(products);
-        }
-
-
-
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id) {

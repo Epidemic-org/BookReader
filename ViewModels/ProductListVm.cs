@@ -10,7 +10,7 @@ namespace BookReader.ViewModels
     {
         public int Id { get; set; }
         public int ProductCategoryId { get; set; }
-        [Display(Name ="نام دسته بندی")]
+        [Display(Name = "نام دسته بندی")]
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         public string CategoryName { get; set; }
         [Display(Name = "عنوان")]
@@ -28,21 +28,18 @@ namespace BookReader.ViewModels
         public string UserFullName { get; set; }
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         public DateTime CreationDate { get; set; }
-        public string NCreationDate
-        {
-            get
-            {
+        public string NCreationDate {
+            get {
                 return CreationDate.ToPersianDateTimeString();
             }
 
-            set
-            {
+            set {
                 CreationDate = value.ToEnglishDateTime();
             }
         }
         public DateTime? EditionDate { get; set; }
-       
-        [Display(Name ="نوع محصول")]
+
+        [Display(Name = "نوع محصول")]
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         public int ProductType { get; set; }
 
