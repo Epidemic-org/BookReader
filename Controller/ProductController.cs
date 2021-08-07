@@ -110,18 +110,6 @@ namespace BookReader.Controller
             return Ok(list);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetProductsByCategoryId(int categoryId, int page = 1, int pageSize = 10)
-        {
-
-            var products =await _db.Products.GetAll().
-                Where(
-                s => s.ProductCategoryId == categoryId).
-                PaginateObjects(page, pageSize)
-                .ToListAsync();
-            return Ok(products);
-        }
-
         /// <summary>
         /// Returns a specified product by id
         /// </summary>
@@ -206,6 +194,24 @@ namespace BookReader.Controller
         /// </summary>
         /// <param name="id"></param>
         /// <returns>ResultObject</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetProductsByCategoryId(int categoryId, int page = 1, int pageSize = 10)
+        {
+
+            var products = await _db.Products.GetAll().
+                Where(
+                s => s.ProductCategoryId == categoryId).
+                            Select(v => new ProductListByCategoryVm
+                            {
+                                ProductAuthors = v.ProductAuthors,
+                                ProductPrices = v.ProductPrices,
+                                //ProductRates = v.ProductRates,
+                                Title = v.Title
+                            }).
+            PaginateObjects(page, pageSize)
+            .ToListAsync();
+            return Ok(products);
+        }
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
