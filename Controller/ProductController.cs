@@ -17,7 +17,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _db;
@@ -33,8 +33,23 @@ namespace BookReader.Controller
         /// <param name="pageSize">Set products count to display on each page</param>
         /// <returns>List Of Products></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10, int id = 0) {
-            var list = await _db.Products.GetAll()
+        public async Task<IActionResult> GetAll(string search = "", int? categoryId = null, int page = 1, int pageSize = 10) {
+
+            var q = _db.Products.GetAll();
+
+            if(!string.IsNullOrWhiteSpace(search))
+            {
+                q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
+            }
+
+            //if(categoryId > 0)
+            //{
+            //    var ids = new List<int>();
+
+            //    q = q.Where(w => ids.Contains(w.ProductCategoryId));
+            //}
+
+            var list = await q
                 .Select(p => new ProductListVm {
                     Id = p.Id,
                     ProductCategoryId = p.ProductCategoryId,
@@ -51,7 +66,20 @@ namespace BookReader.Controller
                 .PaginateObjects(page, pageSize)
                 .ToListAsync();
             return Ok(list);
+        }        
+
+        /// <summary>
+        /// Returns list of free products
+        /// </summary>
+        /// <param name="top">Number of products should return</param>
+        /// <returns>List of type products</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetFreeProducts([FromRoute] int top) {
+            var products = _db.Products.GetFreeProducts(top).ToList();
+            return Ok(products);
         }
+
+
 
         /// <summary>
         /// Returns a specified product by id

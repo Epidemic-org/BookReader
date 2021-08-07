@@ -2,6 +2,7 @@
 using BookReader.Interfaces;
 using BookReader.Repositories.Base;
 using BookReader.Repositories.Interfaces;
+using BookReader.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace BookReader.Interfaces
         IQueryable<Product> GetAll(string search);
 
         IQueryable<Product> GetAll(int userId);
+
+        IEnumerable<Product> GetFreeProducts(int top);
     }
 }
