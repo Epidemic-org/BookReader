@@ -1,4 +1,5 @@
 ﻿using BookReader.Data.Models;
+using BookReader.ViewModels;
 using System.Linq;
 using System.Security.Claims;
 
@@ -17,7 +18,7 @@ namespace BookReader.Utillities
         public static decimal TermAmountCalculate(this InvoiceItem invoiceItem) {
             return invoiceItem.Price * invoiceItem.Quantity;
         }
-        public static decimal GetLastPrice(this Product product) {            
+        public static decimal GetLastPrice(this Product product) {
             var productPrices = product.ProductPrices.Where(p => p.IsActive == true).First().ProductPriceValue;
             return productPrices;
         }

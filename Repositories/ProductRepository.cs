@@ -20,6 +20,13 @@ namespace BookReader.Repositories
         }
 
 
+        public decimal GetProductPrice(int productId) {
+            var product = _db.Products.Find(productId);
+            var price = product.ProductPrices.Where(p => p.IsActive == true).First().ProductPriceValue;
+            return price;
+        }
+
+
         public IQueryable<Product> GetAll(string search) {
             if (string.IsNullOrWhiteSpace(search))
                 return base.GetAll();
