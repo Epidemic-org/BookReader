@@ -4,6 +4,7 @@ using BookReader.Interfaces;
 using BookReader.Repositories.Base;
 using BookReader.Utillities;
 using BookReader.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,9 +46,9 @@ namespace BookReader.Repositories
                         join price in _db.ProductPrices.ToList()
                         on p equals price.Product
                         where price.ProductPriceValue == 0
-                        select(p)
+                        select (p)
                         ;
             return query;
-        }
+        }       
     }
 }

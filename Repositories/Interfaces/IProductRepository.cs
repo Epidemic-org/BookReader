@@ -22,5 +22,6 @@ namespace BookReader.Interfaces
         //IQueryable<Product> GetNewProducts(int num);
 
         decimal GetProductPrice(int productId);
+        IEnumerable<Product> GetProductsByCategoryId(int categoryId);
     }
 }
