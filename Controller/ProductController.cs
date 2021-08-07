@@ -65,7 +65,20 @@ namespace BookReader.Controller
                 .PaginateObjects(page, pageSize)
                 .ToListAsync();
             return Ok(list);
+        }        
+
+
+        /// <summary>
+        /// Returns list of free products
+        /// </summary>
+        /// <param name="top">Number of products should return</param>
+        /// <returns>List of type products</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetFreeProducts([FromRoute] int top) {
+            var products = _db.Products.GetFreeProducts(top).ToList();
+            return Ok(products);
         }
+
 
 
         /// <summary>

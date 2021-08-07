@@ -2,6 +2,8 @@
 using BookReader.Data.Models;
 using BookReader.Interfaces;
 using BookReader.Repositories.Base;
+using BookReader.Utillities;
+using BookReader.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,28 +15,32 @@ namespace BookReader.Repositories
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         private readonly ApplicationDbContext _db;
-        public ProductRepository(ApplicationDbContext db) : base(db)
-        {
+        public ProductRepository(ApplicationDbContext db) : base(db) {
             _db = db;
         }
 
 
-        public IQueryable<Product> GetAll(string search)
-        {
+        public IQueryable<Product> GetAll(string search) {
             if (string.IsNullOrWhiteSpace(search))
                 return base.GetAll();
 
             return base.GetAll().Where(w => w.Title.Contains(search));
         }
 
-        public IQueryable<Product> GetAll(int userId)
-        {
+
+        public IQueryable<Product> GetAll(int userId) {
             return base.GetAll().Where(w => w.UserId == userId);
         }
 
-        public IQueryable<Product> GetNewProducts(int num)
-        {
-            return base.GetAll().OrderByDescending(w => w.CreationDate).Where(w=>w.IsConfirmed).Skip(0).Take(num);
+
+        public IEnumerable<Product> GetFreeProducts(int top) {
+            var query = from p in _db.Products.Where(p => p.IsConfirmed == true).ToList()
+                        join price in _db.ProductPrices.ToList()
+                        on p equals price.Product
+                        where price.ProductPriceValue == 0
+                        select(p)
+                        ;
+            return query;
         }
     }
 }
