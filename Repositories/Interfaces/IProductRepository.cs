@@ -18,5 +18,7 @@ namespace BookReader.Interfaces
         IQueryable<Product> GetAll(int userId);
 
         IEnumerable<Product> GetFreeProducts(int top);
+
+        IQueryable<Product> GetNewProducts(int num);
     }
 }

@@ -1,17 +1,13 @@
 ﻿using BookReader.Context;
 using BookReader.Data.Models;
-using BookReader.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookReader.Utillities;
 using BookReader.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace BookReader.Controller
 {
@@ -21,7 +17,8 @@ namespace BookReader.Controller
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _db;
-        public ProductController(IUnitOfWork db) {
+        public ProductController(IUnitOfWork db)
+        {
             _db = db;
         }
 
@@ -33,11 +30,12 @@ namespace BookReader.Controller
         /// <param name="pageSize">Set products count to display on each page</param>
         /// <returns>List Of Products></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(string search = "", int? categoryId = null, int page = 1, int pageSize = 10) {
+        public async Task<IActionResult> GetAll(string search = "", int? categoryId = null, int page = 1, int pageSize = 10)
+        {
 
             var q = _db.Products.GetAll();
 
-            if(!string.IsNullOrWhiteSpace(search))
+            if (!string.IsNullOrWhiteSpace(search))
             {
                 q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
             }
@@ -50,7 +48,8 @@ namespace BookReader.Controller
             //}
 
             var list = await q
-                .Select(p => new ProductListVm {
+                .Select(p => new ProductListVm
+                {
                     Id = p.Id,
                     ProductCategoryId = p.ProductCategoryId,
                     CategoryName = p.ProductCategory.Name,
@@ -68,6 +67,7 @@ namespace BookReader.Controller
             return Ok(list);
         }        
 
+
         /// <summary>
         /// Returns list of free products
         /// </summary>
@@ -82,13 +82,56 @@ namespace BookReader.Controller
 
 
         /// <summary>
+        /// Get the newest product 
+        /// </summary>
+        /// <param name="numberOfProducts"></param>
+        /// <returns>The List Of Products</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetNewestProducts(int numberOfProducts)
+        {
+
+            var q = _db.Products.GetNewProducts(numberOfProducts);
+            var list = await q
+                .Select(p => new ProductListVm
+                {
+                    Id = p.Id,
+                    ProductCategoryId = p.ProductCategoryId,
+                    CategoryName = p.ProductCategory.Name,
+                    Title = p.Title,
+                    Description = p.Description,
+                    Tags = p.Tags,
+                    UserId = p.UserId,
+                    UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
+                    CreationDate = p.CreationDate,
+                    EditionDate = p.EditionDate,
+                    ProductType = p.ProductType
+                })
+                .ToListAsync();
+            return Ok(list);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProductsByCategoryId(int categoryId, int page = 1, int pageSize = 10)
+        {
+
+            var products =await _db.Products.GetAll().
+                Where(
+                s => s.ProductCategoryId == categoryId).
+                PaginateObjects(page, pageSize)
+                .ToListAsync();
+            return Ok(products);
+        }
+
+        /// <summary>
         /// Returns a specified product by id
         /// </summary>
         /// <param name="id">Gets id of product to find from url</param>
         /// <returns>Product</returns>
         [HttpGet]
-        public async Task<IActionResult> FindById([FromRoute] int id) {
-            if (!await _db.Products.IsExists(id)) {
+        public async Task<IActionResult> FindById([FromRoute] int id)
+        {
+            if (!await _db.Products.IsExists(id))
+            {
                 return NotFound();
 
             }
@@ -115,8 +158,10 @@ namespace BookReader.Controller
         /// <param name="product">Product entitiy gets from body</param>
         /// <returns>ResultObject</returns>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Product product) {
-            if (!ModelState.IsValid) {
+        public async Task<IActionResult> Create([FromBody] Product product)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             product.UserId = User.GetUserId();
@@ -144,8 +189,10 @@ namespace BookReader.Controller
         /// <param name="product">Product to delete which gets from body</param>
         /// <returns>ResultObject</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] Product product) {
-            if (!ModelState.IsValid) {
+        public async Task<IActionResult> Edit([FromBody] Product product)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             var result = await _db.Products.EditAsync(product);
@@ -160,9 +207,11 @@ namespace BookReader.Controller
         /// <param name="id"></param>
         /// <returns>ResultObject</returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id) {
+        public async Task<IActionResult> Delete(int id)
+        {
             var productToDelete = await _db.Products.Find(id);
-            if (productToDelete == null) {
+            if (productToDelete == null)
+            {
                 return NotFound();
             }
             var result = await _db.Products.DeleteAsync(productToDelete);
