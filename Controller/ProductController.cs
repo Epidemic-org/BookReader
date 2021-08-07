@@ -1,17 +1,13 @@
 ﻿using BookReader.Context;
 using BookReader.Data.Models;
-using BookReader.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookReader.Utillities;
 using BookReader.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace BookReader.Controller
 {
@@ -33,8 +29,23 @@ namespace BookReader.Controller
         /// <param name="pageSize">Set products count to display on each page</param>
         /// <returns>List Of Products></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(string search, int page = 1, int pageSize = 10, int id = 0) {
-            var list = await _db.Products.GetAll()
+        public async Task<IActionResult> GetAll(string search = "", int? categoryId = null, int page = 1, int pageSize = 10) {
+
+            var q = _db.Products.GetAll();
+
+            if(!string.IsNullOrWhiteSpace(search))
+            {
+                q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
+            }
+
+            //if(categoryId > 0)
+            //{
+            //    var ids = new List<int>();
+
+            //    q = q.Where(w => ids.Contains(w.ProductCategoryId));
+            //}
+
+            var list = await q
                 .Select(p => new ProductListVm {
                     Id = p.Id,
                     ProductCategoryId = p.ProductCategoryId,
@@ -49,6 +60,36 @@ namespace BookReader.Controller
                     ProductType = p.ProductType
                 })
                 .PaginateObjects(page, pageSize)
+                .ToListAsync();
+            return Ok(list);
+        }
+
+
+        /// <summary>
+        /// Get the newest product 
+        /// </summary>
+        /// <param name="numberOfProducts"></param>
+        /// <returns>The List Of Products</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetNewestProducts(int numberOfProducts)
+        {
+
+            var q = _db.Products.GetNewProducts(numberOfProducts);
+            var list = await q
+                .Select(p => new ProductListVm
+                {
+                    Id = p.Id,
+                    ProductCategoryId = p.ProductCategoryId,
+                    CategoryName = p.ProductCategory.Name,
+                    Title = p.Title,
+                    Description = p.Description,
+                    Tags = p.Tags,
+                    UserId = p.UserId,
+                    UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
+                    CreationDate = p.CreationDate,
+                    EditionDate = p.EditionDate,
+                    ProductType = p.ProductType
+                })
                 .ToListAsync();
             return Ok(list);
         }

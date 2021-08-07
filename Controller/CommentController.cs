@@ -29,8 +29,8 @@ namespace BookReader.Controller
         /// <param name="pageSize"></param>
         /// <returns>IActionResults of Ok with Comments Model</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
-            var commentList = await _db.Comments.GetAll().
+        public async Task<IActionResult> GetAll(int productId, int page = 1, int pageSize = 10) {
+            var commentList = await _db.Comments.GetAll().Where(w=> w.ProductId == productId).
                 Select(s => new CommentVm {
                     Id = s.Id,
                     CreationDate = s.CreationDate,

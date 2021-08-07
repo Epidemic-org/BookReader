@@ -35,23 +35,37 @@ namespace BookReader.Controller
         [HttpGet]
         public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
         {
-            var list = await _db.AppUsers.GetAll()
-                .Select(u => new UserListVM
+            try
+            {
+                var list = Enumerable.Range(0, 50).Select((idx, u) => new UserListVM
                 {
-                    Id = u.Id,
-                    BirthDate = u.Person.BirthDate,
-                    CreationDate = u.Person.CreationDate,
-                    IsActive = u.IsActive,
-                    GenderType = u.Person.GenderType,
-                    Name = u.Person.FirstName,
-                    LastName = u.Person.LastName,
-                    JobType = u.Person.JobType,
-                    NationalCode = u.Person.NationalCode,
-                    Phone = u.Person.Phone
-                })
-            .PaginateObjects(page, pageSize)
-            .ToListAsync();
-            return Ok(list);
+                    Id = idx,
+                    Name = "user name " + idx,
+                }).ToList();
+
+                //var list = await _db.AppUsers.GetAll()
+                //       .Select(u => new UserListVM
+                //       {
+                //           Id = u.Id,
+                //           BirthDate = u.Person.BirthDate,
+                //           CreationDate = u.Person.CreationDate,
+                //           IsActive = u.IsActive,
+                //           GenderType = u.Person.GenderType,
+                //           Name = u.Person.FirstName,
+                //           LastName = u.Person.LastName,
+                //           JobType = u.Person.JobType,
+                //           NationalCode = u.Person.NationalCode,
+                //           Phone = u.Person.Phone
+                //       })
+                //   .PaginateObjects(page, pageSize)
+                //   .ToListAsync();
+                return Ok(list);
+            }
+            catch (Exception exp)
+            {
+
+                throw;
+            }
         }
 
 
