@@ -20,5 +20,6 @@ namespace BookReader.Interfaces
         IEnumerable<ProductSliderVM> GetFreeProducts(int top);
 
         decimal getProductPrice(int productId);
+        IQueryable<Product> getSortedVisitValue();
     }
 }

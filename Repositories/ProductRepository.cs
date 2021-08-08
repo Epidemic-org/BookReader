@@ -16,37 +16,42 @@ namespace BookReader.Repositories
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         private readonly ApplicationDbContext _db;
-        public ProductRepository(ApplicationDbContext db) : base(db) {
+        public ProductRepository(ApplicationDbContext db) : base(db)
+        {
             _db = db;
         }
 
 
-        public IQueryable<Product> GetAll(string search) {
+        public IQueryable<Product> GetAll(string search)
+        {
             if (string.IsNullOrWhiteSpace(search))
                 return base.GetAll();
             return base.GetAll().Where(w => w.Title.Contains(search));
         }
 
 
-        public IQueryable<Product> GetAll(int userId) {
+        public IQueryable<Product> GetAll(int userId)
+        {
             return base.GetAll().Where(w => w.UserId == userId);
         }
 
 
-        public IEnumerable<ProductSliderVM> GetFreeProducts(int top) {
+        public IEnumerable<ProductSliderVM> GetFreeProducts(int top)
+        {
             var query = from p in _db.Products.Where(p => p.IsConfirmed == true).ToList()
                         join price in _db.ProductPrices.ToList()
                         on p equals price.Product
                         where price.ProductPriceValue == decimal.Zero
-                        select new ProductSliderVM {
+                        select new ProductSliderVM
+                        {
                             Id = p.Id,
                             ProductCategoryId = p.ProductCategoryId,
                             CategoryName = p.ProductCategory.Name,
                             Description = p.Description,
-                            Title  = p.Title,
+                            Title = p.Title,
                             UserId = p.UserId,
                             UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
-                            ProductRateAverage = 
+                            //ProductRateAverage = 
                         }
                         ;
             return query;
@@ -56,10 +61,17 @@ namespace BookReader.Repositories
 
 
 
-        public decimal getProductPrice(int productId) {
+        public decimal getProductPrice(int productId)
+        {
             var product = _db.Products.Find(productId);
             return product.ProductPrices.Where(p => p.IsActive).Single().ProductPriceValue;
         }
 
+
+        public IQueryable<Product> getSortedVisitValue()
+        {
+            var visitProduct = _db.Products.OrderByDescending(s => s.ProductVisits);
+            return visitProduct;
+        }
     }
 }
