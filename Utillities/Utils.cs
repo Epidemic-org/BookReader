@@ -1,5 +1,6 @@
 ﻿using BookReader.Data.Models;
 using BookReader.ViewModels;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
@@ -18,5 +19,11 @@ namespace BookReader.Utillities
         public static decimal TermAmountCalculate(this InvoiceItem invoiceItem) {
             return invoiceItem.Price * invoiceItem.Quantity;
         }
+
+        public static IEnumerable<decimal> CalProductRateAverage(this Product product) {                        
+            var q=  product.ProductRates.Select(p=> p.RateValue);
+            return q;
+        }
+
     }
 }

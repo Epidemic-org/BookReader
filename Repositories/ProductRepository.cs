@@ -33,27 +33,26 @@ namespace BookReader.Repositories
         }
 
 
-        public IEnumerable<ProductSliderVM> GetFreeProducts(int top) {
+        public IEnumerable<ProductSliderVM> GetFreeProducts() {
             var query = from p in _db.Products.Where(p => p.IsConfirmed == true).ToList()
+                        join rate in _db.ProductRates.ToList()
+                        on p.Id equals rate.ProductId
                         join price in _db.ProductPrices.ToList()
-                        on p equals price.Product
+                        on p.Id equals price.ProductId
                         where price.ProductPriceValue == decimal.Zero
                         select new ProductSliderVM {
                             Id = p.Id,
                             ProductCategoryId = p.ProductCategoryId,
-                            CategoryName = p.ProductCategory.Name,
+                            CategoryName = "CategoryName",
                             Description = p.Description,
-                            Title  = p.Title,
+                            Title = p.Title,
                             UserId = p.UserId,
-                            UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
-                            ProductRateAverage = 
-                        }
+                            UserFullName = "UserName",
+                            ProductRateAverage = p.CalProductRateAverage().Average()
+                        }                    
                         ;
             return query;
         }
-
-
-
 
 
         public decimal getProductPrice(int productId) {
