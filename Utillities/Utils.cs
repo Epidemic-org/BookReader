@@ -8,7 +8,7 @@ namespace BookReader.Utillities
 {
     public static class Utils
     {
-        public static IQueryable<T> PaginateObjects<T>(this IQueryable<T> q , int page = 1, int pageSize = 10) {
+        public static IQueryable<T> PaginateObjects<T>(this IQueryable<T> q, int page = 1, int pageSize = 10) {
             return q.Skip((page - 1) * pageSize)
              .Take(pageSize);
         }
@@ -20,9 +20,8 @@ namespace BookReader.Utillities
             return invoiceItem.Price * invoiceItem.Quantity;
         }
 
-        public static IEnumerable<decimal> CalProductRateAverage(this Product product) {                        
-            var q=  product.ProductRates.Select(p=> p.RateValue);
-            return q;
+        public static IEnumerable<decimal> CalProductRateAverage(this Product product) {
+            return product.ProductRates.Select(p => p.RateValue);
         }
 
     }

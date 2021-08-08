@@ -40,17 +40,19 @@ namespace BookReader.Repositories
                         join price in _db.ProductPrices.ToList()
                         on p.Id equals price.ProductId
                         where price.ProductPriceValue == decimal.Zero
+                        group new { rate } by new { p } into g
                         select new ProductSliderVM {
-                            Id = p.Id,
-                            ProductCategoryId = p.ProductCategoryId,
+                            Id = g.Key.p.Id,
+                            ProductCategoryId = g.Key.p.ProductCategoryId,
                             CategoryName = "CategoryName",
-                            Description = p.Description,
-                            Title = p.Title,
-                            UserId = p.UserId,
+                            Description = g.Key.p.Description,
+                            Title = g.Key.p.Title,
+                            UserId = g.Key.p.UserId,
                             UserFullName = "UserName",
-                            ProductRateAverage = p.CalProductRateAverage().Average()
-                        }                    
+                            ProductRateAverage = g.Key.p.CalProductRateAverage().Average()
+                        }
                         ;
+           
             return query;
         }
 
