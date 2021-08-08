@@ -59,7 +59,7 @@ namespace BookReader.Controller
             {
                 return BadRequest();
             }
-            invoiceItem.Price = invoiceItem.Product.GetLastPrice();
+            invoiceItem.Price = _db.Products.getProductPrice(invoiceItem.ProductId);
             invoiceItem.TermAMount = invoiceItem.TermAmountCalculate();
             await _db.InvoiceItem.CreateAsync(invoiceItem);
             return Ok(invoiceItem);

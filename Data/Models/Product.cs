@@ -22,6 +22,7 @@ namespace BookReader.Data.Models
         public ProductCategory ProductCategory { get; set; }
         public AppUser User { get; set; }
         public AppUser Admin { get; set; }
+
         public ICollection<CampaignItem> CampaignItems { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<InvoiceItem> InvoiceItems { get; set; }
@@ -43,7 +44,6 @@ namespace BookReader.Data.Models
         public ICollection<SubscriptionTypeItem> SubscriptionTypeItems { get; set; }
         public ICollection<UserFavorites> UserFavorites{ get; set; }
         public ICollection<UserShelves> UserShelves { get; set; }
-
 
     }
 }

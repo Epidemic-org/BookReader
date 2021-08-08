@@ -15,5 +15,12 @@ namespace BookReader.Repositories
         public ProductRateRepository(ApplicationDbContext db): base(db) {
             _db = db;
         }
+
+
+        public async Task<decimal> ProductRateAverage(int productId) {
+            return _db.ProductRates.Where(p => p.ProductId == productId).Select(p=> p.RateValue).Average();            
+        }
+
+
     }
 }

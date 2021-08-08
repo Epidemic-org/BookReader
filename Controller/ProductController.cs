@@ -64,7 +64,7 @@ namespace BookReader.Controller
         /// <returns>List of type products</returns>
         [HttpGet]
         public async Task<IActionResult> GetFreeProducts([FromRoute] int top) {
-            var products = _db.Products.GetFreeProducts(top).ToList();
+            var products =  _db.Products.GetFreeProducts(top).ToList();
             return Ok(products);
         }
 

@@ -21,17 +21,9 @@ namespace BookReader.Repositories
         }
 
 
-        public decimal GetProductPrice(int productId) {
-            var product = _db.Products.Find(productId);
-            var price = product.ProductPrices.Where(p => p.IsActive == true).First().ProductPriceValue;
-            return price;
-        }
-
-
         public IQueryable<Product> GetAll(string search) {
             if (string.IsNullOrWhiteSpace(search))
                 return base.GetAll();
-
             return base.GetAll().Where(w => w.Title.Contains(search));
         }
 
@@ -41,14 +33,33 @@ namespace BookReader.Repositories
         }
 
 
-        public IEnumerable<Product> GetFreeProducts(int top) {
+        public IEnumerable<ProductSliderVM> GetFreeProducts(int top) {
             var query = from p in _db.Products.Where(p => p.IsConfirmed == true).ToList()
                         join price in _db.ProductPrices.ToList()
                         on p equals price.Product
-                        where price.ProductPriceValue == 0
-                        select (p)
+                        where price.ProductPriceValue == decimal.Zero
+                        select new ProductSliderVM {
+                            Id = p.Id,
+                            ProductCategoryId = p.ProductCategoryId,
+                            CategoryName = p.ProductCategory.Name,
+                            Description = p.Description,
+                            Title  = p.Title,
+                            UserId = p.UserId,
+                            UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
+                            ProductRateAverage = 
+                        }
                         ;
             return query;
-        }       
+        }
+
+
+
+
+
+        public decimal getProductPrice(int productId) {
+            var product = _db.Products.Find(productId);
+            return product.ProductPrices.Where(p => p.IsActive).Single().ProductPriceValue;
+        }
+
     }
 }

@@ -15,11 +15,10 @@ namespace BookReader.Interfaces
 
         IQueryable<Product> GetAll(string search);
 
-        IQueryable<Product> GetAll(int userId);
+        IQueryable<Product> GetAll(int userId);        
 
-        IEnumerable<Product> GetFreeProducts(int top);        
+        IEnumerable<ProductSliderVM> GetFreeProducts(int top);
 
-        decimal GetProductPrice(int productId);
-       
+        decimal getProductPrice(int productId);
     }
 }
