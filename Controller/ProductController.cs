@@ -67,9 +67,8 @@ namespace BookReader.Controller
         /// <param name="top">Number of products should return</param>
         /// <returns>List of type products</returns>
         [HttpGet]
-        public async Task<IActionResult> GetFreeProducts([FromRoute] int top)
-        {
-            var products = _db.Products.GetFreeProducts(top).ToList();
+        public async Task<IActionResult> GetFreeProducts([FromRoute] int top) {
+            var products =  _db.Products.GetFreeProducts(top).Take(top).ToList();
             return Ok(products);
         }
 

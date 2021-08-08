@@ -12,7 +12,9 @@ namespace BookReader.Data.Models.Map
         public void Configure(EntityTypeBuilder<ProductRate> builder)
         {
             builder.HasKey(q => q.Id);
+
             builder.Property(q => q.RateValue).HasColumnType("real");
+
             builder.HasOne(q => q.Product)
                 .WithMany(q => q.ProductRates)
                 .HasForeignKey(q => q.ProductId)
