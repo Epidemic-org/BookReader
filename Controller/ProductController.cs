@@ -64,10 +64,14 @@ namespace BookReader.Controller
         /// <returns>List of type products</returns>
         [HttpGet]
         public async Task<IActionResult> GetFreeProducts([FromRoute] int top) {
-            var products =  _db.Products.GetFreeProducts().Distinct().ToList();
-            return Ok(products);
+                        
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetMostSoldProducts([FromRoute] int top) {
+            var products = _db.Products.GetMostSoldProducts().ToList();
+            return Ok(products);
+        }
 
 
         /// <summary>

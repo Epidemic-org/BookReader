@@ -33,30 +33,10 @@ namespace BookReader.Repositories
         }
 
 
-        public IEnumerable<ProductSliderVM> GetFreeProducts() {
-            var query = from p in _db.Products.Where(p => p.IsConfirmed == true).ToList()
-                        join rate in _db.ProductRates.ToList()
-                        on p.Id equals rate.ProductId
-                        join price in _db.ProductPrices.ToList()
-                        on p.Id equals price.ProductId
-                        where price.ProductPriceValue == decimal.Zero
-                        group new { rate } by new { p } into g
-                        select new ProductSliderVM {
-                            Id = g.Key.p.Id,
-                            ProductCategoryId = g.Key.p.ProductCategoryId,
-                            CategoryName = "CategoryName",
-                            Description = g.Key.p.Description,
-                            Title = g.Key.p.Title,
-                            UserId = g.Key.p.UserId,
-                            UserFullName = "UserName",
-                            ProductRateAverage = g.Key.p.CalProductRateAverage().Average()
-                        }
-                        ;
-           
-            return query;
-        }
 
 
+
+        //TODO:By-Dls-> Optimized Method To Extention Methods
         public decimal getProductPrice(int productId) {
             var product = _db.Products.Find(productId);
             return product.ProductPrices.Where(p => p.IsActive).Single().ProductPriceValue;

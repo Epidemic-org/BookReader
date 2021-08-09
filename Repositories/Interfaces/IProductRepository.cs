@@ -17,8 +17,6 @@ namespace BookReader.Interfaces
 
         IQueryable<Product> GetAll(int userId);        
 
-        IEnumerable<ProductSliderVM> GetFreeProducts();
-
         decimal getProductPrice(int productId);
     }
 }
