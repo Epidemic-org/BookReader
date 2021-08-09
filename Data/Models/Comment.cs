@@ -13,7 +13,7 @@ namespace BookReader.Data.Models
         public int UserId { get; set; }
         public string Text { get; set; }
         public DateTime CreationDate { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
         public bool IsActive { get; set; }
         public double RateValue { get; set; }
 

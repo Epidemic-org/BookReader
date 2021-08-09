@@ -153,17 +153,17 @@ namespace BookReader.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0396e11d-6d67-44eb-8da5-e67c95bda1ee",
+                            ConcurrencyStamp = "0ce960b4-bcff-44c6-9ae1-cf3bfa9d9d96",
                             Email = "AbbasKashi69@gmail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "09132602521",
                             NormalizedUserName = "09132602521",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKW/ILNEdMLuQYmbNOfgvvhJBPlzvFvpBmhF6G7dpB5mJ/x+h4rnVQYPmpZViXvS1A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEP+WkgB0EdNntH8Df+Icdla2D5AVm3g1HCMWTaXhljs4WL5uAo4OnmgDgXGzUZztQ==",
                             PhoneNumber = "09132602521",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "cfc8f9aa-5513-479d-bdbd-95519b35a783",
+                            SecurityStamp = "1fd06555-c22e-4fee-90b1-dbcf84fe420c",
                             TwoFactorEnabled = false,
                             UserName = "09132602521"
                         });
@@ -997,7 +997,7 @@ namespace BookReader.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(1990, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreationDate = new DateTime(2021, 7, 28, 19, 35, 46, 475, DateTimeKind.Local).AddTicks(2228),
+                            CreationDate = new DateTime(2021, 8, 9, 14, 53, 49, 30, DateTimeKind.Local).AddTicks(48),
                             FirstName = "Abbas",
                             GenderType = 1,
                             IsAcceptRules = 1,
