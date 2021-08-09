@@ -9,6 +9,7 @@ namespace BookReader.ViewModels
     public class ProductListVm
     {
         public int Id { get; set; }
+
         public int ProductCategoryId { get; set; }
         public string CategoryName { get; set; }
         public string Title { get; set; }
