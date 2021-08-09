@@ -76,5 +76,10 @@ namespace BookReader.Repositories
             return product.ProductPrices.Where(p => p.IsActive).Single().ProductPriceValue;
         }
 
+        public IQueryable<ProductListVm> GetProductsByCategory(int categoryId)
+        {
+            var products = GetAllProducts().Where(n => n.ProductCategoryId == categoryId);
+            return products;
+        }
     }
 }
