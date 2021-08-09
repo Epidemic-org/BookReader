@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace BookReader.Repositories
 {
-    public class ProductRepository : BaseRepository<Product>, IProductRepository {
+    public class ProductRepository : BaseRepository<Product>, IProductRepository
+    {
         private readonly ApplicationDbContext _db;
         public ProductRepository(ApplicationDbContext db) : base(db)
         {
@@ -42,41 +43,22 @@ namespace BookReader.Repositories
                         join price in _db.ProductPrices.ToList()
                         on p.Id equals price.ProductId
                         where price.ProductPriceValue == decimal.Zero
-                        select new ProductSliderVM {
+                        select new ProductSliderVM
+                        {
                             Id = p.Id,
-                            CategoryName = p.ProductCategory.Name,
+                            ProductCategoryId = p.ProductCategoryId,
+                            CategoryName = "CategoryName",
                             Description = p.Description,
                             Title = p.Title,
-                            CreationDate = p.CreationDate,
-                            EditionDate = p.EditionDate,
-                            Price = p.ProductPrices.Where(p => p.IsActive).Select(s=> (double?)s.ProductPriceValue)
-                            .FirstOrDefault(),
-                            ProductType = p.ProductType,
-                            ProductCategoryId = p.ProductCategoryId,
                             UserId = p.UserId,
-                            UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
-                            Tags = p.Tags,
-                            VisitCount = p.ProductVisits.Count(),
-                            RateAverage = p.ProductRates.Average(p => (double?)p.RateValue),
-                        };
+                            UserFullName = "UserName",
+                            ProductRateAverage = p.CalProductRateAverage().Average()
+                        }                    
+                        ;
             return query;
         }
 
 
-        public IQueryable<ProductListVm> GetFreeProducts() {
-            var query = GetAllProducts().Where(p => p.Price == 0);
-            return query;
-        }
-
-        public IQueryable<ProductListVm> GetMostVisitedProducts() {
-            var query = GetAllProducts().OrderBy(p => p.VisitCount);
-            return query;
-        }
-
-
-
-
-        //TODO:By-Dls-> Optimized Method To Extention Methods
         public decimal getProductPrice(int productId) {
             var product = _db.Products.Find(productId);
             return product.ProductPrices.Where(p => p.IsActive).Single().ProductPriceValue;
