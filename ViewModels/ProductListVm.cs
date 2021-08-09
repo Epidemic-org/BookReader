@@ -27,9 +27,10 @@ namespace BookReader.ViewModels
             }
         }
         public DateTime? EditionDate { get; set; }
-        public int ProductType { get; set; }
-        public decimal Price { get; set; }
-        public decimal RateAverage { get; set; }
-        
+        public double? ProductType { get; set; }
+        public double? Price { get; set; }
+        public double? RateAverage { get; set; }
+        public double? VisitCount { get; set; }
+
     }
 }
