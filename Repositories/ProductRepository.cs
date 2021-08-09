@@ -2,14 +2,8 @@
 using BookReader.Data.Models;
 using BookReader.Interfaces;
 using BookReader.Repositories.Base;
-using BookReader.Utillities;
 using BookReader.ViewModels;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace BookReader.Repositories
 {
