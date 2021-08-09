@@ -20,7 +20,7 @@ namespace BookReader.Interfaces
         IQueryable<ProductListVm> GetFreeProducts();
         IQueryable<ProductListVm> GetMostVisitedProducts();
 
-
-        decimal getProductPrice(int productId);
+        IQueryable<ProductListVm> GetNewestProducts();
+            decimal getProductPrice(int productId);
     }
 }

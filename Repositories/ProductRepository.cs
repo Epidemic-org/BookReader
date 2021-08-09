@@ -67,6 +67,11 @@ namespace BookReader.Repositories
             return query;
         }
 
+        public IQueryable<ProductListVm> GetNewestProducts()
+        {
+            var query = GetAllProducts().OrderBy(p => p.CreationDate);
+            return query;
+        }
 
 
 

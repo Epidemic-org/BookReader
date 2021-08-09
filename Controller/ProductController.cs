@@ -77,7 +77,7 @@ namespace BookReader.Controller
                 .ToListAsync();
             return Ok(products);
         }
-        
+
 
 
         /// <summary>
@@ -86,28 +86,27 @@ namespace BookReader.Controller
         /// <param name="numberOfProducts"></param>
         /// <returns>The List Of Products</returns>
         //[HttpGet]
-        //public async Task<IActionResult> GetNewestProducts(int numberOfProducts)
-        //{
-
-        //    var q = _db.Products.GetNewProducts(numberOfProducts);
-        //    var list = await q
-        //        .Select(p => new ProductListVm
-        //        {
-        //            Id = p.Id,
-        //            ProductCategoryId = p.ProductCategoryId,
-        //            CategoryName = p.ProductCategory.Name,
-        //            Title = p.Title,
-        //            Description = p.Description,
-        //            Tags = p.Tags,
-        //            UserId = p.UserId,
-        //            UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
-        //            CreationDate = p.CreationDate,
-        //            EditionDate = p.EditionDate,
-        //            ProductType = p.ProductType
-        //        })
-        //        .ToListAsync();
-        //    return Ok(list);
-        //}
+        public async Task<IActionResult> GetNewestPropducts(int numberofproducts)
+        { 
+            var q = _db.Products.GetNewestProducts();
+            var list = await q
+                .Select(p => new ProductListVm
+                {
+                    Id = p.Id,
+                    ProductCategoryId = p.ProductCategoryId,
+                    CategoryName = p.CategoryName,
+                    Title = p.Title,
+                    Description = p.Description,
+                    Tags = p.Tags,
+                    UserId = p.UserId,
+                    UserFullName = p.UserFullName,
+                    CreationDate = p.CreationDate,
+                    EditionDate = p.EditionDate,
+                    ProductType = p.ProductType
+                })
+                .ToListAsync();
+            return Ok(list);
+        }
 
         /// <summary>
         /// Returns a specified product by id
