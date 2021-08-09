@@ -19,6 +19,7 @@ namespace BookReader.Interfaces
 
         IQueryable<ProductListVm> GetFreeProducts();
         IQueryable<ProductListVm> GetMostVisitedProducts();
+        IQueryable<ProductListVm> GetNewestProducts();
 
         public IQueryable<ProductListVm> GetProductsByCategory(int categoryId);
         decimal getProductPrice(int productId);

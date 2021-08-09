@@ -68,7 +68,11 @@ namespace BookReader.Repositories
         }
 
 
-
+        public IQueryable<ProductListVm> GetNewestProducts()
+        {
+            var query = GetAllProducts().OrderBy(p => p.CreationDate);
+            return query;
+        }
 
         //TODO:By-Dls-> Optimized Method To Extention Methods
         public decimal getProductPrice(int productId) {
