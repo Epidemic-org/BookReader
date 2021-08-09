@@ -86,7 +86,7 @@ namespace BookReader.Controller
         /// <param name="numberOfProducts"></param>
         /// <returns>The List Of Products</returns>
         //[HttpGet]
-        public async Task<IActionResult> GetNewestPropducts(int numberofproducts)
+        public async Task<IActionResult> GetNewestPropducts(int top)
         { 
             var products = await _db.Products.GetNewestProducts()
                 .PaginateObjects(1, 10)
