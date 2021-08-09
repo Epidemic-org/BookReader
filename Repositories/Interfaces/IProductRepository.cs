@@ -14,14 +14,12 @@ namespace BookReader.Interfaces
     {
 
         IQueryable<Product> GetAll(string search);
-
         IQueryable<Product> GetAll(int userId);
-
         IQueryable<ProductListVm> GetFreeProducts();
         IQueryable<ProductListVm> GetMostVisitedProducts();
-        IQueryable<ProductListVm> GetNewestProducts();
 
         public IQueryable<ProductListVm> GetProductsByCategory(int categoryId);
+        IQueryable<ProductListVm> GetNewestProducts();
         decimal getProductPrice(int productId);
     }
 }
