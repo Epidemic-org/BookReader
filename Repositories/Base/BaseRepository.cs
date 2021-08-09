@@ -27,7 +27,6 @@ namespace BookReader.Repositories.Base
                 return new ResultObjectVm { Success = true, Message = "با موفقیت افزوده شد" };
             }
             catch (Exception exp) {
-                var sad = exp;
                 //TODO: Check For Errros !
                 return new ResultObjectVm { Success = false, Message = "خطا در افزودن رخ داد" };
             }

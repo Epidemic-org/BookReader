@@ -77,8 +77,12 @@ namespace BookReader.Controller
                 .ToListAsync();
             return Ok(products);
         }
-        
-
+        [HttpGet]
+        public async Task<IActionResult> GetProductsByCategoryId(int categoryId)
+        {
+            var products = await _db.Products.GetProductsByCategory(categoryId).ToListAsync();
+            return Ok(products);
+        }
 
         /// <summary>
         /// Get the newest product 
@@ -86,28 +90,13 @@ namespace BookReader.Controller
         /// <param name="numberOfProducts"></param>
         /// <returns>The List Of Products</returns>
         //[HttpGet]
-        //public async Task<IActionResult> GetNewestProducts(int numberOfProducts)
-        //{
-
-        //    var q = _db.Products.GetNewProducts(numberOfProducts);
-        //    var list = await q
-        //        .Select(p => new ProductListVm
-        //        {
-        //            Id = p.Id,
-        //            ProductCategoryId = p.ProductCategoryId,
-        //            CategoryName = p.ProductCategory.Name,
-        //            Title = p.Title,
-        //            Description = p.Description,
-        //            Tags = p.Tags,
-        //            UserId = p.UserId,
-        //            UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
-        //            CreationDate = p.CreationDate,
-        //            EditionDate = p.EditionDate,
-        //            ProductType = p.ProductType
-        //        })
-        //        .ToListAsync();
-        //    return Ok(list);
-        //}
+        public async Task<IActionResult> GetNewestPropducts(int top)
+        { 
+            var products = await _db.Products.GetNewestProducts()
+                .PaginateObjects(1, 10)
+                .ToListAsync();
+            return Ok(products);
+        }
 
         /// <summary>
         /// Returns a specified product by id
