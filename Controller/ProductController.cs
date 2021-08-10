@@ -77,8 +77,12 @@ namespace BookReader.Controller
                 .ToListAsync();
             return Ok(products);
         }
-
-
+        [HttpGet]
+        public async Task<IActionResult> GetProductsByCategoryId(int categoryId)
+        {
+            var products = await _db.Products.GetProductsByCategory(categoryId).ToListAsync();
+            return Ok(products);
+        }
 
         /// <summary>
         /// Get the newest product 
