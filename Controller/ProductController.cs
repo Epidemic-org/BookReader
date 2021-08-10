@@ -137,6 +137,19 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
+            var validProduct = await _db.Products.Find(product.Id);
+
+            validProduct.ProductCategoryId = product.ProductCategoryId;
+            validProduct.Title = product.Title;
+            validProduct.Description = product.Description;
+            validProduct.Tags = product.Tags;
+            validProduct.UserId = product.UserId;
+            validProduct.AdminId = product.AdminId;
+            validProduct.IsConfirmed = product.IsConfirmed;
+            validProduct.ConfirmDate = product.ConfirmDate;
+            validProduct.EditionDate = DateTime.Now;
+            validProduct.ProductType = product.ProductType;
+
             var result = await _db.Products.EditAsync(product);
             result.Id = product.Id;
             result.Extra = product;

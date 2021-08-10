@@ -81,8 +81,6 @@ namespace BookReader.Controller
             comment.IsActive = false;
             comment.CreationDate = DateTime.Now;
             comment.UserId = User.GetUserId();
-            comment.ProductId = 5;
-            //comment.ProductId = 0;
             var result = await _db.Comments.CreateAsync(comment);
             result.Id = comment.Id;
             result.Extra = comment;
@@ -95,11 +93,20 @@ namespace BookReader.Controller
         /// <param name="comment"></param>
         /// <returns>Return New ResultObjectVm</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit(int id, [FromBody] Comment comment) {
+        public async Task<IActionResult> Edit([FromBody] Comment comment) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var result = await _db.Comments.EditAsync(comment);
+            var validComment = await _db.Comments.Find(comment.Id);
+
+            validComment.ProductId = comment.ProductId;
+            validComment.UserId = User.GetUserId();
+            validComment.Text = comment.Text;
+            validComment.CreationDate = comment.CreationDate;
+            validComment.IsActive = comment.IsActive;
+            validComment.RateValue = comment.RateValue;
+
+            var result = await _db.Comments.EditAsync(validComment);
             result.Id = comment.Id;
             result.Extra = comment;
             return Ok(result);

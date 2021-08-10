@@ -8,5 +8,6 @@ namespace BookReader.Repositories.Interfaces
 {
     public interface ICommentRepository : IBaseRepository<Comment>
     {
+
     }
 }

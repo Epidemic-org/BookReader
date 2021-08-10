@@ -86,7 +86,21 @@ namespace BookReader.Controller
         public async Task<IActionResult> Edit([FromBody] Person person) {
             if (!ModelState.IsValid) {
                 return BadRequest();
-            }            
+            }
+            var validPerson = await _db.People.Find(person.Id);
+
+            validPerson.UserId = User.GetUserId();
+            validPerson.FirstName = person.FirstName;
+            validPerson.LastName = person.LastName;
+            validPerson.BirthDate = person.BirthDate;
+            validPerson.NationalCode = person.NationalCode;
+            validPerson.Pic = person.Pic;
+            validPerson.Phone = person.Phone;
+            validPerson.GenderType = person.GenderType;
+            validPerson.JobType = person.JobType;
+            validPerson.IsAcceptRules = person.IsAcceptRules;
+            validPerson.CreationDate = person.CreationDate;
+
             var result = await _db.People.EditAsync(person);
             result.Id = person.Id;
             result.Extra = person;
