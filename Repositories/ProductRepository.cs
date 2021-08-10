@@ -70,8 +70,30 @@ namespace BookReader.Repositories
         }
 
 
+        public IQueryable<InvoiceItem>
+
+
         public IQueryable<ProductListVm> GetUserProducts(int userId) {
-            var query = GetAllProducts().Where(p => p.UserId == userId);                
+            var query = from invoice in _db.InvoiceItems.Where(i => i.Invoice.InvoicePayments.Count() > 0)
+                        where invoice.Invoice.UserId == userId                        
+                        select new ProductListVm() {
+                            Id = invoice.Product.Id,
+                            CategoryName = invoice.Product.ProductCategory.Name,
+                            Description = invoice.Product.Description,
+                            Title = invoice.Product.Title,
+                            CreationDate = invoice.Product.CreationDate,
+                            EditionDate = invoice.Product.EditionDate,
+                            Price = invoice.Product.ProductPrices.Where(p => p.IsActive).Select(s => (double?)s.ProductPriceValue)
+                            .FirstOrDefault(),
+                            ProductType = invoice.Product.ProductType,
+                            ProductCategoryId = invoice.Product.ProductCategoryId,
+                            UserId = invoice.Product.UserId,
+                            UserFullName = invoice.Product.User.Person.FirstName + " " + invoice.Product.User.Person.LastName,
+                            Tags = invoice.Product.Tags,
+                            VisitCount = invoice.Product.ProductVisits.Count(),
+                            RateAverage = invoice.Product.ProductRates.Average(p => (double?)p.RateValue),
+                        }
+                        ;
             return query;
         }
     }

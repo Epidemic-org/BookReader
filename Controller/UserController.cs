@@ -77,7 +77,10 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            user.IsActive = false;            
+            Person person = new Person();
+            user.IsActive = false;
+            user.Person = person;
+            await _db.People.CreateAsync(person);
             var result = await _db.AppUsers.CreateAsync(user);
             return Ok(result);
         }
