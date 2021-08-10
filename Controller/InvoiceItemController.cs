@@ -17,17 +17,14 @@ namespace BookReader.Controller
     public class InvoiceItemController : ControllerBase
     {
         private readonly IUnitOfWork _db;
-        public InvoiceItemController(IUnitOfWork db)
-        {
+        public InvoiceItemController(IUnitOfWork db) {
             _db = db;
         }
-        
+
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
-        {
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
             var list = await _db.InvoiceItem.GetAll().
-                Select(s => new InvoiceItemVm
-                {
+                Select(s => new InvoiceItemVm {
                     Id = s.Id,
                     InvoiceID = s.InvoiceID,
                     Price = s.Price,
@@ -36,15 +33,13 @@ namespace BookReader.Controller
                     TermAMount = s.TermAMount
                 }
                 ).
-                PaginateObjects(page,pageSize).ToListAsync();
+                PaginateObjects(page, pageSize).ToListAsync();
             return Ok(list);
-        }       
+        }
 
         [HttpGet]
-        public async Task<IActionResult> FindById([FromRoute] int id)
-        {
-            if (!await _db.InvoiceItem.IsExists(id))
-            {
+        public async Task<IActionResult> FindById([FromRoute] int id) {
+            if (!await _db.InvoiceItem.IsExists(id)) {
                 return NotFound();
             }
             var invoiceItem = await _db.InvoiceItem.Find(id);
@@ -53,13 +48,14 @@ namespace BookReader.Controller
 
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] InvoiceItem invoiceItem)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Create([FromBody] InvoiceItem invoiceItem) {
+            if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            invoiceItem.Price = _db.Products.getProductPrice(invoiceItem.ProductId);
+            invoiceItem.Price = _db.Products.GetAll(p => p.Id == invoiceItem.ProductId)
+                .FirstOrDefault().ProductPrices
+                .Where(p => p.IsActive).FirstOrDefault().ProductPriceValue;
+
             invoiceItem.TermAMount = invoiceItem.TermAmountCalculate();
             await _db.InvoiceItem.CreateAsync(invoiceItem);
             return Ok(invoiceItem);
@@ -67,10 +63,8 @@ namespace BookReader.Controller
 
 
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] InvoiceItem invoiceItem)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Edit([FromBody] InvoiceItem invoiceItem) {
+            if (!ModelState.IsValid) {
                 return BadRequest();
             }
             var result = await _db.InvoiceItem.EditAsync(invoiceItem);
@@ -80,11 +74,9 @@ namespace BookReader.Controller
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
+        public async Task<IActionResult> Delete([FromRoute] int id) {
             var invoiceItem = _db.InvoiceItem.Find(id);
-            if (invoiceItem == null)
-            {
+            if (invoiceItem == null) {
                 return NotFound();
             }
             var result = await _db.InvoiceItem.DeleteAsync(id);

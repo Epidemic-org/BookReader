@@ -21,6 +21,7 @@ namespace BookReader.Repositories
 
         public async Task<AppUser> Find(string username) {
             return await _db.Users.Where(u => u.UserName == username).FirstOrDefaultAsync();
-        }
+        }        
+
     }
 }

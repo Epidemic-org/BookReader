@@ -15,6 +15,7 @@ namespace BookReader.Data.Models
         public decimal  CreditAmount { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreationDate { get; set; }
+
         public AppUser Admin { get; set; }
     }
 }

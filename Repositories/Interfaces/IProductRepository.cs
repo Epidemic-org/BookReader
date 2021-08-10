@@ -12,14 +12,18 @@ namespace BookReader.Interfaces
 {
     public interface IProductRepository : IBaseRepository<Product>
     {
+        decimal getProductPrice(int productId);
 
+
+
+
+        IQueryable<ProductListVm> GetAllProducts();
         IQueryable<Product> GetAll(string search);
         IQueryable<Product> GetAll(int userId);
         IQueryable<ProductListVm> GetFreeProducts();
+        IQueryable<ProductListVm> GetUserProducts(int userId);
         IQueryable<ProductListVm> GetMostVisitedProducts();
-
-        public IQueryable<ProductListVm> GetProductsByCategory(int categoryId);
+        IQueryable<ProductListVm> GetProductsByCategory(int categoryId);
         IQueryable<ProductListVm> GetNewestProducts();
-        decimal getProductPrice(int productId);
     }
 }

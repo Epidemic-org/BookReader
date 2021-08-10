@@ -3,16 +3,22 @@ using BookReader.Data.Models;
 using BookReader.Interfaces;
 using BookReader.Repositories.Base;
 using BookReader.ViewModels;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BookReader.Repositories
 {
-    public class ProductRepository : BaseRepository<Product>, IProductRepository {
+    public class ProductRepository : BaseRepository<Product>, IProductRepository
+    {
 
         private readonly ApplicationDbContext _db;
 
         public ProductRepository(ApplicationDbContext db) : base(db) {
             _db = db;
+        }
+        public decimal getProductPrice(int productId) {
+            var product = _db.Products.Find(productId);
+            return product.ProductPrices.Where(p => p.IsActive).Single().ProductPriceValue;
         }
 
 
@@ -21,12 +27,9 @@ namespace BookReader.Repositories
                 return base.GetAll();
             return base.GetAll().Where(w => w.Title.Contains(search));
         }
-
-
         public IQueryable<Product> GetAll(int userId) {
             return base.GetAll().Where(w => w.UserId == userId);
         }
-
         public IQueryable<ProductListVm> GetAllProducts() {
             var query = from p in _db.Products
                         where p.IsConfirmed
@@ -37,7 +40,7 @@ namespace BookReader.Repositories
                             Title = p.Title,
                             CreationDate = p.CreationDate,
                             EditionDate = p.EditionDate,
-                            Price = p.ProductPrices.Where(p => p.IsActive).Select(s=> (double?)s.ProductPriceValue)
+                            Price = p.ProductPrices.Where(p => p.IsActive).Select(s => (double?)s.ProductPriceValue)
                             .FirstOrDefault(),
                             ProductType = p.ProductType,
                             ProductCategoryId = p.ProductCategoryId,
@@ -49,36 +52,27 @@ namespace BookReader.Repositories
                         };
             return query;
         }
-
-
         public IQueryable<ProductListVm> GetFreeProducts() {
             var query = GetAllProducts().Where(p => p.Price == 0);
             return query;
         }
-
         public IQueryable<ProductListVm> GetMostVisitedProducts() {
             var query = GetAllProducts().OrderBy(p => p.VisitCount);
             return query;
         }
-
-        public IQueryable<ProductListVm> GetNewestProducts()
-        {
+        public IQueryable<ProductListVm> GetNewestProducts() {
             var query = GetAllProducts().OrderBy(p => p.CreationDate);
             return query;
         }
-
-
-
-        //TODO:By-Dls-> Optimized Method To Extention Methods
-        public decimal getProductPrice(int productId) {
-            var product = _db.Products.Find(productId);
-            return product.ProductPrices.Where(p => p.IsActive).Single().ProductPriceValue;
-        }
-
-        public IQueryable<ProductListVm> GetProductsByCategory(int categoryId)
-        {
+        public IQueryable<ProductListVm> GetProductsByCategory(int categoryId) {
             var products = GetAllProducts().Where(n => n.ProductCategoryId == categoryId);
             return products;
+        }
+
+
+        public IQueryable<ProductListVm> GetUserProducts(int userId) {
+            var query = GetAllProducts().Where(p => p.UserId == userId);                
+            return query;
         }
     }
 }

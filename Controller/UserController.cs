@@ -66,6 +66,7 @@ namespace BookReader.Controller
             return Ok(user);
         }
 
+
         /// <summary>
         /// Insert new user with person 
         /// </summary>
@@ -76,9 +77,7 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            user.IsActive = false;
-
-            await _db.AppUsers.CreateAsync(user);
+            user.IsActive = false;            
             var result = await _db.AppUsers.CreateAsync(user);
             return Ok(result);
         }
@@ -119,6 +118,7 @@ namespace BookReader.Controller
             result.Id = user.Id;
             result.Extra = user;
             return Ok(result);
-        }
+        }       
+
     }
 }

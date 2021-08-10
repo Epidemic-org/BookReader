@@ -56,8 +56,11 @@ namespace BookReader.Controller
             creditType.AdminId = User.GetUserId();
             creditType.IsActive = true;
             creditType.CreationDate = DateTime.Now;
-            await _db.CreditTypes.CreateAsync(creditType);
-            return Ok(creditType);
+
+            var result = await _db.CreditTypes.CreateAsync(creditType);
+            result.Id = creditType.Id;
+            result.Extra = creditType;
+            return Ok(result);
         }
 
 
@@ -66,6 +69,17 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
+
+            var validCreditType = await _db.CreditTypes.Find(creditType.Id);
+
+            validCreditType.AdminId = User.GetUserId();
+            validCreditType.Title = creditType.Title;
+            validCreditType.Description = creditType.Description;
+            validCreditType.CreditPrice = creditType.CreditPrice;
+            validCreditType.CreditAmount = creditType.CreditAmount;
+            validCreditType.IsActive = creditType.IsActive;
+            validCreditType.CreationDate = creditType.CreationDate;
+
             var result = await _db.CreditTypes.EditAsync(creditType);
             result.Id = creditType.Id;
             result.Extra = creditType;
