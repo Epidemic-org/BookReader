@@ -65,7 +65,7 @@ namespace BookReader.Controller
         [HttpGet]
         public async Task<IActionResult> GetFreeProducts([FromRoute] int top) {
             var products = await _db.Products.GetFreeProducts()
-                 .PaginateObjects(1, 10)
+                 .PaginateObjects(1, top)
                  .ToListAsync();
             return Ok(products);
         }
@@ -85,11 +85,11 @@ namespace BookReader.Controller
         /// </summary>
         /// <param name="numberOfProducts"></param>
         /// <returns>The List Of Products</returns>
-        //[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> GetNewestPropducts(int top)
         { 
             var products = await _db.Products.GetNewestProducts()
-                .PaginateObjects(1, 10)
+                .PaginateObjects(1, top)
                 .ToListAsync();
             return Ok(products);
         }
