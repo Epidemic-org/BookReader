@@ -103,23 +103,22 @@ namespace BookReader.Repositories
             public decimal Sum { get; set; }
         }
 
-        public IQueryable<SoldType> GetSoldProducts() {
+        public IQueryable<SoldType> MostSoldProducts() {
             var query = from invoice in _db.InvoiceItems
                         from product in _db.Products
                         where invoice.Product == product
-                        select invoice;
-
-            var result = query.GroupBy(i => i.Product.Id).Select(g => new SoldType {
-                ProductId = g.Key,
-                Sum = g.Sum(i => i.Quantity)
-            }).OrderByDescending(i => i.Sum);
-
-            return result;
+                        group invoice by product.Id into gp
+                        select new SoldType() {
+                            ProductId = gp.Key,
+                            Sum = gp.Sum(i => i.Quantity)
+                        }                        
+                        ;
+            return query;
         }
 
 
         public IQueryable<ProductListVm> GetMostSoldProducts() {
-            var query = from t in GetSoldProducts()
+            var query = from t in MostSoldProducts().OrderBy(p=>p.Sum)
                         from p in _db.Products
                         where t.ProductId == p.Id
                         select new ProductListVm() {
