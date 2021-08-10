@@ -63,14 +63,15 @@ namespace BookReader.Controller
         /// <param name="top">Number of products should return</param>
         /// <returns>List of type products</returns>
         [HttpGet]
-        public async Task<IActionResult> GetFreeProducts([FromRoute] int top) {
-            var products = await _db.Products.GetFreeProducts()                 
+        public async Task<IActionResult> GetFreeProducts([FromRoute] int top=10) {
+            var products = await _db.Products.GetFreeProducts()    
+                .PaginateObjects(1, top)
                  .ToListAsync();
             return Ok(products);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMostVisitedProducts([FromRoute] int top) {
+        public async Task<IActionResult> GetMostVisitedProducts([FromRoute] int top=10) {
             var products = await _db.Products.GetMostVisitedProducts()
                 .PaginateObjects(1, top)
                 .ToListAsync();
@@ -91,7 +92,7 @@ namespace BookReader.Controller
         /// <param name="numberOfProducts"></param>
         /// <returns>The List Of Products</returns>
         [HttpGet]
-        public async Task<IActionResult> GetNewestPropducts(int top)
+        public async Task<IActionResult> GetNewestPropducts(int top=10)
         { 
             var products = await _db.Products.GetNewestProducts()
                 .PaginateObjects(1, top)
@@ -101,7 +102,7 @@ namespace BookReader.Controller
 
 
         [HttpGet]
-        public async Task<IActionResult> GetUserProducts(int top) {            
+        public async Task<IActionResult> GetUserProducts(int top=10) {            
             var products = await _db.Products.GetUserProducts(User.GetUserId())
                 .PaginateObjects(1, top)
                 .ToListAsync();
