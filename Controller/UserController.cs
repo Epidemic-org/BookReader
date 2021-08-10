@@ -76,11 +76,7 @@ namespace BookReader.Controller
         public async Task<IActionResult> Create([FromBody] AppUser user) {
             if (!ModelState.IsValid) {
                 return BadRequest();
-            }
-            Person person = new Person();
-            user.IsActive = false;
-            user.Person = person;
-            await _db.People.CreateAsync(person);
+            }            
             var result = await _db.AppUsers.CreateAsync(user);
             return Ok(result);
         }

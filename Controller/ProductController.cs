@@ -63,16 +63,24 @@ namespace BookReader.Controller
         /// <param name="top">Number of products should return</param>
         /// <returns>List of type products</returns>
         [HttpGet]
-        public async Task<IActionResult> GetFreeProducts([FromRoute] int top=10) {
-            var products = await _db.Products.GetFreeProducts()    
+        public async Task<IActionResult> GetFreeProducts([FromRoute] int top = 10) {
+            var products = await _db.Products.GetFreeProducts()
                 .PaginateObjects(1, top)
                  .ToListAsync();
             return Ok(products);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMostVisitedProducts([FromRoute] int top=10) {
+        public async Task<IActionResult> GetMostVisitedProducts([FromRoute] int top = 10) {
             var products = await _db.Products.GetMostVisitedProducts()
+                .PaginateObjects(1, top)
+                .ToListAsync();
+            return Ok(products);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMostSoldProducts([FromRoute] int top = 10) {
+            var products = await _db.Products.GetMostSoldProducts()
                 .PaginateObjects(1, top)
                 .ToListAsync();
             return Ok(products);
@@ -80,8 +88,7 @@ namespace BookReader.Controller
 
 
         [HttpGet]
-        public async Task<IActionResult> GetProductsByCategoryId(int categoryId)
-        {
+        public async Task<IActionResult> GetProductsByCategoryId(int categoryId) {
             var products = await _db.Products.GetProductsByCategory(categoryId).ToListAsync();
             return Ok(products);
         }
@@ -92,8 +99,7 @@ namespace BookReader.Controller
         /// <param name="numberOfProducts"></param>
         /// <returns>The List Of Products</returns>
         [HttpGet]
-        public async Task<IActionResult> GetNewestPropducts(int top=10)
-        { 
+        public async Task<IActionResult> GetNewestPropducts(int top = 10) {
             var products = await _db.Products.GetNewestProducts()
                 .PaginateObjects(1, top)
                 .ToListAsync();
@@ -102,10 +108,10 @@ namespace BookReader.Controller
 
 
         [HttpGet]
-        public async Task<IActionResult> GetUserProducts(int top=10) {            
-            var products = await _db.Products.GetUserProducts(1)
+        public async Task<IActionResult> GetUserProducts(int top = 10) {
+            var products = await _db.Products.GetUserProducts(1)                
                 .PaginateObjects(1, top)
-                .ToListAsync();
+                .ToListAsync();            
             return Ok(products);
         }
 

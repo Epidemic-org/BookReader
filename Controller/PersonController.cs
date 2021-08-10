@@ -39,7 +39,7 @@ namespace BookReader.Controller
                     CreationDate = p.CreationDate,
                     IsAcceptRules = p.IsAcceptRules
                 })
-                .PaginateObjects(page,pageSize)
+                .PaginateObjects(page, pageSize)
                 .ToListAsync();
             return Ok(people);
         }
@@ -50,9 +50,13 @@ namespace BookReader.Controller
         /// <param name="id">Gets the id corresponds to the person object</param>
         /// <returns>Person</returns>
         [HttpGet]
-        public async Task<IActionResult> FindById([FromRoute] int id) {
-            var person = await _db.People.Find(id);
-            if(person == null) {
+        public async Task<IActionResult> FindById() {
+            var userId = User.GetUserId();
+            var validUser = await _db.AppUsers.Find(userId);
+
+            var person = await _db.People.Find(validUser.Person.Id);
+
+            if (person == null) {
                 return NotFound();
             }
             return Ok(person);
@@ -87,7 +91,18 @@ namespace BookReader.Controller
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            var validPerson = await _db.People.Find(person.Id);
+
+            Person validPerson = new Person();
+
+            var validUser = await _db.AppUsers.Find(User.GetUserId());
+
+            if (_db.AppUsers.GetAll(u => u.Id == User.GetUserId()).Where(u=> u.Person == null).Any()) {
+                person = new Person();
+                validUser.Person = validPerson;
+            }
+            else {
+                validPerson = validUser.Person;
+            }            
 
             validPerson.UserId = User.GetUserId();
             validPerson.FirstName = person.FirstName;

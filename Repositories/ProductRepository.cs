@@ -52,6 +52,9 @@ namespace BookReader.Repositories
                         };
             return query;
         }
+
+
+
         public IQueryable<ProductListVm> GetFreeProducts() {
             var query = GetAllProducts().Where(p => p.Price == 0);
             return query;
@@ -69,31 +72,73 @@ namespace BookReader.Repositories
             return products;
         }
 
-
-        public IQueryable<InvoiceItem>
-
-
         public IQueryable<ProductListVm> GetUserProducts(int userId) {
-            var query = from invoice in _db.InvoiceItems.Where(i => i.Invoice.InvoicePayments.Count() > 0)
-                        where invoice.Invoice.UserId == userId                        
+            var query = from product in _db.Products
+                        from invoice in _db.InvoiceItems.Where(i => i.Invoice.UserId == userId)
+                        where invoice.Product == product
                         select new ProductListVm() {
                             Id = invoice.Product.Id,
-                            CategoryName = invoice.Product.ProductCategory.Name,
-                            Description = invoice.Product.Description,
-                            Title = invoice.Product.Title,
-                            CreationDate = invoice.Product.CreationDate,
-                            EditionDate = invoice.Product.EditionDate,
-                            Price = invoice.Product.ProductPrices.Where(p => p.IsActive).Select(s => (double?)s.ProductPriceValue)
+                            CategoryName = product.ProductCategory.Name,
+                            Description = product.Description,
+                            Title = product.Title,
+                            CreationDate = product.CreationDate,
+                            EditionDate = product.EditionDate,
+                            Price = product.ProductPrices.Where(p => p.IsActive).Select(s => (double?)s.ProductPriceValue)
                             .FirstOrDefault(),
-                            ProductType = invoice.Product.ProductType,
-                            ProductCategoryId = invoice.Product.ProductCategoryId,
-                            UserId = invoice.Product.UserId,
-                            UserFullName = invoice.Product.User.Person.FirstName + " " + invoice.Product.User.Person.LastName,
-                            Tags = invoice.Product.Tags,
-                            VisitCount = invoice.Product.ProductVisits.Count(),
-                            RateAverage = invoice.Product.ProductRates.Average(p => (double?)p.RateValue),
-                        }
-                        ;
+                            ProductType = product.ProductType,
+                            ProductCategoryId = product.ProductCategoryId,
+                            UserId = product.UserId,
+                            UserFullName = product.User.Person.FirstName + " " + invoice.Product.User.Person.LastName,
+                            Tags = product.Tags,
+                            VisitCount = product.ProductVisits.Count(),
+                        };
+            return query;
+        }
+
+
+
+        public class SoldType
+        {
+            public int ProductId { get; set; }
+            public decimal Sum { get; set; }
+        }
+
+        public IQueryable<SoldType> GetSoldProducts() {
+            var query = from invoice in _db.InvoiceItems
+                        from product in _db.Products
+                        where invoice.Product == product
+                        select invoice;
+
+            var result = query.GroupBy(i => i.Product.Id).Select(g => new SoldType {
+                ProductId = g.Key,
+                Sum = g.Sum(i => i.Quantity)
+            }).OrderByDescending(i => i.Sum);
+
+            return result;
+        }
+
+
+        public IQueryable<ProductListVm> GetMostSoldProducts() {
+            var query = from t in GetSoldProducts()
+                        from p in _db.Products
+                        where t.ProductId == p.Id
+                        select new ProductListVm() {
+                            Id = p.Id,
+                            CategoryName = p.ProductCategory.Name,
+                            Description = p.Description,
+                            Title = p.Title,
+                            CreationDate = p.CreationDate,
+                            EditionDate = p.EditionDate,
+                            Price = p.ProductPrices.Where(p => p.IsActive).Select(s => (double?)s.ProductPriceValue)
+                            .FirstOrDefault(),
+                            ProductType = p.ProductType,
+                            ProductCategoryId = p.ProductCategoryId,
+                            UserId = p.UserId,
+                            UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
+                            Tags = p.Tags,
+                            VisitCount = p.ProductVisits.Count(),
+                            RateAverage = p.ProductRates.Average(p => (double?)p.RateValue),
+                        };
             return query;
         }
     }

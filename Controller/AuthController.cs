@@ -56,7 +56,6 @@ namespace EshopApi.Controllers
                 return BadRequest(ModelState);
             }
 
-
             generatedToken = _tokenService.BuildToken(key: _config["Jwt:Key"].ToString(),
                 issuer: _config["Jwt:Issuer"].ToString(), validUser);
             if (generatedToken != null)
@@ -67,7 +66,6 @@ namespace EshopApi.Controllers
             {
                 return NotFound("Token Buil Failed");
             }
-
         }
 
 
@@ -86,11 +84,10 @@ namespace EshopApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var result = await _userManager.CreateAsync(new AppUser { UserName = userVM.UserName, IsActive = true, PhoneNumberConfirmed = true, EmailConfirmed = true }, userVM.Password);
-
+            var result = await _userManager.CreateAsync(new AppUser { UserName = userVM.UserName, IsActive = true, PhoneNumberConfirmed = true, EmailConfirmed = true }, userVM.Password);                        
             if (result.Succeeded)
             {
-                return Ok();
+                return Ok(userVM);
             }
 
             return BadRequest(result.Errors);

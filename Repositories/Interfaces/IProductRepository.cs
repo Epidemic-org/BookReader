@@ -18,6 +18,7 @@ namespace BookReader.Interfaces
 
 
         IQueryable<ProductListVm> GetAllProducts();
+        IQueryable<ProductListVm> GetMostSoldProducts();
         IQueryable<Product> GetAll(string search);
         IQueryable<Product> GetAll(int userId);
         IQueryable<ProductListVm> GetFreeProducts();
