@@ -109,9 +109,9 @@ namespace BookReader.Controller
 
         [HttpGet]
         public async Task<IActionResult> GetUserProducts(int top = 10) {
-            var products = await _db.Products.GetUserProducts(1)                
+            var products = await _db.Products.GetUserProducts(1)
                 .PaginateObjects(1, top)
-                .ToListAsync();            
+                .ToListAsync();
             return Ok(products);
         }
 

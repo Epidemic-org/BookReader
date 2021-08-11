@@ -92,12 +92,12 @@ namespace BookReader.Controller
                 return BadRequest();
             }
 
-            Person validPerson = new Person();
+            Person validPerson;
 
             var validUser = await _db.AppUsers.Find(User.GetUserId());
 
             if (_db.AppUsers.GetAll(u => u.Id == User.GetUserId()).Where(u=> u.Person == null).Any()) {
-                person = new Person();
+                validPerson = new Person();
                 validUser.Person = validPerson;
             }
             else {

@@ -7,15 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static BookReader.Repositories.ProductRepository;
 
 namespace BookReader.Interfaces
 {
     public interface IProductRepository : IBaseRepository<Product>
     {
         decimal getProductPrice(int productId);
-
-
-
 
         IQueryable<ProductListVm> GetAllProducts();
         IQueryable<ProductListVm> GetMostSoldProducts();
@@ -26,5 +24,6 @@ namespace BookReader.Interfaces
         IQueryable<ProductListVm> GetMostVisitedProducts();
         IQueryable<ProductListVm> GetProductsByCategory(int categoryId);
         IQueryable<ProductListVm> GetNewestProducts();
+
     }
 }
