@@ -17,7 +17,8 @@ namespace BookReader.Controller
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _db;
-        public ProductController(IUnitOfWork db) {
+        public ProductController(IUnitOfWork db)
+        {
             _db = db;
         }
 
@@ -29,16 +30,19 @@ namespace BookReader.Controller
         /// <param name="pageSize">Set products count to display on each page</param>
         /// <returns>List Of Products></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(string search = "", int? categoryId = null, int page = 1, int pageSize = 10) {
+        public async Task<IActionResult> GetAll(string search = "", int? categoryId = null, int page = 1, int pageSize = 10)
+        {
 
             var q = _db.Products.GetAll();
 
-            if (!string.IsNullOrWhiteSpace(search)) {
+            if (!string.IsNullOrWhiteSpace(search))
+            {
                 q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
             }
 
             var list = await q
-                .Select(p => new ProductListVm {
+                .Select(p => new ProductListVm
+                {
                     Id = p.Id,
                     ProductCategoryId = p.ProductCategoryId,
                     CategoryName = p.ProductCategory.Name,
@@ -63,7 +67,8 @@ namespace BookReader.Controller
         /// <param name="top">Number of products should return</param>
         /// <returns>List of type products</returns>
         [HttpGet]
-        public async Task<IActionResult> GetFreeProducts([FromRoute] int top = 10) {
+        public async Task<IActionResult> GetFreeProducts([FromRoute] int top = 10)
+        {
             var products = await _db.Products.GetFreeProducts()
                 .PaginateObjects(1, top)
                  .ToListAsync();
@@ -71,7 +76,8 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMostVisitedProducts([FromRoute] int top = 10) {
+        public async Task<IActionResult> GetMostVisitedProducts([FromRoute] int top = 10)
+        {
             var products = await _db.Products.GetMostVisitedProducts()
                 .PaginateObjects(1, top)
                 .ToListAsync();
@@ -79,7 +85,8 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMostSoldProducts([FromRoute] int top = 10) {
+        public async Task<IActionResult> GetMostSoldProducts([FromRoute] int top = 10)
+        {
             var products = await _db.Products.GetMostSoldProducts()
                 .PaginateObjects(1, top)
                 .ToListAsync();
@@ -88,7 +95,8 @@ namespace BookReader.Controller
 
 
         [HttpGet]
-        public async Task<IActionResult> GetProductsByCategoryId(int categoryId) {
+        public async Task<IActionResult> GetProductsByCategoryId(int categoryId)
+        {
             var products = await _db.Products.GetProductsByCategory(categoryId).ToListAsync();
             return Ok(products);
         }
@@ -99,7 +107,8 @@ namespace BookReader.Controller
         /// <param name="numberOfProducts"></param>
         /// <returns>The List Of Products</returns>
         [HttpGet]
-        public async Task<IActionResult> GetNewestPropducts(int top = 10) {
+        public async Task<IActionResult> GetNewestPropducts(int top = 10)
+        {
             var products = await _db.Products.GetNewestProducts()
                 .PaginateObjects(1, top)
                 .ToListAsync();
@@ -108,7 +117,12 @@ namespace BookReader.Controller
 
 
         [HttpGet]
+<<<<<<< HEAD
         public async Task<IActionResult> GetUserProducts(int top = 10) {
+=======
+        public async Task<IActionResult> GetUserProducts(int top = 10)
+        {
+>>>>>>> 7a79b29309b9dc53a04c29321dd25d8271d8b103
             var products = await _db.Products.GetUserProducts(1)
                 .PaginateObjects(1, top)
                 .ToListAsync();
@@ -122,8 +136,10 @@ namespace BookReader.Controller
         /// <param name="id">Gets id of product to find from url</param>
         /// <returns>Product</returns>
         [HttpGet]
-        public async Task<IActionResult> FindById([FromRoute] int id) {
-            if (!await _db.Products.IsExists(id)) {
+        public async Task<IActionResult> FindById([FromRoute] int id)
+        {
+            if (!await _db.Products.IsExists(id))
+            {
                 return NotFound();
 
             }
@@ -137,8 +153,10 @@ namespace BookReader.Controller
         /// <param name="product">Product entitiy gets from body</param>
         /// <returns>ResultObject</returns>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Product product) {
-            if (!ModelState.IsValid) {
+        public async Task<IActionResult> Create([FromBody] Product product)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             product.UserId = User.GetUserId();
@@ -151,8 +169,10 @@ namespace BookReader.Controller
             return Ok(result);
         }
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] Product product) {
-            if (!ModelState.IsValid) {
+        public async Task<IActionResult> Edit([FromBody] Product product)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             var validProduct = await _db.Products.Find(product.Id);
@@ -175,15 +195,26 @@ namespace BookReader.Controller
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id) {
+        public async Task<IActionResult> Delete(int id)
+        {
             var productToDelete = await _db.Products.Find(id);
-            if (productToDelete == null) {
+            if (productToDelete == null)
+            {
                 return NotFound();
             }
             var result = await _db.Products.DeleteAsync(productToDelete);
             result.Id = id;
             result.Extra = productToDelete;
             return Ok(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetUserFavorites(int userId, int page = 1, int top = 10)
+        {
+            var productsList = await _db.Products
+                .GetUserFavorites(userId)
+                .PaginateObjects(page, top)
+                .ToListAsync();
+            return Ok(productsList);
         }
     }
 }
