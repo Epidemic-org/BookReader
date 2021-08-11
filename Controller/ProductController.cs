@@ -117,8 +117,12 @@ namespace BookReader.Controller
 
 
         [HttpGet]
+<<<<<<< HEAD
+        public async Task<IActionResult> GetUserProducts(int top = 10) {
+=======
         public async Task<IActionResult> GetUserProducts(int top = 10)
         {
+>>>>>>> 7a79b29309b9dc53a04c29321dd25d8271d8b103
             var products = await _db.Products.GetUserProducts(1)
                 .PaginateObjects(1, top)
                 .ToListAsync();
