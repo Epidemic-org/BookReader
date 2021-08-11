@@ -140,7 +140,24 @@ namespace BookReader.Controller
 
             }
             var product = await _db.Products.Find(id);
-            return Ok(product);
+            var listViewModelProduct = new ProductListVm
+            {
+                //CategoryName = product.ProductCategory.Name,
+                CreationDate = product.CreationDate,
+                Description = product.Description,
+                EditionDate = product.EditionDate,
+                Id = product.Id,
+                //Price = product.ProductPrices.Select(n => (double?)n.ProductPriceValue).FirstOrDefault(),
+                ProductCategoryId = product.ProductCategoryId,
+                //ProductType = product.ProductType,
+                //RateAverage = product.ProductRates.Average(p => (double?)p.RateValue),
+                Tags = product.Tags,
+                Title = product.Title,
+                UserId = product.UserId,
+                //VisitCount = product.ProductVisits.Count,
+                //UserFullName = product.User.Person.FirstName + " " + product.User.Person.LastName
+            };
+            return Ok(listViewModelProduct);
         }
 
         /// <summary>
