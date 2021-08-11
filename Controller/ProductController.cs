@@ -117,12 +117,12 @@ namespace BookReader.Controller
 
 
         [HttpGet]
-<<<<<<< HEAD
-        public async Task<IActionResult> GetUserProducts(int top = 10) {
-=======
+
+       
+
         public async Task<IActionResult> GetUserProducts(int top = 10)
         {
->>>>>>> 7a79b29309b9dc53a04c29321dd25d8271d8b103
+
             var products = await _db.Products.GetUserProducts(1)
                 .PaginateObjects(1, top)
                 .ToListAsync();
@@ -210,7 +210,15 @@ namespace BookReader.Controller
             result.Extra = product;
             return Ok(result);
         }
-
+        [HttpGet]
+        public async Task<IActionResult> GetOfflineProducts(int userId, int size = 1, int top = 10)
+        {
+            var offlineProducts =await _db.Products
+                .GetOfflineProducts(userId)
+                .PaginateObjects(size, top)
+                .ToListAsync();
+            return Ok(offlineProducts);
+        }
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
