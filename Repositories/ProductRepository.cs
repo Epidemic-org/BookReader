@@ -55,7 +55,6 @@ namespace BookReader.Repositories
                             Pic = p.ProductFiles.Select(f => f.Path).FirstOrDefault(),
                             VisitCount = p.ProductVisits.Count(),
                             RateAverage = p.ProductRates.Average(p => (double?)p.RateValue),
-                            InvoiceItems = p.InvoiceItems
                         };
             return query;
        }
@@ -90,49 +89,18 @@ namespace BookReader.Repositories
         }
 
         public IQueryable<ProductListVm> GetUserProducts(int userId) {
-            var query = _db.InvoiceItems.Where(i => i.Invoice.UserId == userId)
-                .Select(i => new ProductListVm() {
-                    Id = i.ProductId,
-                    CategoryName = i.Product.ProductCategory.Name,
-                    CreationDate = i.Product.CreationDate,
-                    Description = i.Product.Description,
-                    EditionDate = i.Product.EditionDate,
-                    Price = i.Product.ProductPrices.Where(p => p.IsActive).Select(s => (double?)s.ProductPriceValue)
-                            .FirstOrDefault(),
-                    ProductType = i.Product.ProductType,
-                    Tags = i.Product.Tags,
-                    Title = i.Product.Title,
-                    Pic = i.Product.ProductFiles.Select(f => f.Path).FirstOrDefault(),
-                    UserFullName = i.Product.User.Person.FirstName + " " + i.Product.User.Person.LastName,
-                    RateAverage = i.Product.ProductRates.Average(p => (double?)p.RateValue),
-                    VisitCount = i.Product.ProductVisits.Count(),
-                    ProductCategoryId = i.Product.ProductCategoryId,
-                    UserId = i.Product.UserId
-                })
-                .Distinct()
-                ;
+            var query = from p in GetAllProducts()
+                        from invoice in _db.InvoiceItems
+                        where p.Id == invoice.ProductId && p.UserId == userId
+                        select p;
             return query;
         }
         public IQueryable<ProductListVm> GetUserFavorites(int userId) {
-            var favoritesProducts = _db.UserFavorites.Where(n => n.UserId == userId).
-                Select(n => new ProductListVm() {
-                    Id = n.Id,
-                    Price = n.Product.ProductPrices.Select(n => (double)n.ProductPriceValue).FirstOrDefault(),
-                    Title = n.Product.Title,
-                    CategoryName = n.Product.ProductCategory.Name,
-                    ProductCategoryId = n.Product.ProductCategoryId,
-                    ProductType = n.Product.ProductType,
-                    CreationDate = n.CreationDate,
-                    Description = n.Product.Description,
-                    EditionDate = n.Product.EditionDate,
-
-                    RateAverage = n.Product.ProductRates.Average(p => (double?)p.RateValue),
-                    VisitCount = n.Product.ProductVisits.Count(),
-                    UserFullName = n.User.Person.FirstName + " " + n.User.Person.LastName,
-                    Tags = n.Product.Tags,
-                    UserId = n.Product.UserId
-                });
-            return favoritesProducts;
+            var query = from p in GetAllProducts()
+                        from fav in _db.UserFavorites
+                        where p.Id == fav.ProductId && p.UserId == fav.UserId
+                        select p;
+            return query;
         }
     }
 }

@@ -35,8 +35,5 @@ namespace BookReader.ViewModels
         public double? RateAverage { get; set; }
         public double? VisitCount { get; set; }
         public decimal SalesCount { get; set; }
-
-        public ICollection<InvoiceItem> InvoiceItems { get; set; }
-
     }
 }

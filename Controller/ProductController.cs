@@ -110,10 +110,9 @@ namespace BookReader.Controller
 
 
         [HttpGet]
+        public async Task<IActionResult> GetUserProducts(int userId, int top = 10) {
 
-        public async Task<IActionResult> GetUserProducts(int top = 10) {
-
-            var products = await _db.Products.GetUserProducts(1)
+            var products = await _db.Products.GetUserProducts(userId)
                 .PaginateObjects(1, top)
                 .ToListAsync();
             return Ok(products);
@@ -190,10 +189,10 @@ namespace BookReader.Controller
             return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> GetUserFavorites(int userId, int page = 1, int top = 10) {
+        public async Task<IActionResult> GetUserFavorites(int userId, int top = 10) {
             var productsList = await _db.Products
                 .GetUserFavorites(userId)
-                .PaginateObjects(page, top)
+                .PaginateObjects(1, top)
                 .ToListAsync();
             return Ok(productsList);
         }
