@@ -110,9 +110,19 @@ namespace BookReader.Controller
 
 
         [HttpGet]
+<<<<<<< HEAD
         public async Task<IActionResult> GetUserProducts(int userId, int top = 10) {
 
             var products = await _db.Products.GetUserProducts(userId)
+=======
+
+       
+
+        public async Task<IActionResult> GetUserProducts(int top = 10)
+        {
+
+            var products = await _db.Products.GetUserProducts(1)
+>>>>>>> e57d4b94572ffd7fb3db57ec50de5f7746494891
                 .PaginateObjects(1, top)
                 .ToListAsync();
             return Ok(products);
@@ -131,7 +141,24 @@ namespace BookReader.Controller
 
             }
             var product = await _db.Products.Find(id);
-            return Ok(product);
+            var listViewModelProduct = new ProductListVm
+            {
+                //CategoryName = product.ProductCategory.Name,
+                CreationDate = product.CreationDate,
+                Description = product.Description,
+                EditionDate = product.EditionDate,
+                Id = product.Id,
+                //Price = product.ProductPrices.Select(n => (double?)n.ProductPriceValue).FirstOrDefault(),
+                ProductCategoryId = product.ProductCategoryId,
+                //ProductType = product.ProductType,
+                //RateAverage = product.ProductRates.Average(p => (double?)p.RateValue),
+                Tags = product.Tags,
+                Title = product.Title,
+                UserId = product.UserId,
+                //VisitCount = product.ProductVisits.Count,
+                //UserFullName = product.User.Person.FirstName + " " + product.User.Person.LastName
+            };
+            return Ok(listViewModelProduct);
         }
 
         /// <summary>
@@ -176,7 +203,15 @@ namespace BookReader.Controller
             result.Extra = product;
             return Ok(result);
         }
-
+        [HttpGet]
+        public async Task<IActionResult> GetOfflineProducts(int userId, int size = 1, int top = 10)
+        {
+            var offlineProducts =await _db.Products
+                .GetOfflineProducts(userId)
+                .PaginateObjects(size, top)
+                .ToListAsync();
+            return Ok(offlineProducts);
+        }
         [HttpDelete]
         public async Task<IActionResult> Delete(int id) {
             var productToDelete = await _db.Products.Find(id);

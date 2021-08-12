@@ -25,6 +25,7 @@ namespace BookReader.Interfaces
         IQueryable<ProductListVm> GetMostVisitedProducts();
         IQueryable<ProductListVm> GetProductsByCategory(int categoryId);
         IQueryable<ProductListVm> GetNewestProducts();
+        public IQueryable<ProductListVm> GetOfflineProducts(int userId);
 
     }
 }

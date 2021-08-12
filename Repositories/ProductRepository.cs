@@ -57,7 +57,7 @@ namespace BookReader.Repositories
                             RateAverage = p.ProductRates.Average(p => (double?)p.RateValue),
                         };
             return query;
-       }
+        }
 
 
         public IQueryable<ProductListVm> GetFreeProducts() {
