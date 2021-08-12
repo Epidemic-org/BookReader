@@ -14,26 +14,23 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
-    
+
     public class CommentLikeController : ControllerBase
     {
         public IUnitOfWork _db;
-        public CommentLikeController(IUnitOfWork db)
-        {
+        public CommentLikeController(IUnitOfWork db) {
             _db = db;
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
-        {
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
             //IQueryable<Comment> q = null;
             //q = Utils.PaginateObjects<Comment>(q, page, pageSize);
             //var products = q.ToList();
             //return Ok(products);
             var commentList = await _db.CommentLikes.GetAll().
-                Select(s => new CommentLikeVm
-                {
+                Select(s => new CommentLikeVm {
                     CommentId = s.CommentId,
                     Id = s.Id,
                     CreationDate = s.CreationDate,
@@ -42,7 +39,7 @@ namespace BookReader.Controller
                     UserFullName = s.User.Person.FirstName + " " + s.User.Person.LastName
                 }
                 )
-                .PaginateObjects(page,pageSize).
+                .PaginateObjects(page, pageSize).
                 ToListAsync();
             return Ok(commentList);
         }
@@ -52,13 +49,11 @@ namespace BookReader.Controller
         /// <param name="id">the id corresponding to a comment like</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> FindById(int id)
-        {
-            if (!await _db.CommentLikes.IsExists(id))
-            {
+        public async Task<IActionResult> FindById(int id) {
+            if (!await _db.CommentLikes.IsExists(id)) {
                 return NotFound();
             }
-            var comment = await _db.CommentLikes.Find(id);            
+            var comment = await _db.CommentLikes.Find(id);
             return Ok(comment);
         }
 
@@ -68,10 +63,8 @@ namespace BookReader.Controller
         /// <param name="commentLike">Gets a comment like object as parameter</param>
         /// <returns>ResultObject</returns>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CommentLike commentLike)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Create([FromBody] CommentLike commentLike) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
             commentLike.CreationDate = DateTime.Now;
@@ -89,10 +82,8 @@ namespace BookReader.Controller
         /// <param name="commentLike">Gets a comment like object as parameter</param>
         /// <returns>ResultObject</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] CommentLike commentLike)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Edit([FromBody] CommentLike commentLike) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
             var result = await _db.CommentLikes.EditAsync(commentLike);
@@ -107,8 +98,7 @@ namespace BookReader.Controller
         /// <param name="id">Gets the id correspond to comment like object</param>
         /// <returns>ResultObject</returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
+        public async Task<IActionResult> Delete(int id) {
             var commentLikeToDelete = await _db.CommentLikes.Find(id);
             if (commentLikeToDelete == null) {
                 return NotFound();
