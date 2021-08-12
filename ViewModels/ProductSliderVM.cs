@@ -15,5 +15,11 @@ namespace BookReader.ViewModels
         public int UserId { get; set; }
         public string UserFullName { get; set; }
         public decimal ProductRateAverage { get; set; }
+
+        public decimal Price { get; set; }
+        public int CommentCount { get; set; }
+        public bool HasMark { get; set; }
+
+        public int VisitCount { get; set; }
     }
 }

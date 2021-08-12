@@ -43,5 +43,13 @@ namespace BookReader.ViewModels
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         public int ProductType { get; set; }
 
+
+        public decimal Price { get; set; }
+        public int CommentCount { get; set; }
+        public bool HasMark { get; set; }
+
+        public int VisitCount { get; set; }
+
+        public decimal? ProductRateAverage { get; set; }
     }
 }

@@ -31,28 +31,31 @@ namespace BookReader.Controller
         [HttpGet]
         public async Task<IActionResult> GetAll(string search = "", int? categoryId = null, int page = 1, int pageSize = 10) {
 
-            var q = _db.Products.GetAll();
+            //var q = _db.Products.GetAll();
 
-            if (!string.IsNullOrWhiteSpace(search)) {
-                q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
-            }
+            //if (!string.IsNullOrWhiteSpace(search)) {
+            //    q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
+            //}
 
-            var list = await q
-                .Select(p => new ProductListVm {
-                    Id = p.Id,
-                    ProductCategoryId = p.ProductCategoryId,
-                    CategoryName = p.ProductCategory.Name,
-                    Title = p.Title,
-                    Description = p.Description,
-                    Tags = p.Tags,
-                    UserId = p.UserId,
-                    UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
-                    CreationDate = p.CreationDate,
-                    EditionDate = p.EditionDate,
-                    ProductType = p.ProductType
-                })
-                .PaginateObjects(page, pageSize)
-                .ToListAsync();
+            //var list = await q
+            //    .Select(p => new ProductListVm {
+            //        Id = p.Id,
+            //        ProductCategoryId = p.ProductCategoryId,
+            //        CategoryName = p.ProductCategory.Name,
+            //        Title = p.Title,
+            //        Description = p.Description,
+            //        Tags = p.Tags,
+            //        UserId = p.UserId,
+            //        UserFullName = p.User.Person.FirstName + " " + p.User.Person.LastName,
+            //        CreationDate = p.CreationDate,
+            //        EditionDate = p.EditionDate,
+            //        ProductType = p.ProductType
+            //    })
+            //    .PaginateObjects(page, pageSize)
+            //    .ToListAsync();
+
+            var list = await _db.Products.All().ToListAsync();
+
             return Ok(list);
         }
 

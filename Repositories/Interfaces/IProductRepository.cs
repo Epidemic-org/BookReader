@@ -13,11 +13,12 @@ namespace BookReader.Interfaces
     public interface IProductRepository : IBaseRepository<Product>
     {
 
+        IQueryable<ProductListVm> All();
         IQueryable<Product> GetAll(string search);
 
         IQueryable<Product> GetAll(int userId);        
 
-        IEnumerable<ProductSliderVM> GetFreeProducts();
+        IEnumerable<ProductListVm> GetFreeProducts();
 
         decimal getProductPrice(int productId);
     }
