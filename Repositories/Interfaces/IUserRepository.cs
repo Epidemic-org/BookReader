@@ -11,6 +11,5 @@ namespace BookReader.Repositories.Interfaces
     {
         Task<AppUser> Find(int id);
         Task<AppUser> Find(string id);
-        AppUser GetUser(LoginVM userVM);
     }
 }

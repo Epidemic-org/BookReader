@@ -39,7 +39,7 @@ namespace BookReader.Controller
                     CreationDate = p.CreationDate,
                     IsAcceptRules = p.IsAcceptRules
                 })
-                .PaginateObjects(page,pageSize)
+                .PaginateObjects(page, pageSize)
                 .ToListAsync();
             return Ok(people);
         }
@@ -50,9 +50,13 @@ namespace BookReader.Controller
         /// <param name="id">Gets the id corresponds to the person object</param>
         /// <returns>Person</returns>
         [HttpGet]
-        public async Task<IActionResult> FindById([FromRoute] int id) {
-            var person = await _db.People.Find(id);
-            if(person == null) {
+        public async Task<IActionResult> FindById() {
+            var userId = User.GetUserId();
+            var validUser = await _db.AppUsers.Find(userId);
+
+            var person = await _db.People.Find(validUser.Person.Id);
+
+            if (person == null) {
                 return NotFound();
             }
             return Ok(person);
@@ -86,7 +90,32 @@ namespace BookReader.Controller
         public async Task<IActionResult> Edit([FromBody] Person person) {
             if (!ModelState.IsValid) {
                 return BadRequest();
+            }
+
+            Person validPerson;
+
+            var validUser = await _db.AppUsers.Find(User.GetUserId());
+
+            if (_db.AppUsers.GetAll(u => u.Id == User.GetUserId()).Where(u=> u.Person == null).Any()) {
+                validPerson = new Person();
+                validUser.Person = validPerson;
+            }
+            else {
+                validPerson = validUser.Person;
             }            
+
+            validPerson.UserId = User.GetUserId();
+            validPerson.FirstName = person.FirstName;
+            validPerson.LastName = person.LastName;
+            validPerson.BirthDate = person.BirthDate;
+            validPerson.NationalCode = person.NationalCode;
+            validPerson.Pic = person.Pic;
+            validPerson.Phone = person.Phone;
+            validPerson.GenderType = person.GenderType;
+            validPerson.JobType = person.JobType;
+            validPerson.IsAcceptRules = person.IsAcceptRules;
+            validPerson.CreationDate = person.CreationDate;
+
             var result = await _db.People.EditAsync(person);
             result.Id = person.Id;
             result.Extra = person;

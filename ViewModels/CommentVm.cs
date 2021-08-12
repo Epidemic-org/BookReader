@@ -32,6 +32,6 @@ namespace BookReader.ViewModels
                 CreationDate = value.ToEnglishDateTime();
             }
         }
-
+        public bool IsActive { get; set; }
     }
 }
