@@ -8,15 +8,19 @@ namespace BookReader.ViewModels
 {
     public class CommentVm
     {
+       
+
+
         public int Id { get; set; }
         public int UserId { get; set; }
         public int ProductId { get; set; }
-
-        [Display(Name = "نام و نام خانوادگی کاربر")]
-        [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
-        public string UserFullName { get; set; }
-        [Display (Name = "متن نظر")]
+        public int? ParentId { get; set; }
+        //[Display(Name = "نام و نام خانوادگی کاربر")]
+        //[Required(ErrorMessage = "این فیلد {0} اجباری است.")]
+        //public string UserFullName { get; set; }
+        [Display(Name = "متن نظر")]
         public string Text { get; set; }
+        public double RateValue { get; set; }
 
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         public DateTime CreationDate { get; set; }
