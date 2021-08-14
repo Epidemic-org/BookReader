@@ -9,8 +9,12 @@ namespace BookReader.ViewModels
 {
 
     public class LoginVM
-    {        
-        public string UserName { get; set; }
+    {
+        [Required]
+        [Phone]
+        public string PhoneNumber { get; set; }
+
+        [Required]
         public string Password { get; set; }
 
     }

@@ -48,17 +48,7 @@ namespace BookReader.Controller
                 return NotFound();
             }
 
-            return Ok(invoice);
-
-            //if (await _db.Invoice.IsExists(id))
-            //{
-            //    var Invoice = await _db.Invoice.FindById(id);
-            //    return Ok(Invoice);
-            //}
-            //else
-            //{
-            //    return NotFound();
-            //}
+            return Ok(invoice);            
         }
 
         [HttpPost]
