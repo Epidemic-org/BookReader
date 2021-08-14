@@ -8,6 +8,7 @@ namespace BookReader.ViewModels
 {
     public class CommentVmPost
     {
+        public int Id { get; set; }
         public int? ParentId { get; set; }
         public int UserId { get; set; }
         public int ProductId { get; set; }
