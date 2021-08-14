@@ -16,7 +16,8 @@ namespace BookReader.Controller
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
     [Authorize]
-    public class CommentController : ControllerBase
+    public class 
+        : ControllerBase
     {
         public IUnitOfWork _db;
         public CommentController(IUnitOfWork db) {
