@@ -16,6 +16,7 @@ namespace BookReader.Context
         public IProductPriceRepository ProductPrices { get; }
         public IPersonRepository People { get; }
         public IOrderRepository Orders { get; }
+        public IOrderItemRepository OrderItems { get; }
         public IInvoiceRepository Invoice { get; }
         public IInvoiceItemRepository InvoiceItem { get; }
         public IInvoiceTermRepository InvoiceTerm { get; }

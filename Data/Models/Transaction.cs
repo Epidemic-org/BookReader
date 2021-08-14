@@ -13,6 +13,8 @@ namespace BookReader.Data.Models
         public decimal Amount { get; set; }
         public DateTime CreationDate { get; set; }
         public bool IsSuccess { get; set; }
+
+
         public string Description { get; set; }
 
         public ICollection<InvoicePayment> InvoicePayments { get; set; }        

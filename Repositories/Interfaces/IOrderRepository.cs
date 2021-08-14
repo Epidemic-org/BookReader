@@ -8,6 +8,7 @@ namespace BookReader.Repositories.Interfaces
 {
     public interface IOrderRepository : IBaseRepository<Order>
     {
+        Task<Order> GetAll(int userId);
 
     }
 }
