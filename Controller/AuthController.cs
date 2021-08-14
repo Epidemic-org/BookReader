@@ -39,7 +39,7 @@ namespace EshopApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var validUser = await _userManager.FindByNameAsync(userVM.UserName);
+            var validUser = await _userManager.FindByNameAsync(userVM.PhoneNumber);
             if (validUser == null) {
                 ModelState.AddModelError("not found user", "نام کاربری یا کلمه عبور اشتباه است.");
                 return BadRequest(ModelState);
@@ -54,6 +54,7 @@ namespace EshopApi.Controllers
 
             generatedToken = _tokenService.BuildToken(key: _config["Jwt:Key"].ToString(),
                 issuer: _config["Jwt:Issuer"].ToString(), validUser);
+
             if (generatedToken != null) {
                 return Ok(new { UserId = validUser.Id, UserName = validUser.UserName, Token = generatedToken });
             }
@@ -64,27 +65,35 @@ namespace EshopApi.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] LoginVM userVM) {
+        public async Task<IActionResult> Register([FromBody] RegisterVM userVM) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            var validUser = await _userManager.FindByNameAsync(userVM.UserName);
+            var validUser = await _userManager.FindByNameAsync(userVM.PhoneNumber);
             if (validUser != null) {
-                ModelState.AddModelError("not found user", "نام کاربری وجود دارد.");
+                ModelState.AddModelError("not found user", "کاربری با این شماره تلفن از قبل وجود دارد");
                 return BadRequest(ModelState);
             }
 
-            var result = await _userManager.CreateAsync(new AppUser {  UserName= userVM.UserName, IsActive = true, PhoneNumberConfirmed = true, EmailConfirmed = true }, userVM.Password);
-
-            if (result.Succeeded) {
+            var result = await _userManager.CreateAsync(
+                new AppUser {
+                    UserName= userVM.PhoneNumber, PhoneNumber = userVM.PhoneNumber, IsActive = true, 
+                    PhoneNumberConfirmed = true, EmailConfirmed = true }, userVM.Password
+                    );    
+            
+            if (result.Succeeded) {                
                 return Ok(userVM);
             }
 
             return BadRequest(result.Errors);
         }
 
-
-
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromRoute] int userId) {
+            var validUser = await _db.AppUsers.Find(userId);
+            var result = _userManager.DeleteAsync(validUser);            
+            return Ok(result);
+        }
     }
 }

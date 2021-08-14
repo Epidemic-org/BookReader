@@ -8,8 +8,8 @@ namespace BookReader.ViewModels
 {
     public class RegisterVM
     {
-        [Required]
-        [Phone]
+        [Required]        
+        [RegularExpression(@"^([0-9]{11})$", ErrorMessage = "فرمت شماره تلفن وارد شده صحیح نمی باشد")]
         public string PhoneNumber { get; set; }
 
         [Required]
