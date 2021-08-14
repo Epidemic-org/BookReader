@@ -15,6 +15,7 @@ namespace BookReader.ViewModels
         public string PhoneNumber { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
     }
