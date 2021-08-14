@@ -118,31 +118,11 @@ namespace BookReader.Repositories
 
         public IQueryable<ProductListVm> GetOfflineProducts(int userId)
         {
-            var products = _db.ProductDownloads.Where(n => n.UserId == userId)
-                .Select(n => new ProductListVm
-                {
-                    CategoryName = n.Product.ProductCategory.Name,
-                    CreationDate = n.CreationDate,
-                    Description = n.Product.Description,
-                    EditionDate = n.Product.EditionDate,
-                    Id = n.Id,
-                    Price = n.Product.ProductPrices.Select(n => (double?)n.ProductPriceValue).FirstOrDefault(),
-                    ProductCategoryId = n.Product.ProductCategoryId,
-                    ProductType = n.Product.ProductType,
-                    RateAverage = n.Product.ProductRates.Average(n => (double?)n.RateValue),
-                    Tags = n.Product.Tags,
-                    Title = n.Product.Title,
-                    UserId = n.UserId,
-                    VisitCount = n.Product.ProductVisits.Count,
-                    UserFullName = n.User.Person.FirstName + " " + n.User.Person.LastName,
-
-
-                });
-            return products;
-
-
-
-
+            var query = from p in GetAllProducts()
+                        from pd in _db.ProductDownloads
+                        where pd.UserId == userId && pd.ProductId == p.Id
+                        select p;
+            return query;
         }
     }
 }
