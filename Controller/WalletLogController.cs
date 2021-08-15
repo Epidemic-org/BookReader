@@ -53,15 +53,14 @@ namespace BookReader.Controller
 
 
         }
-        //[HttpGet]
-        //public async Task<IActionResult> GetWalletValue(int userId)
-        //{
-        //    var q = from w in _db.WalletLogs
-        //            join i in _db.InvoicePayments
-        //            on w.
-        //            join t in _db.Transactions
-
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetWalletValue(int userId)
+        {
+            var walletValue =await _db.WalletLogs.GetAll()
+                 .Where(n => n.UserId == userId)
+                 .SumAsync(n => n.WalletValue);
+            return Ok(walletValue);
+        }
         [HttpPost]
         public async Task<IActionResult> Create(int transactionId)
         {
