@@ -56,12 +56,22 @@ namespace BookReader.Controller
         /// <param name="person">Gets a person object as parameter</param>
         /// <returns>Person</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] PersonVm person) {
+        public async Task<IActionResult> Edit([FromBody] Person person) {
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
 
-            var validPerson = await _db.People.Find(person.Id);
+            Person validPerson;
+
+            var validUser = await _db.AppUsers.Find(User.GetUserId());
+
+            if (_db.AppUsers.GetAll(u => u.Id == User.GetUserId()).Where(u => u.Person == null).Any()) {
+                validPerson = new Person();
+                validUser.Person = validPerson;
+            }
+            else {
+                validPerson = validUser.Person;
+            }
 
             validPerson.UserId = User.GetUserId();
             validPerson.FirstName = person.FirstName;
@@ -75,7 +85,7 @@ namespace BookReader.Controller
             validPerson.IsAcceptRules = person.IsAcceptRules;
             validPerson.CreationDate = person.CreationDate;
 
-            var result = await _db.People.EditAsync(validPerson);
+            var result = await _db.People.EditAsync(person);
             result.Id = person.Id;
             result.Extra = person;
             return Ok(person);

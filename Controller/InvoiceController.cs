@@ -102,36 +102,6 @@ namespace BookReader.Controller
             result.Extra = invoiceVm;
             return Ok(result);
         }
-
-        [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] InvoiceVm invoice) {
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
-            var validInvoice = await _db.Invoice.Find(invoice.Id);
-            validInvoice.Id = invoice.Id;
-            validInvoice.UserId = invoice.UserId;
-
-            var result = await _db.Invoice.EditAsync(validInvoice);
-            result.Id = invoice.Id;
-            result.Extra = invoice;
-            return Ok(result);
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id) {
-            var invoice = await _db.Invoice.Find(id);
-
-            if (invoice == null) {
-                return NotFound();
-            }
-
-            var result = await _db.Invoice.DeleteAsync(invoice);
-
-            result.Id = invoice.Id;
-            result.Extra = invoice;
-            return Ok(result);
-        }
     }
 }
 

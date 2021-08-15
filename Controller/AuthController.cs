@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Threading.Tasks;
 
 namespace EshopApi.Controllers
@@ -82,7 +83,14 @@ namespace EshopApi.Controllers
                     PhoneNumberConfirmed = true, EmailConfirmed = true }, userVM.Password
                     );    
             
-            if (result.Succeeded) {                
+            if (result.Succeeded) {
+                var validPerson = new Person() {
+                    FirstName = userVM.FirstName,
+                    LastName = userVM.LastName,
+                    CreationDate = DateTime.Now,
+                    UserId = User.GetUserId()                        
+                };
+                await _db.People.CreateAsync(validPerson);
                 return Ok(userVM);
             }
 
