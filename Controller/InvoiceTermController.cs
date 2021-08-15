@@ -21,6 +21,7 @@ namespace BookReader.Controller
         {
             _db = db;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
         {
@@ -34,7 +35,7 @@ namespace BookReader.Controller
 
                 }
                 ).
-                PaginateObjects(page,pageSize).ToListAsync();
+                PaginateObjects(page, pageSize).ToListAsync();
             return Ok(list);
 
         }
@@ -54,37 +55,69 @@ namespace BookReader.Controller
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll(int invoiceId, int page = 1, int pageSize = 10)
+        {
+            var invoiceTermList = await _db.InvoiceTerm.GetAll()
+                .Where(n => n.InvoiceId == invoiceId)
+                .Select(s => new InvoiceTerm()
+                {
+                    Id = s.Id,
+                    InvoiceId = s.InvoiceId,
+                    TermAmount = s.TermAmount,
+                    TermTypeId = s.TermTypeId
+
+                })
+                .PaginateObjects(page, pageSize).ToListAsync();
+            return Ok(invoiceTermList);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> CreateInvoiceTerm([FromBody] InvoiceTerm invoiceTerm)
+        public async Task<IActionResult> Create([FromBody] InvoiceTermVm invoiceTermVm)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            InvoiceTerm invoiceTerm = new InvoiceTerm()
+            {
+                Id = invoiceTermVm.Id,
+                InvoiceId = invoiceTermVm.InvoiceId,
+                TermAmount = invoiceTermVm.TermAmount,
+                TermTypeId = invoiceTermVm.TermTypeId,
+            };
+
             var result = await _db.InvoiceTerm.CreateAsync(invoiceTerm);
-            result.Id = invoiceTerm.Id;
-            result.Extra = invoiceTerm;
+            result.Id = invoiceTermVm.Id;
+            result.Extra = invoiceTermVm;
             return Ok(result);
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditInvoiceTerm([FromBody] InvoiceTerm invoiceTerm)
+        public async Task<IActionResult> EditI([FromBody] InvoiceTermVm invoiceTermVm)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _db.InvoiceTerm.EditAsync(invoiceTerm);
-            result.Id = invoiceTerm.Id;
-            result.Extra = invoiceTerm;
+            var oldInvoiceTerm = await _db.InvoiceTerm.Find(invoiceTermVm.Id);
+            oldInvoiceTerm.Id = invoiceTermVm.Id;
+            oldInvoiceTerm.InvoiceId = invoiceTermVm.InvoiceId;
+            oldInvoiceTerm.TermAmount = invoiceTermVm.TermAmount;
+            oldInvoiceTerm.TermTypeId = invoiceTermVm.TermTypeId;
+            
+            var result = await _db.InvoiceTerm.EditAsync(oldInvoiceTerm);
+            result.Id = invoiceTermVm.Id;
+            result.Extra = invoiceTermVm;
             return Ok(result);
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteInvoiceTerm(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var invoiceTerm = await _db.InvoiceTerm.Find(id);
-            if(invoiceTerm== null)
+            if (invoiceTerm == null)
             {
                 return NotFound();
             }

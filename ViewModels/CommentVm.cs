@@ -15,9 +15,9 @@ namespace BookReader.ViewModels
         public int UserId { get; set; }
         public int ProductId { get; set; }
         public int? ParentId { get; set; }
-        //[Display(Name = "نام و نام خانوادگی کاربر")]
-        //[Required(ErrorMessage = "این فیلد {0} اجباری است.")]
-        //public string UserFullName { get; set; }
+        [Display(Name = "نام و نام خانوادگی کاربر")]
+        [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
+        public string UserFullName { get; set; }
         [Display(Name = "متن نظر")]
         public string Text { get; set; }
         public double RateValue { get; set; }

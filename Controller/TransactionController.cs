@@ -20,23 +20,22 @@ namespace BookReader.Controller
     public class TransactionController : ControllerBase
     {
         private readonly IUnitOfWork _db;
-        
-        public TransactionController(IUnitOfWork db)
-        {
+
+        public TransactionController(IUnitOfWork db) {
             _db = db;
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TransactionVm transaction){
+        public async Task<IActionResult> Create([FromBody] TransactionVm transaction) {
 
-            if(!ModelState.IsValid){
+            if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            
+
             transaction.CreationDate = DateTime.Now;
 
-            var validTransaction = new Transaction(){
+            var validTransaction = new Transaction() {
                 Id = transaction.Id,
                 BankName = transaction.BankName,
                 TrackingCode = transaction.TrackingCode,
@@ -55,23 +54,21 @@ namespace BookReader.Controller
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
-        {
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
             var transactions = await _db.Transactions.GetAll().
-                Select(s => new TransactionVm
-                {
+                Select(s => new TransactionVm {
                     Id = s.Id,
-                    Amount = s.Amount,
                     BankName = s.BankName,
-                    TrackingCode = s.TrackingCode,
                     CreationDate = s.CreationDate,
+                    Description = s.Description,
                     IsSuccess = s.IsSuccess,
-                    Description = s.Description
+                    TrackingCode = s.TrackingCode,
+                    Amount = s.Amount
                 })
                .PaginateObjects(page, pageSize)
                .ToListAsync();
             return Ok(transactions);
-        }        
+        }
 
     }
 }

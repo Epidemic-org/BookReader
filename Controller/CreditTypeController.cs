@@ -2,6 +2,7 @@
 using BookReader.Data.Models;
 using BookReader.Utillities;
 using BookReader.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
+    [Authorize]
     public class CreditTypeController : ControllerBase
     {
         private readonly IUnitOfWork _db;
@@ -49,14 +51,22 @@ namespace BookReader.Controller
 
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreditType creditType) {
+        public async Task<IActionResult> Create([FromBody] CreditTypeVm creditTypeVm) {
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            creditType.AdminId = User.GetUserId();
-            creditType.IsActive = true;
-            creditType.CreationDate = DateTime.Now;
-
+            CreditType creditType = new CreditType()
+            {
+                AdminId = User.GetUserId(),
+                CreationDate = DateTime.Now,
+                CreditAmount = creditTypeVm.CreditAmount,
+                CreditPrice = creditTypeVm.CreditPrice,
+                Description = creditTypeVm.Description,
+                Id = creditTypeVm.Id,
+                IsActive = creditTypeVm.IsActive,
+                Title = creditTypeVm.Title,
+                
+            };
             var result = await _db.CreditTypes.CreateAsync(creditType);
             result.Id = creditType.Id;
             result.Extra = creditType;
@@ -65,24 +75,24 @@ namespace BookReader.Controller
 
 
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] CreditType creditType) {
+        public async Task<IActionResult> Edit([FromBody] CreditTypeVm creditTypeVm) {
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
 
-            var validCreditType = await _db.CreditTypes.Find(creditType.Id);
+            var validCreditType = await _db.CreditTypes.Find(creditTypeVm.Id);
 
             validCreditType.AdminId = User.GetUserId();
-            validCreditType.Title = creditType.Title;
-            validCreditType.Description = creditType.Description;
-            validCreditType.CreditPrice = creditType.CreditPrice;
-            validCreditType.CreditAmount = creditType.CreditAmount;
-            validCreditType.IsActive = creditType.IsActive;
-            validCreditType.CreationDate = creditType.CreationDate;
+            validCreditType.Title = creditTypeVm.Title;
+            validCreditType.Description = creditTypeVm.Description;
+            validCreditType.CreditPrice = creditTypeVm.CreditPrice;
+            validCreditType.CreditAmount = creditTypeVm.CreditAmount;
+            validCreditType.IsActive = creditTypeVm.IsActive;
+            validCreditType.CreationDate = creditTypeVm.CreationDate;
 
-            var result = await _db.CreditTypes.EditAsync(creditType);
-            result.Id = creditType.Id;
-            result.Extra = creditType;
+            var result = await _db.CreditTypes.EditAsync(validCreditType);
+            result.Id = creditTypeVm.Id;
+            result.Extra = creditTypeVm;
             return Ok(result);
         }
 

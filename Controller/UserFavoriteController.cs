@@ -23,12 +23,18 @@ namespace BookReader.Controller
             _db = db;
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UserFavorites userFavorite) {
+        public async Task<IActionResult> Create([FromBody] UserFavoritesVm userFavoriteVm) {
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            userFavorite.UserId = User.GetUserId();
-            var result = await _db.UserFavorites.CreateAsync(userFavorite);
+            UserFavorites userFavorites = new UserFavorites() {
+                CreationDate = DateTime.Now,
+                ProductId = userFavoriteVm.ProductId,
+                UserId = User.GetUserId()
+            };
+
+            var result = await _db.UserFavorites.CreateAsync(userFavorites);
+
             return Ok(result);
         }
         [HttpDelete]

@@ -19,7 +19,8 @@ namespace BookReader.Controller
     public class CommentController : ControllerBase
     {
         public IUnitOfWork _db;
-        public CommentController(IUnitOfWork db) {
+        public CommentController(IUnitOfWork db)
+        {
             _db = db;
         }
         /// <summary>
@@ -29,9 +30,11 @@ namespace BookReader.Controller
         /// <param name="pageSize"></param>
         /// <returns>IActionResults of Ok with Comments Model</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(int productId, int page = 1, int pageSize = 10) {
+        public async Task<IActionResult> GetAll(int productId, int page = 1, int pageSize = 10)
+        {
             var commentList = await _db.Comments.GetAll().Where(w => w.ProductId == productId).
-                Select(s => new CommentVm {
+                Select(s => new CommentVm
+                {
                     Id = s.Id,
                     CreationDate = s.CreationDate,
                     ProductId = s.ProductId,
@@ -50,20 +53,24 @@ namespace BookReader.Controller
         /// <param name="id"></param>
         /// <returns>Special Comment</returns>
         [HttpGet]
-        public async Task<IActionResult> FindById(int id) {
-            if (await _db.Comments.IsExists(id)) {
+        public async Task<IActionResult> FindById(int id)
+        {
+            if (await _db.Comments.IsExists(id))
+            {
                 var comment = await _db.Comments.Find(id);
-                var test = new CommentVm {
+                var test = new CommentVm
+                {
                     CreationDate = comment.CreationDate,
                     Id = comment.Id,
                     ProductId = comment.ProductId,
                     Text = comment.Text,
-                    //UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
+                    UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
                 }
                 ;
                 return Ok(test);
             }
-            else {
+            else
+            {
                 return NotFound();
             }
         }
@@ -73,14 +80,15 @@ namespace BookReader.Controller
         /// <param name="comment"></param>
         /// <returns>Comment which is ResultObjectVm</returns>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CommentVmPost commentViewModel, int productId) {
-            if (!ModelState.IsValid) {
+        public async Task<IActionResult> Create([FromBody] CommentVmPost commentViewModel, int productId)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
-
-
-            Comment comment = new Comment() {
+            Comment comment = new Comment()
+            {
 
                 Text = commentViewModel.Text,
                 ProductId = productId,
@@ -91,8 +99,9 @@ namespace BookReader.Controller
                 CreationDate = DateTime.Now,
                 ParentId = commentViewModel.ParentId,
                 RateValue = 0,
-
+                Id = commentViewModel.Id
             };
+
             var result = await _db.Comments.CreateAsync(comment);
             result.Id = comment.Id;
             result.Extra = comment;
@@ -105,23 +114,24 @@ namespace BookReader.Controller
         /// <param name="comment"></param>
         /// <returns>Return New ResultObjectVm</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] Comment comment) {
-            if (!ModelState.IsValid) {
+        public async Task<IActionResult> Edit([FromBody] CommentVmPost commentViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
-            var validComment = await _db.Comments.Find(comment.Id);
+            var validComment = await _db.Comments.Find(commentViewModel.Id);
 
-            validComment.ProductId = comment.ProductId;
-            validComment.UserId = User.GetUserId();
-            validComment.Text = comment.Text;
-            validComment.CreationDate = comment.CreationDate;
-            validComment.IsActive = comment.IsActive;
-            validComment.RateValue = comment.RateValue;
+            validComment.Id = commentViewModel.Id;
+            validComment.ParentId = commentViewModel.ParentId;
+            validComment.Text = commentViewModel.Text;
+            validComment.ProductId = commentViewModel.ProductId;
 
             var result = await _db.Comments.EditAsync(validComment);
-            result.Id = comment.Id;
-            result.Extra = comment;
+            result.Id = commentViewModel.Id;
+            result.Extra = commentViewModel;
             return Ok(result);
+
         }
         /// <summary>
         /// Delete a Comment
@@ -129,9 +139,11 @@ namespace BookReader.Controller
         /// <param name="id"></param>
         /// <returns>ResultViewModel</returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id) {
+        public async Task<IActionResult> Delete(int id)
+        {
             var comment = await _db.Comments.Find(id);
-            if (comment == null) {
+            if (comment == null)
+            {
                 return NotFound();
             }
             var result = await _db.Comments.DeleteAsync(id);
