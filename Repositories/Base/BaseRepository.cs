@@ -52,7 +52,7 @@ namespace BookReader.Repositories.Base
                 return new ResultObjectVm { Success = true, Message = "با موفقیت حذف شد" };
             }
             catch (Exception exp) {
-                return new ResultObjectVm { Success = true, Message = "خطا در حذف رخ داد" };
+                return new ResultObjectVm { Success = false, Message = "خطا در حذف رخ داد" };
             }
         }
 

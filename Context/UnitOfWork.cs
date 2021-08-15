@@ -48,6 +48,18 @@ namespace BookReader.Context
         }
 
 
+        private IOrderItemRepository _orderItemRepository;
+        public IOrderItemRepository OrderItems {
+            get {
+                if (_orderItemRepository == null) {
+                    _orderItemRepository = new OrderItemRepository(_db);
+                }
+                return _orderItemRepository;
+            }
+        }
+
+
+
 
         private IInvoiceRepository _invoiceRepository;
         public IInvoiceRepository Invoice

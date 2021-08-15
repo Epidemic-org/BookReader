@@ -25,10 +25,6 @@ namespace BookReader.Controller
 
         [HttpGet]
         public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
-            //IQueryable<Comment> q = null;
-            //q = Utils.PaginateObjects<Comment>(q, page, pageSize);
-            //var products = q.ToList();
-            //return Ok(products);
             var commentList = await _db.CommentLikes.GetAll().
                 Select(s => new CommentLikeVm {
                     CommentId = s.CommentId,
@@ -43,6 +39,9 @@ namespace BookReader.Controller
                 ToListAsync();
             return Ok(commentList);
         }
+
+
+
         /// <summary>
         /// Finds a comment like by id
         /// </summary>
@@ -53,8 +52,22 @@ namespace BookReader.Controller
             if (!await _db.CommentLikes.IsExists(id)) {
                 return NotFound();
             }
-            var comment = await _db.CommentLikes.Find(id);
-            return Ok(comment);
+            var validCommentLike = await _db.CommentLikes.Find(id);
+            var commentLike = new CommentLikeVm() {
+                Id = validCommentLike.Id,
+                UserId = validCommentLike.UserId,
+                UserFullName = validCommentLike.User.Person.FirstName + " " + validCommentLike.User.Person.LastName,
+                CommentId = validCommentLike.CommentId,
+                IsLike = validCommentLike.IsLike,
+                CreationDate = validCommentLike.CreationDate
+            };
+            return Ok(commentLike);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FindByUserCommentIds(int userId, int commentId) {
+            var exists = await _db.CommentLikes.IsExists(userId, commentId);
+            return Ok(exists);
         }
 
         /// <summary>
@@ -63,17 +76,26 @@ namespace BookReader.Controller
         /// <param name="commentLike">Gets a comment like object as parameter</param>
         /// <returns>ResultObject</returns>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CommentLike commentLike) {
+        public async Task<IActionResult> Create([FromBody] CommentLikeVm commentLike) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
+
             commentLike.CreationDate = DateTime.Now;
             commentLike.UserId = User.GetUserId();
-            var result = await _db.CommentLikes.CreateAsync(commentLike);
+
+            var validCommentLike = new CommentLike() {
+                UserId = commentLike.UserId,
+                CommentId = commentLike.CommentId,
+                IsLike = commentLike.IsLike,
+                CreationDate = commentLike.CreationDate
+            };
+            var result = await _db.CommentLikes.CreateAsync(validCommentLike);
             result.Id = commentLike.Id;
             result.Extra = commentLike;
             return Ok(result);
         }
+
 
         /// <summary>
         /// Edit a comment like object 
@@ -82,15 +104,22 @@ namespace BookReader.Controller
         /// <param name="commentLike">Gets a comment like object as parameter</param>
         /// <returns>ResultObject</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] CommentLike commentLike) {
+        public async Task<IActionResult> Edit([FromBody] CommentLikeVm commentLike) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var result = await _db.CommentLikes.EditAsync(commentLike);
+            var validCommentLike = await _db.CommentLikes.Find(commentLike.Id);
+
+            validCommentLike.IsLike = commentLike.IsLike;
+            validCommentLike.UserId = commentLike.UserId;
+            validCommentLike.CommentId = commentLike.CommentId;
+
+            var result = await _db.CommentLikes.EditAsync(validCommentLike);
             result.Id = commentLike.Id;
             result.Extra = commentLike;
             return Ok(result);
         }
+
 
         /// <summary>
         /// Deletes a comment like object

@@ -14,6 +14,8 @@ namespace BookReader.Repositories
         private readonly ApplicationDbContext _db;
         public OrderItemRepository(ApplicationDbContext db) : base(db) {
             _db = db;
-        }
+        }        
+
+
     }
 }

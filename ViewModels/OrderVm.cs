@@ -33,5 +33,6 @@ namespace BookReader.ViewModels
         [StringLength(maximumLength: 50)]
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         public string Address { get; set; }
+
     }
 }

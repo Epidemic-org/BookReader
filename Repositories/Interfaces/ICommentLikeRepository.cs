@@ -8,6 +8,6 @@ namespace BookReader.Repositories.Interfaces
 {
     public interface ICommentLikeRepository : IBaseRepository<CommentLike>
     {
-
+        Task<bool> IsExists(int userId, int commentId);
     }
 }
