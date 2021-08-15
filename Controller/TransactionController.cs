@@ -26,14 +26,20 @@ namespace BookReader.Controller
             _db = db;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAll(int page = 1, int top= 10)
         {
             var transactions = await _db.Transactions.GetAll().
                 Select(s => new TransactionVm
                 {
+                    BankName = s.BankName,
+                    CreationDate = s.CreationDate,
+                    Description = s.Description,
+                    Id = s.Id,
+                    IsSuccess = s.IsSuccess,
+                    TrackingCode = s.TrackingCode,
                     Amount = s.Amount,
                 })
-               .PaginateObjects().ToListAsync();
+               .PaginateObjects(page, top).ToListAsync();
             return Ok(transactions);
 
         }

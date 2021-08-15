@@ -15,7 +15,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
-    [Authorize]
+
     public class WalletLogController : ControllerBase
     {
         private readonly IUnitOfWork _db;
@@ -46,59 +46,66 @@ namespace BookReader.Controller
         {
             var WalletLog = await _db.WalletLogs.Find(id);
             if (WalletLog == null)
+            {
                 return NotFound();
+            }
             return Ok(WalletLog);
 
 
         }
+        //[HttpGet]
+        //public async Task<IActionResult> GetWalletValue(int userId)
+        //{
+        //    var q = from w in _db.WalletLogs
+        //            join i in _db.InvoicePayments
+        //            on w.
+        //            join t in _db.Transactions
 
+        //}
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] WalletLog walletLog)
+        public async Task<IActionResult> Create(int transactionId)
         {
-            if (!ModelState.IsValid)
+
+            var transact = await _db.Transactions.Find(transactionId);
+
+            var walletlog = new WalletLog
             {
-                return BadRequest(ModelState);
-            }
-            walletLog.CreationDate = DateTime.Now;
-            walletLog.UserId = User.GetUserId();
-            Transaction transact = new Transaction();
-            walletLog.TransactionId = transact.Id;
-            var result = await _db.WalletLogs.CreateAsync(walletLog);
-            result.Id = walletLog.Id;
-            result.Extra = walletLog;
+                CreationDate = DateTime.Now,
+                Description = transact.Description,
+                UserId = User.GetUserId(),
+                WalletValue = transact.Amount,
+                TransactionId = transactionId,
+
+
+            };
+            var result = await _db.WalletLogs.CreateAsync(walletlog);
+            result.Id = walletlog.Id;
+            result.Extra = walletlog;
             return Ok(result);
+        }
+        //[HttpPut]
+        //public async Task<IActionResult> Edit([FromBody] WalletLog walletLog)
+        //{
+        //    var oldWalletLog = await _db.WalletLogs.Find(walletLog.Id);
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
 
-        }
-        [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] WalletLog walletLog)
-        {
-            var oldWalletLog = await _db.WalletLogs.Find(walletLog.Id);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            walletLog.UserId = oldWalletLog.UserId;
-            walletLog.TransactionId = oldWalletLog.TransactionId;
-            walletLog.Id = oldWalletLog.Id;
-            // change creationdate for modified date or not?
-            var result = await _db.WalletLogs.EditAsync(walletLog);
-            result.Id = walletLog.Id;
-            result.Extra = walletLog;
-            return Ok(walletLog);
-        }
+        //}
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            var walletLog= await _db.WalletLogs.Find(id);
-            if (walletLog == null)
-            {
-                return NotFound();
-            }
-            var result = await _db.WalletLogs.DeleteAsync(walletLog);
-            result.Id = id;
-            result.Extra = walletLog;
-            return Ok(walletLog);
-        }
+        //[HttpDelete]
+        //public async Task<IActionResult> Delete([FromRoute] int id)
+        //{
+        //    var walletLog = await _db.WalletLogs.Find(id);
+        //    if (walletLog == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var result = await _db.WalletLogs.DeleteAsync(walletLog);
+        //    result.Id = id;
+        //    result.Extra = walletLog;
+        //    return Ok(walletLog);
+        //}
     }
 }
