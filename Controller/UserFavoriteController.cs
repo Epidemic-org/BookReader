@@ -23,59 +23,22 @@ namespace BookReader.Controller
         {
             _db = db;
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
-        {
-            var userFavorites = await _db.UserFavorites.GetAll()
-                .Select(u => new UserFavoritesVm
-                {
-                    CreationDate = u.CreationDate,
-                    Id = u.Id,
-                    ProductId = u.ProductId,
-                    UserId = u.UserId
-                })
-            .PaginateObjects(page, pageSize)
-            .ToListAsync();
-            return Ok(userFavorites);
-        }
-        [HttpGet]
-        public async Task<IActionResult> FindById([FromRoute] int id)
-        {
-            var userFavorite = await _db.UserFavorites.Find(id);
-            if (userFavorite == null)
-            {
-                return NotFound();
-            }
-            return Ok(userFavorite);
-        }
-
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UserFavorites userFavorite)
+        public async Task<IActionResult> Create([FromBody] UserFavoritesVm userFavoriteVm)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            userFavorite.UserId = User.GetUserId();
-            var result = await _db.UserFavorites.CreateAsync(userFavorite);
-            return Ok(result);
-        }
-        [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] UserFavorites userFavorite)
-        {
-            var oldUserFavorite = await _db.UserFavorites.Find(userFavorite.Id);
-            if (!ModelState.IsValid)
+            UserFavorites userFavorites = new UserFavorites()
             {
-                return BadRequest();
-            }
-            userFavorite.Id = oldUserFavorite.Id;
-            userFavorite.CreationDate = oldUserFavorite.CreationDate;
-            userFavorite.UserId = oldUserFavorite.UserId;
-            var result = await _db.UserFavorites.EditAsync(userFavorite);
-            result.Extra = userFavorite;
-            result.Id = userFavorite.Id;
+                CreationDate = DateTime.Now,
+                ProductId = userFavoriteVm.ProductId,
+                UserId = User.GetUserId()
+            };
+            
+            var result = await _db.UserFavorites.CreateAsync(userFavorites);
             return Ok(result);
-
         }
         [HttpDelete]
         public async Task<IActionResult> Delete([FromRoute] int id)
