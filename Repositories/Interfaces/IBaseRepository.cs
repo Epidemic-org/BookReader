@@ -1,4 +1,5 @@
-﻿using BookReader.ViewModels;
+﻿using BookReader.Data.Models;
+using BookReader.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,5 @@ namespace BookReader.Repositories.Interfaces
 
         Task<ResultObjectVm> DeleteAsync(int id);
         Task<bool> IsExists(int id);
-
     }
 }

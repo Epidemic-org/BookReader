@@ -57,7 +57,7 @@ namespace EshopApi.Controllers
                 issuer: _config["Jwt:Issuer"].ToString(), validUser);
 
             if (generatedToken != null) {
-                return Ok(new { UserId = validUser.Id, UserName = validUser.UserName, Token = generatedToken });
+                return Ok(new { UserId = validUser.Id, PhoneNumber = validUser.UserName, Token = generatedToken });
             }
             else {
                 return NotFound("Token Buil Failed");
@@ -77,18 +77,26 @@ namespace EshopApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var result = await _userManager.CreateAsync(
-                new AppUser {
-                    UserName= userVM.PhoneNumber, PhoneNumber = userVM.PhoneNumber, IsActive = true, 
-                    PhoneNumberConfirmed = true, EmailConfirmed = true }, userVM.Password
-                    );    
-            
+
+            var newUser = new AppUser() {
+                UserName = userVM.PhoneNumber,
+                PhoneNumber = userVM.PhoneNumber,
+                IsActive = true,
+                PhoneNumberConfirmed = true,
+                EmailConfirmed = true
+            };
+
+
+            var result = await _userManager.CreateAsync(newUser, userVM.Password);
+
+
             if (result.Succeeded) {
                 var validPerson = new Person() {
                     FirstName = userVM.FirstName,
                     LastName = userVM.LastName,
                     CreationDate = DateTime.Now,
-                    UserId = User.GetUserId()                        
+                    UserId = newUser.Id,
+                    Phone = newUser.PhoneNumber
                 };
                 await _db.People.CreateAsync(validPerson);
                 return Ok(userVM);
@@ -100,7 +108,7 @@ namespace EshopApi.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete([FromRoute] int userId) {
             var validUser = await _db.AppUsers.Find(userId);
-            var result = _userManager.DeleteAsync(validUser);            
+            var result = _userManager.DeleteAsync(validUser);
             return Ok(result);
         }
     }

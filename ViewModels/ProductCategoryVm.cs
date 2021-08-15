@@ -12,7 +12,6 @@ namespace BookReader.ViewModels
         [Display(Name = "شناسه")]
         public int Id { get; set; }
         public int? ParentId { get; set; }
-
         [Display(Name = "نام")]
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         [StringLength(maximumLength: 50, MinimumLength = 10)]
@@ -38,6 +37,5 @@ namespace BookReader.ViewModels
             }
         }
         public int ProductType { get; set; }
-
     }
 }

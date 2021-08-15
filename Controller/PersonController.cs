@@ -27,26 +27,21 @@ namespace BookReader.Controller
         /// <param name="id">Gets the id corresponds to the person object</param>
         /// <returns>Person</returns>
         [HttpGet]
-        public async Task<IActionResult> FindById(int userId) {
-            var validPerson = await _db.People.Find(userId);
+        public async Task<IActionResult> FindById([FromRoute] int id) {
+            var validPerson = await _db.People.FindbyUserId(id);
 
             if (validPerson == null) {
                 return NotFound();
             }
+
             var person = new PersonVm() {
                 Id = validPerson.Id,
                 UserId = validPerson.UserId,
                 FirstName = validPerson.FirstName,
                 LastName = validPerson.LastName,
-                BirthDate = validPerson.BirthDate,
                 NationalCode = validPerson.NationalCode,
-                Pic = validPerson.Pic,
                 Phone = validPerson.Phone,
-                JobType = validPerson.JobType,
-                CreationDate = validPerson.CreationDate,
-                IsAcceptRules = validPerson.IsAcceptRules
             };
-
             return Ok(person);
         }
 
@@ -56,36 +51,20 @@ namespace BookReader.Controller
         /// <param name="person">Gets a person object as parameter</param>
         /// <returns>Person</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] Person person) {
+        public async Task<IActionResult> Edit([FromBody] PersonPostVM person) {
             if (!ModelState.IsValid) {
                 return BadRequest();
-            }
-
-            Person validPerson;
-
+            }            
             var validUser = await _db.AppUsers.Find(User.GetUserId());
+            var validPerson = await _db.People.FindbyUserId(validUser.Id);
 
-            if (_db.AppUsers.GetAll(u => u.Id == User.GetUserId()).Where(u => u.Person == null).Any()) {
-                validPerson = new Person();
-                validUser.Person = validPerson;
-            }
-            else {
-                validPerson = validUser.Person;
-            }
-
-            validPerson.UserId = User.GetUserId();
+            validPerson.UserId = person.UserId;
             validPerson.FirstName = person.FirstName;
             validPerson.LastName = person.LastName;
-            validPerson.BirthDate = person.BirthDate;
             validPerson.NationalCode = person.NationalCode;
-            validPerson.Pic = person.Pic;
-            validPerson.Phone = person.Phone;
-            validPerson.GenderType = person.GenderType;
-            validPerson.JobType = person.JobType;
-            validPerson.IsAcceptRules = person.IsAcceptRules;
-            validPerson.CreationDate = person.CreationDate;
+            validUser.Email = person.Email;
 
-            var result = await _db.People.EditAsync(person);
+            var result = await _db.People.EditAsync(validPerson);
             result.Id = person.Id;
             result.Extra = person;
             return Ok(person);

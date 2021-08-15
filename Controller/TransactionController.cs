@@ -37,19 +37,19 @@ namespace BookReader.Controller
             transaction.CreationDate = DateTime.Now;
 
             var validTransaction = new Transaction(){
-                Id = transactions.Id,
-                BankName = transactions.BankName,
-                TrackingCode = transactions.TrackingCode,
+                Id = transaction.Id,
+                BankName = transaction.BankName,
+                TrackingCode = transaction.TrackingCode,
                 Amount = transaction.Amount,
                 CreationDate = transaction.CreationDate,
-                IsSuccess = transactions.IsSuccess,
-                Description = transactions.Description
+                IsSuccess = transaction.IsSuccess,
+                Description = transaction.Description
             };
 
-            var result = _db.Transactions.CreateAsync(transaction);
-            result.Id = transaction.Id,
-            result.Extra = transaction
-            return result;       
+            var result = await _db.Transactions.CreateAsync(validTransaction);
+            result.Id = validTransaction.Id;
+            result.Extra = validTransaction;
+            return Ok(result);
         }
 
 
@@ -64,8 +64,7 @@ namespace BookReader.Controller
                     Amount = s.Amount,
                     BankName = s.BankName,
                     TrackingCode = s.TrackingCode,
-                    Amount = s.Amount,
-                    CreationDate = s.CreationDate(),
+                    CreationDate = s.CreationDate,
                     IsSuccess = s.IsSuccess,
                     Description = s.Description
                 })

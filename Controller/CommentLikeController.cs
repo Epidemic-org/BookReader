@@ -42,28 +42,6 @@ namespace BookReader.Controller
 
 
 
-        /// <summary>
-        /// Finds a comment like by id
-        /// </summary>
-        /// <param name="id">the id corresponding to a comment like</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> FindById(int id) {
-            if (!await _db.CommentLikes.IsExists(id)) {
-                return NotFound();
-            }
-            var validCommentLike = await _db.CommentLikes.Find(id);
-            var commentLike = new CommentLikeVm() {
-                Id = validCommentLike.Id,
-                UserId = validCommentLike.UserId,
-                UserFullName = validCommentLike.User.Person.FirstName + " " + validCommentLike.User.Person.LastName,
-                CommentId = validCommentLike.CommentId,
-                IsLike = validCommentLike.IsLike,
-                CreationDate = validCommentLike.CreationDate
-            };
-            return Ok(commentLike);
-        }
-
         [HttpGet]
         public async Task<IActionResult> FindByUserCommentIds(int userId, int commentId) {
             var exists = await _db.CommentLikes.IsExists(userId, commentId);

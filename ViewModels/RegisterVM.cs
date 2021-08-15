@@ -16,11 +16,11 @@ namespace BookReader.ViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "تایید رمز عبور")]
-        [Compare("Password", ErrorMessage ="رمز عبور های وارد شده تطابق ندارند")]
-        public string ConfirmPassword { get; set; }
+        //[Required]
+        //[DataType(DataType.Password)]
+        //[Display(Name = "تایید رمز عبور")]
+        //[Compare("Password", ErrorMessage ="رمز عبور های وارد شده تطابق ندارند")]
+        //public string ConfirmPassword { get; set; }
 
         [Required]
         public string FirstName { get; set; }
