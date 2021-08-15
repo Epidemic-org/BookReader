@@ -64,7 +64,7 @@ namespace BookReader.Controller
                     Id = comment.Id,
                     ProductId = comment.ProductId,
                     Text = comment.Text,
-                    //UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
+                    UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
                 }
                 ;
                 return Ok(test);
