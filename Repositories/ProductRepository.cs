@@ -109,11 +109,22 @@ namespace BookReader.Repositories
         }
         public IQueryable<ProductListVm> GetUserFavorites(int userId)
         {
-            var query = from p in GetAllProducts()
-                        from fav in _db.UserFavorites
-                        where p.Id == fav.ProductId && p.UserId == fav.UserId
-                        select p;
-            return query;
+            var q_ids = _db.UserFavorites.Where(w => w.UserId == userId).Select(s => s.ProductId);
+
+            var q = GetAllProducts().Where(w => q_ids.Contains(w.Id));
+
+            return q;
+
+            //var query = from p in GetAllProducts()
+            //            join fav in _db.UserFavorites on p.Id equals fav.ProductId
+            //            where userId == fav.UserId
+            //            select p;
+
+            //var query = from p in GetAllProducts()
+            //            from fav in _db.UserFavorites
+            //            where p.Id == fav.ProductId && p.UserId == fav.UserId
+            //            select p;
+            //return query;
         }
 
         public IQueryable<ProductListVm> GetOfflineProducts(int userId)
