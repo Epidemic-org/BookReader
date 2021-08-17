@@ -26,21 +26,27 @@ namespace BookReader.Controller
         /// Returns list of product categories
         /// </summary>
         /// <returns>List of type product category VM</returns>
-        [HttpGet]
-        public async Task<IActionResult> GetAll() {
-            //var list = await _db.ProductCategories.GetAll().ToListAsync();
-            var PrdouctCategoryList = await _db.ProductCategories.GetAll().Select(
-                s => new ProductCategoryVm {
-                    Id = s.Id,
-                    ParentId = s.ParentId,
-                    DisplayOrder = s.DisplayOrder,
-                    Pic = s.Pic,
-                    Icon = s.Icon,
-                    IsActive = s.IsActive,
-                    CreationDate = s.CreationDate,
-                    ProductType = s.ProductType
-                }).ToListAsync();
-            return Ok(PrdouctCategoryList);
+        [HttpGet("{parentId}")]
+        public async Task<IActionResult> GetAll([FromRoute] int parentId = 0) {
+            var query = _db.ProductCategories.GetAll().Select(
+                 s => new ProductCategoryVm {
+                     Id = s.Id,
+                     ParentId = s.ParentId,
+                     Name = s.Name,
+                     Description = s.Description,
+                     DisplayOrder = s.DisplayOrder,
+                     Pic = s.Pic,                     
+                     Icon = s.Icon,
+                     IsActive = s.IsActive,
+                     CreationDate = s.CreationDate,
+                     ProductType = s.ProductType,
+                     AdminId = s.AdminId                     
+                 });
+
+            if (parentId != 0) {
+                query = query.Where(c => c.ParentId == parentId);
+            }            
+            return Ok(query);
         }
 
 
@@ -50,7 +56,7 @@ namespace BookReader.Controller
         /// <param name="productCategory"></param>
         /// <returns>ResultObject</returns>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ProductCategory productCategory) {
+        public async Task<IActionResult> Create([FromBody] ProductCategoryVm productCategory) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
@@ -58,8 +64,21 @@ namespace BookReader.Controller
             productCategory.CreationDate = DateTime.Now;
             productCategory.IsActive = false;
 
+            var productVM = new ProductCategory() {
+                Id = productCategory.Id,
+                AdminId = User.GetUserId(),
+                Description = productCategory.Description,
+                IsActive = productCategory.IsActive,
+                Name = productCategory.Name,
+                ParentId = productCategory.ParentId,
+                CreationDate = productCategory.CreationDate,
+                DisplayOrder = productCategory.DisplayOrder,
+                Pic = productCategory.Pic,
+                Icon = productCategory.Icon,
+                ProductType = productCategory.ProductType                
+            };
 
-            var result = await _db.ProductCategories.CreateAsync(productCategory);
+            var result = await _db.ProductCategories.CreateAsync(productVM);
             result.Id = productCategory.Id;
             result.Extra = productCategory;
             return Ok(result);
@@ -71,11 +90,27 @@ namespace BookReader.Controller
         /// <param name="productCategory">Gets a product category as parameter</param>
         /// <returns>ResultObject</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] ProductCategory productCategory) {
+        public async Task<IActionResult> Edit([FromBody] ProductCategoryVm productCategory) {
+
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var result = await _db.ProductCategories.EditAsync(productCategory);
+
+            var validProductCategory = new ProductCategory() {
+                Id = productCategory.Id,
+                AdminId = productCategory.AdminId,
+                ProductType = productCategory.ProductType,
+                CreationDate = productCategory.CreationDate,
+                DisplayOrder = productCategory.DisplayOrder,
+                Description = productCategory.Description,
+                IsActive = productCategory.IsActive,
+                Name = productCategory.Name,
+                Icon = productCategory.Icon,
+                ParentId = productCategory.ParentId,
+                Pic = productCategory.Pic                
+            };
+
+            var result = await _db.ProductCategories.EditAsync(validProductCategory);
             result.Id = productCategory.Id;
             result.Extra = productCategory;
             return Ok(result);

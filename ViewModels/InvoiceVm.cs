@@ -12,14 +12,21 @@ namespace BookReader.ViewModels
         public int Id { get; set; }
         public int UserId { get; set; }
         public int PermitGenerationId { get; set; }
+
         [Display(Name = "مجموع هزینه")]
         public decimal TotalAmount { get; set; }
+
         public decimal TotalTerms { get; set; }
+
         [Display(Name = "مبلغ قابل پرداخت")]
         public decimal PayableAmount { get; set; }
+
         [Display(Name = "آدرس")]
         public string Address { get; set; }
+
         public DateTime CreationDate { get; set; }
+
+
         [Display(Name = "تاریخ شمسی")]
         public string NCreationDate
         {
@@ -33,5 +40,6 @@ namespace BookReader.ViewModels
                 CreationDate = value.ToEnglishDateTime();
             }
         }
+
     }
 }

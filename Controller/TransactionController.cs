@@ -16,40 +16,60 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class TransactionController : ControllerBase
     {
         private readonly IUnitOfWork _db;
-        public TransactionController(IUnitOfWork db)
-        {
 
+        public TransactionController(IUnitOfWork db) {
             _db = db;
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
-        {
-            var transactions = await _db.Transactions.GetAll().
-                Select(s => new TransactionVm
-                {
-                    Amount = s.Amount,
-                })
-               .PaginateObjects().ToListAsync();
-            return Ok(transactions);
 
-        }
 
-        [HttpGet]
-        public async Task<IActionResult> FindById(int id)
-        {
-            var transaction = await _db.Transactions.Find(id);
-            if (transaction == null)
-            {
-                return NotFound();
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] TransactionVm transaction) {
+
+            if (!ModelState.IsValid) {
+                return BadRequest();
             }
 
-            return Ok(transaction);
+            transaction.CreationDate = DateTime.Now;
+
+            var validTransaction = new Transaction() {
+                Id = transaction.Id,
+                BankName = transaction.BankName,
+                TrackingCode = transaction.TrackingCode,
+                Amount = transaction.Amount,
+                CreationDate = transaction.CreationDate,
+                IsSuccess = transaction.IsSuccess,
+                Description = transaction.Description
+            };
+
+            var result = await _db.Transactions.CreateAsync(validTransaction);
+            result.Id = validTransaction.Id;
+            result.Extra = validTransaction;
+            return Ok(result);
         }
-}
-        
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
+            var transactions = await _db.Transactions.GetAll().
+                Select(s => new TransactionVm {
+                    Id = s.Id,
+                    BankName = s.BankName,
+                    CreationDate = s.CreationDate,
+                    Description = s.Description,
+                    IsSuccess = s.IsSuccess,
+                    TrackingCode = s.TrackingCode,
+                    Amount = s.Amount
+                })
+               .PaginateObjects(page, pageSize)
+               .ToListAsync();
+            return Ok(transactions);
+        }
+
+    }
 }
 

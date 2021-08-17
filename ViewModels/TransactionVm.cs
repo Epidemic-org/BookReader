@@ -12,15 +12,11 @@ namespace BookReader.ViewModels
         public string TrackingCode { get; set; }
         public decimal Amount { get; set; }
         public DateTime CreationDate { get; set; }
-        public string NCreationDate
-        {
-            get
-            {
+        public string NCreationDate {
+            get {
                 return CreationDate.ToPersianDateTimeString();
             }
-
-            set
-            {
+            set {
                 CreationDate = value.ToEnglishDateTime();
             }
         }

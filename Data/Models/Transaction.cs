@@ -14,10 +14,8 @@ namespace BookReader.Data.Models
         public DateTime CreationDate { get; set; }
         public bool IsSuccess { get; set; }
         public string Description { get; set; }
-
         public ICollection<InvoicePayment> InvoicePayments { get; set; }        
         public ICollection<SubscriptionInvoicePayment> SubscriptionInvoicePayments { get; set; }
         public ICollection<WalletLog> WalletLogs { get; set; }
-
     }
 }

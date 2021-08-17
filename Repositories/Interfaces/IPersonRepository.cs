@@ -8,5 +8,11 @@ namespace BookReader.Repositories.Interfaces
 {
     public interface IPersonRepository : IBaseRepository<Person>
     {
+
+
+        Task<Person> FindbyUserId(int userId);
+
+
+
     }
 }

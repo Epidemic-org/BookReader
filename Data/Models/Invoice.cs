@@ -17,6 +17,9 @@ namespace BookReader.Data.Models
         public string Address { get; set; }
         public DateTime CreationDate { get; set; }
 
+
+
+
         public AppUser User { get; set; }
         public PermitGeneration PermitGeneration { get; set; }
 

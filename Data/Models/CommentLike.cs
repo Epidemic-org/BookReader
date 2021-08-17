@@ -13,6 +13,8 @@ namespace BookReader.Data.Models
         public int CommentId { get; set; }
         public bool IsLike { get; set; }
         public DateTime CreationDate { get; set; }
+
+
         public AppUser User { get; set; }
         public Comment Comment { get; set; }
     }

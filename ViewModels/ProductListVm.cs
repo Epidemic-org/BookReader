@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookReader.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace BookReader.ViewModels
         public string CategoryName { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public string Pic { get; set; }
+
         public string Tags { get; set; }
         public int UserId { get; set; }
         public string UserFullName { get; set; }
@@ -31,14 +34,6 @@ namespace BookReader.ViewModels
         public double? Price { get; set; }
         public double? RateAverage { get; set; }
         public double? VisitCount { get; set; }
-
-
-        public decimal Price { get; set; }
-        public int CommentCount { get; set; }
-        public bool HasMark { get; set; }
-
-        public int VisitCount { get; set; }
-
-        public decimal? ProductRateAverage { get; set; }
+        public decimal SalesCount { get; set; }
     }
 }

@@ -31,58 +31,10 @@ namespace BookReader.Controller
                     ProductId = s.ProductId,
                     Quantity = s.Quantity,
                     TermAMount = s.TermAMount
-                }
-                ).
+                })
+                .
                 PaginateObjects(page, pageSize).ToListAsync();
             return Ok(list);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> FindById([FromRoute] int id) {
-            if (!await _db.InvoiceItem.IsExists(id)) {
-                return NotFound();
-            }
-            var invoiceItem = await _db.InvoiceItem.Find(id);
-            return Ok(invoiceItem);
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] InvoiceItem invoiceItem) {
-            if (!ModelState.IsValid) {
-                return BadRequest();
-            }
-            invoiceItem.Price = _db.Products.GetAll(p => p.Id == invoiceItem.ProductId)
-                .FirstOrDefault().ProductPrices
-                .Where(p => p.IsActive).FirstOrDefault().ProductPriceValue;
-
-            invoiceItem.TermAMount = invoiceItem.TermAmountCalculate();
-            await _db.InvoiceItem.CreateAsync(invoiceItem);
-            return Ok(invoiceItem);
-        }
-
-
-        [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] InvoiceItem invoiceItem) {
-            if (!ModelState.IsValid) {
-                return BadRequest();
-            }
-            var result = await _db.InvoiceItem.EditAsync(invoiceItem);
-            result.Id = invoiceItem.Id;
-            result.Extra = invoiceItem;
-            return Ok(result);
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromRoute] int id) {
-            var invoiceItem = _db.InvoiceItem.Find(id);
-            if (invoiceItem == null) {
-                return NotFound();
-            }
-            var result = await _db.InvoiceItem.DeleteAsync(id);
-            result.Id = id;
-            result.Extra = invoiceItem;
-            return Ok(result);
         }
     }
 }

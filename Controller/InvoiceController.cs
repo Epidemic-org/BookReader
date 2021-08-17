@@ -38,10 +38,9 @@ namespace BookReader.Controller
                     UserId = s.UserId,
                     Id = s.Id,
                     PermitGenerationId = s.PermitGenerationId,
-                    
                 }
                 ).
-                PaginateObjects(page,pageSize).ToListAsync();
+                PaginateObjects(page, pageSize).ToListAsync();
             return Ok(list);
         }
 
@@ -55,41 +54,108 @@ namespace BookReader.Controller
             }
 
             return Ok(invoice);
-
-            //if (await _db.Invoice.IsExists(id))
-            //{
-            //    var Invoice = await _db.Invoice.FindById(id);
-            //    return Ok(Invoice);
-            //}
-            //else
-            //{
-            //    return NotFound();
-            //}
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Invoice invoice)
+        public async Task<IActionResult> Create([FromRoute] int orderId, int paymentType)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            invoice.CreationDate = DateTime.Now;
-            invoice.UserId = User.GetUserId();
-            var result = await _db.Invoice.CreateAsync(invoice);
-            result.Id = invoice.Id;
-            result.Extra = invoice;
+            var validOrder = await _db.Orders.Find(orderId);
+
+            var validInvoice = new Invoice()
+            {
+                UserId = validOrder.UserId,
+                PermitGenerationId = 1,
+                Address = validOrder.Address,
+                CreationDate = DateTime.Now,
+                TotalAmount = validOrder.OrderItems.Sum(
+                    o => o.Product.ProductPrices.Where(p => p.IsActive).FirstOrDefault().ProductPriceValue *
+                    o.Quantity
+                    ),
+                TotalTerms = 0,
+            };
+
+            validInvoice.PayableAmount = validInvoice.TotalAmount - validInvoice.TotalTerms;
+            var result = await _db.Invoice.CreateAsync(validInvoice);
+
+            foreach (var item in validOrder.OrderItems)
+            {
+                var invoiceItem = new InvoiceItem()
+                {
+                    InvoiceID = validInvoice.Id,
+                    Price = item.Product.ProductPrices.Where(p => p.IsActive)
+                    .FirstOrDefault().ProductPriceValue,
+                    Quantity = item.Quantity,
+                    TermAMount = 0,
+                    ProductId = item.ProductId
+                };
+                await _db.InvoiceItem.CreateAsync(invoiceItem);
+            }
+
+            var invoiceVm = new InvoiceVm()
+            {
+                Id = validInvoice.Id,
+                Address = validInvoice.Address,
+                PayableAmount = validInvoice.PayableAmount,
+                CreationDate = validInvoice.CreationDate,
+                PermitGenerationId = validInvoice.PermitGenerationId,
+                TotalTerms = validInvoice.TotalTerms,
+                TotalAmount = validInvoice.TotalAmount,
+                UserId = validInvoice.UserId
+            };
+
+            string bankName = "";
+
+            if (paymentType == 1)
+            {
+                bankName = "کیف پول";
+            }
+
+            Transaction transaction = new Transaction()
+            {
+                Amount = validInvoice.PayableAmount,
+                BankName = bankName,
+                CreationDate = DateTime.Now,
+                Description = "توضیحات",
+                InvoicePayments = validInvoice.InvoicePayments,
+                IsSuccess = true,
+
+            };
+            decimal value = validInvoice.PayableAmount;
+            if (paymentType == 1)
+            {
+                value = (validInvoice.PayableAmount)*(-1);
+            }
+
+            WalletLog wallet = new WalletLog()
+            {
+                CreationDate = DateTime.Now,
+                Description = transaction.Description,
+                TransactionId = transaction.Id,
+                UserId = User.GetUserId(),
+                WalletValue = value,
+            };
+            result.Id = invoiceVm.Id;
+            result.Extra = invoiceVm;
             return Ok(result);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] Invoice invoice)
+        public async Task<IActionResult> Edit([FromBody] InvoiceVm invoice)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _db.Invoice.EditAsync(invoice);
+            var validInvoice = await _db.Invoice.Find(invoice.Id);
+            validInvoice.Id = invoice.Id;
+            validInvoice.UserId = invoice.UserId;
+
+            var result = await _db.Invoice.EditAsync(validInvoice);
             result.Id = invoice.Id;
             result.Extra = invoice;
             return Ok(result);
@@ -99,11 +165,14 @@ namespace BookReader.Controller
         public async Task<IActionResult> Delete(int id)
         {
             var invoice = await _db.Invoice.Find(id);
+
             if (invoice == null)
             {
                 return NotFound();
             }
+
             var result = await _db.Invoice.DeleteAsync(invoice);
+
             result.Id = invoice.Id;
             result.Extra = invoice;
             return Ok(result);

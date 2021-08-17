@@ -11,13 +11,18 @@ namespace BookReader.ViewModels
 
         public int Id { get; set; }
         public int UserId { get; set; }
+
         [Display(Name = "نام و نام خانوادگی کاربر")]
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         public string UserFullName { get; set; }
+
         public int CommentId { get; set; }
+
         public bool IsLike { get; set; }
+
         [Required(ErrorMessage = "این فیلد {0} اجباری است.")]
         public DateTime CreationDate { get; set; }
+
         public string NCreationDate
         {
             get
