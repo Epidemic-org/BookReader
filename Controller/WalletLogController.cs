@@ -19,13 +19,16 @@ namespace BookReader.Controller
     public class WalletLogController : ControllerBase
     {
         private readonly IUnitOfWork _db;
-        public WalletLogController(IUnitOfWork db) {
+        public WalletLogController(IUnitOfWork db)
+        {
             _db = db;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
+        {
             var list = await _db.WalletLogs.GetAll().
-                Select(s => new WalletLogVm {
+                Select(s => new WalletLogVm
+                {
                     CreationDate = s.CreationDate,
                     Description = s.Description,
                     Id = s.Id,
@@ -39,7 +42,8 @@ namespace BookReader.Controller
 
         }
         [HttpGet]
-        public async Task<IActionResult> FindById(int id) {
+        public async Task<IActionResult> FindById(int id)
+        {
             var WalletLog = await _db.WalletLogs.Find(id);
             if (WalletLog == null)
             {
@@ -52,8 +56,10 @@ namespace BookReader.Controller
 
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] WalletLog walletLog) {
-            if (!ModelState.IsValid) {
+        public async Task<IActionResult> Create([FromBody] WalletLog walletLog)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             walletLog.CreationDate = DateTime.Now;
@@ -67,9 +73,11 @@ namespace BookReader.Controller
 
         }
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] WalletLog walletLog) {
+        public async Task<IActionResult> Edit([FromBody] WalletLog walletLog)
+        {
             var oldWalletLog = await _db.WalletLogs.Find(walletLog.Id);
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest();
             }
             walletLog.UserId = oldWalletLog.UserId;
@@ -83,9 +91,11 @@ namespace BookReader.Controller
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromRoute] int id) {
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
             var walletLog = await _db.WalletLogs.Find(id);
-            if (walletLog == null) {
+            if (walletLog == null)
+            {
                 return NotFound();
             }
             var result = await _db.WalletLogs.DeleteAsync(walletLog);
@@ -96,31 +106,30 @@ namespace BookReader.Controller
         [HttpGet]
         public async Task<IActionResult> GetWalletValue(int userId)
         {
-            var walletValue =await _db.WalletLogs.GetAll()
+            var walletValue = await _db.WalletLogs.GetAll()
                  .Where(n => n.UserId == userId)
                  .SumAsync(n => n.WalletValue);
             return Ok(walletValue);
         }
-        [HttpPost]
-        public async Task<IActionResult> Create(int transactionId)
-        {
+        //[HttpPost]
+        //public async Task<IActionResult> Create(int transactionId)
+        //{
 
-            var transact = await _db.Transactions.Find(transactionId);
+        //    var transact = await _db.Transactions.Find(transactionId);
 
-            var walletlog = new WalletLog
-            {
-                CreationDate = DateTime.Now,
-                Description = transact.Description,
-                UserId = User.GetUserId(),
-                WalletValue = transact.Amount,
-                TransactionId = transactionId,
+        //    var walletlog = new WalletLog
+        //    {
+        //        CreationDate = DateTime.Now,
+        //        Description = transact.Description,
+        //        UserId = User.GetUserId(),
+        //        WalletValue = transact.Amount,
+        //        TransactionId = transactionId,
 
 
-            };
-            var result = await _db.WalletLogs.CreateAsync(walletlog);
-            result.Id = walletlog.Id;
-            result.Extra = walletlog;
-            return Ok(result);
-        }
+        //    };
+        //    var result = await _db.WalletLogs.CreateAsync(walletlog);
+        //    result.Id = walletlog.Id;
+        //    result.Extra = walletlog;
+        //    return Ok(result);
     }
 }

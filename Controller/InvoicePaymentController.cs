@@ -24,39 +24,42 @@ namespace BookReader.Controller
             _db = db;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
-        {
-            var list = await _db.InvoicePayments.GetAll().
-                Select(s => new InvoicePaymentVm
-                {
-                    Id = s.Id,
-                    InvoiceId = s.Invoice.Id,
-                    CreationDate = s.CreationDate,
-                    PayAmount = s.PayAmount,
-                    TransactionId = s.TransactionId
+        //public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
+        //{
+        //    var list = await _db.InvoicePayments.GetAll().
+        //        Select(s => new InvoicePaymentVm
+        //        {
+        //            Id = s.Id,
+        //            InvoiceId = s.Invoice.Id,
+        //            CreationDate = s.CreationDate,
+        //            PayAmount = s.PayAmount,
+        //            TransactionId = s.TransactionId
 
-                }
-                ).
-                PaginateObjects(page, pageSize).ToListAsync();
-            return Ok(list);
-        }
+        //        }
+        //        ).
+        //        PaginateObjects(page, pageSize).ToListAsync();
+        //    return Ok(list);
+        //}
         [HttpGet]
-        public async Task<IActionResult> GetAll(int invoiceId, int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAll(int? invoiceId = null, int page = 1, int pageSize = 10)
         {
-            var invoiceList = await _db.InvoicePayments.GetAll()
-                .Where(n => n.InvoiceId == invoiceId)
-                .Select(s => new InvoicePaymentVm
-                {
-                    Id = s.Id,
-                    InvoiceId = s.Invoice.Id,
-                    CreationDate = s.CreationDate,
-                    PayAmount = s.PayAmount,
-                    TransactionId = s.TransactionId
+            var invoiceList = _db.InvoicePayments.GetAll();
+            if (invoiceId != null)
+            {
+                invoiceList = invoiceList.Where(n => n.InvoiceId == invoiceId);
+            }
+            var list = await invoiceList.Select(s => new InvoicePaymentVm
+            {
+                Id = s.Id,
+                InvoiceId = s.Invoice.Id,
+                CreationDate = s.CreationDate,
+                PayAmount = s.PayAmount,
+                TransactionId = s.TransactionId
 
-                })
+            })
                 .PaginateObjects(page, pageSize)
                 .ToListAsync();
-            return Ok(invoiceList);
+            return Ok(list);
         }
 
         [HttpPost]

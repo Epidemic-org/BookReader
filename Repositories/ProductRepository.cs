@@ -101,11 +101,18 @@ namespace BookReader.Repositories
 
         public IQueryable<ProductListVm> GetUserProducts(int userId)
         {
-            var query = from p in GetAllProducts()
-                        from invoice in _db.InvoiceItems
-                        where p.Id == invoice.ProductId && p.UserId == userId
-                        select p;
-            return query;
+            //var query = from p in GetAllProducts()
+            //            from invoice in _db.InvoiceItems
+            //            where p.Id == invoice.ProductId && p.UserId == userId
+            //            select p;
+            //return query;
+
+            var invoiceIds = _db.Invoices.Where(n => n.UserId == userId).Select(n => n.Id);
+            var productId = _db.InvoiceItems.Where(n => invoiceIds.Contains(n.InvoiceID)).Select(n => n.ProductId);
+            var products = GetAllProducts().Where(n => productId.Contains(n.Id));
+            return products;
+
+
         }
         public IQueryable<ProductListVm> GetUserFavorites(int userId)
         {
@@ -129,11 +136,18 @@ namespace BookReader.Repositories
 
         public IQueryable<ProductListVm> GetOfflineProducts(int userId)
         {
-            var query = from p in GetAllProducts()
-                        from pd in _db.ProductDownloads
-                        where pd.UserId == userId && pd.ProductId == p.Id
-                        select p;
-            return query;
+            //var query = from p in GetAllProducts()
+            //            from pd in _db.ProductDownloads
+            //            where pd.UserId == userId && pd.ProductId == p.Id
+            //            select p;
+            //return query;
+            //
+            var ids = _db.ProductDownloads.Where(n => n.UserId == userId).Select(n => n.ProductId);
+            var offlineProducts = GetAllProducts().Where(n => ids.Contains(n.Id));
+            return offlineProducts;
+
+
+
         }
     }
 }
