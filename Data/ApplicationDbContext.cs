@@ -16,6 +16,8 @@ namespace BookReader.Data
         {
         }
 
+
+        public virtual DbSet<vwProduct> vwProducts { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Campaingn> Campaigns { get; set; }
         public virtual DbSet<CampaignItem> CampaignItems { get; set; }
@@ -74,6 +76,7 @@ namespace BookReader.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration<Product>(new ProductMap());
+            builder.ApplyConfiguration<vwProduct>(new vwProductMap());
             builder.ApplyConfiguration<ProductCategory>(new ProductCategoryMap());
             builder.ApplyConfiguration<CampaignItem>(new CampaignItemMap());
             builder.ApplyConfiguration<Campaingn>(new CampaingnMap());
@@ -134,5 +137,8 @@ namespace BookReader.Data
 
             base.OnModelCreating(builder);
         }
+
+
+        
     }
 }
