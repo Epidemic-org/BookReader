@@ -35,7 +35,7 @@ namespace BookReader.Controller
                      Name = s.Name,
                      Description = s.Description,
                      DisplayOrder = s.DisplayOrder,
-                     Pic = s.Pic,                     
+                     Pic = s.Pic,
                      Icon = s.Icon,
                      IsActive = s.IsActive,
                      CreationDate = s.CreationDate,

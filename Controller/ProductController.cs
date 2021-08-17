@@ -80,10 +80,10 @@ namespace BookReader.Controller
 
         [HttpGet]
         public async Task<IActionResult> GetMostSoldProducts([FromRoute] int top = 10) {
-            var products = _db.Products.GetMostSoldProducts();
-            //var products = await _db.Products.GetMostSoldProducts()
-            //    .PaginateObjects(1, top)
-            //    .ToListAsync();
+            //var products = _db.Products.GetMostSoldProducts();
+            var products = await _db.Products.GetMostSoldProducts()
+                .PaginateObjects(1, top)
+                .ToListAsync();
             return Ok(products);
         }
 
@@ -129,7 +129,6 @@ namespace BookReader.Controller
         public async Task<IActionResult> FindById([FromRoute] int id) {
             if (!await _db.Products.IsExists(id)) {
                 return NotFound();
-
             }
             var product = await _db.Products.Find(id);
             var listViewModelProduct = new ProductListVm {
@@ -213,9 +212,9 @@ namespace BookReader.Controller
             return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> GetUserFavorites(int userId, int top = 10) {
+        public async Task<IActionResult> GetUserFavorites(int top = 10) {
             var productsList = await _db.Products
-                .GetUserFavorites(userId)
+                .GetUserFavorites(User.GetUserId())
                 .PaginateObjects(1, top)
                 .ToListAsync();
             return Ok(productsList);

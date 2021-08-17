@@ -46,7 +46,7 @@ namespace BookReader.Controller
             else return Ok(productRate);
         }
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ProductRate productRate)
+        public async Task<IActionResult> Create([FromBody] ProductRate productRate)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             productRate.UserId = User.GetUserId();
