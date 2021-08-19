@@ -58,7 +58,7 @@ namespace BookReader.Controller
                     Id = comment.Id,
                     ProductId = comment.ProductId,
                     Text = comment.Text,
-                    //UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
+                    UserFullName = comment.User.Person.FirstName + "" + comment.User.Person.LastName
                 }
                 ;
                 return Ok(test);
@@ -78,8 +78,6 @@ namespace BookReader.Controller
                 return BadRequest(ModelState);
             }
 
-
-
             Comment comment = new Comment() {
 
                 Text = commentViewModel.Text,
@@ -91,8 +89,9 @@ namespace BookReader.Controller
                 CreationDate = DateTime.Now,
                 ParentId = commentViewModel.ParentId,
                 RateValue = 0,
-
+                Id = commentViewModel.Id
             };
+
             var result = await _db.Comments.CreateAsync(comment);
             result.Id = comment.Id;
             result.Extra = comment;
@@ -105,23 +104,22 @@ namespace BookReader.Controller
         /// <param name="comment"></param>
         /// <returns>Return New ResultObjectVm</returns>
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] Comment comment) {
+        public async Task<IActionResult> Edit([FromBody] CommentVmPost commentViewModel) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var validComment = await _db.Comments.Find(comment.Id);
+            var validComment = await _db.Comments.Find(commentViewModel.Id);
 
-            validComment.ProductId = comment.ProductId;
-            validComment.UserId = User.GetUserId();
-            validComment.Text = comment.Text;
-            validComment.CreationDate = comment.CreationDate;
-            validComment.IsActive = comment.IsActive;
-            validComment.RateValue = comment.RateValue;
+            validComment.Id = commentViewModel.Id;
+            validComment.ParentId = commentViewModel.ParentId;
+            validComment.Text = commentViewModel.Text;
+            validComment.ProductId = commentViewModel.ProductId;
 
             var result = await _db.Comments.EditAsync(validComment);
-            result.Id = comment.Id;
-            result.Extra = comment;
+            result.Id = commentViewModel.Id;
+            result.Extra = commentViewModel;
             return Ok(result);
+
         }
         /// <summary>
         /// Delete a Comment

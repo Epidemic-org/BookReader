@@ -15,7 +15,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
-    [Authorize]
+
     public class WalletLogController : ControllerBase
     {
         private readonly IUnitOfWork _db;
@@ -41,28 +41,14 @@ namespace BookReader.Controller
         [HttpGet]
         public async Task<IActionResult> FindById(int id) {
             var WalletLog = await _db.WalletLogs.Find(id);
-            if (WalletLog == null)
+            if (WalletLog == null) {
                 return NotFound();
+            }
             return Ok(WalletLog);
 
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] WalletLog walletLog) {
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
-            walletLog.CreationDate = DateTime.Now;
-            walletLog.UserId = User.GetUserId();
-            Transaction transact = new Transaction();
-            walletLog.TransactionId = transact.Id;
-            var result = await _db.WalletLogs.CreateAsync(walletLog);
-            result.Id = walletLog.Id;
-            result.Extra = walletLog;
-            return Ok(result);
-
-        }
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody] WalletLog walletLog) {
             var oldWalletLog = await _db.WalletLogs.Find(walletLog.Id);
@@ -89,6 +75,32 @@ namespace BookReader.Controller
             result.Id = id;
             result.Extra = walletLog;
             return Ok(walletLog);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetWalletValue(int userId) {
+            var walletValue = await _db.WalletLogs.GetAll()
+                 .Where(n => n.UserId == userId)
+                 .SumAsync(n => n.WalletValue);
+            return Ok(walletValue);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(int transactionId) {
+
+            var transact = await _db.Transactions.Find(transactionId);
+
+            var walletlog = new WalletLog {
+                CreationDate = DateTime.Now,
+                Description = transact.Description,
+                UserId = User.GetUserId(),
+                WalletValue = transact.Amount,
+                TransactionId = transactionId,
+
+
+            };
+            var result = await _db.WalletLogs.CreateAsync(walletlog);
+            result.Id = walletlog.Id;
+            result.Extra = walletlog;
+            return Ok(result);
         }
     }
 }

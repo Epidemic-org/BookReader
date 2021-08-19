@@ -7,7 +7,6 @@ namespace BookReader.Data.Models
 {
     public class Invoice
     {
-
         public int Id { get; set; }
         public int UserId { get; set; }
         public int PermitGenerationId { get; set; }
@@ -16,8 +15,6 @@ namespace BookReader.Data.Models
         public decimal PayableAmount { get; set; }
         public string Address { get; set; }
         public DateTime CreationDate { get; set; }
-
-
 
 
         public AppUser User { get; set; }

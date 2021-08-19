@@ -17,9 +17,7 @@ namespace BookReader.Controller
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _db;
-        public ProductController(IUnitOfWork db) {
-            _db = db;
-        }
+        public ProductController(IUnitOfWork db) { }
 
         /// <summary>
         /// Returns list of products
@@ -35,7 +33,7 @@ namespace BookReader.Controller
             if (!string.IsNullOrWhiteSpace(search)) {
                 q = q.Where(w => w.Title.Contains(search) || w.Description.Contains(search));
             }
-
+            
             var list = await q
                 .Select(p => new ProductListVm {
                     Id = p.Id,

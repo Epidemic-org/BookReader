@@ -27,7 +27,7 @@ namespace BookReader.Controller
 
         [HttpGet]
         public async Task<IActionResult> FindById() {
-            var validOrder = await _db.Orders.Find(User.GetUserId());
+            var validOrder = await _db.Orders.GetAll(o => o.UserId == User.GetUserId()).FirstOrDefaultAsync();
             if (validOrder == null) {
                 return NotFound();
             }
@@ -36,7 +36,11 @@ namespace BookReader.Controller
                 UserId = validOrder.UserId,
                 Address = validOrder.Address,
                 CreationDate = validOrder.CreationDate,
-                UserFullName = validOrder.User.Person.FirstName + " " + validOrder.User.Person.LastName
+                UserFullName = validOrder.User.Person.FirstName + " " + validOrder.User.Person.LastName,
+                TotalAmount = validOrder.OrderItems.Sum(
+                    o => o.Product.ProductPrices.Where(p => p.IsActive).FirstOrDefault().ProductPriceValue *
+                    o.Quantity
+                    )
             };
             return Ok(order);
         }

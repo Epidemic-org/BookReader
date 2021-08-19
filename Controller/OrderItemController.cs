@@ -76,7 +76,7 @@ namespace BookReader.Controller
         }
 
 
-        [HttpGet]
+        [HttpDelete]
         public async Task<IActionResult> Delete([FromRoute] int id) {
             var validOrderItem = await _db.OrderItems.Find(id);
 
