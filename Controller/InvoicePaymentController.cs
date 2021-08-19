@@ -2,6 +2,7 @@
 using BookReader.Data.Models;
 using BookReader.Utillities;
 using BookReader.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
+    [Authorize]
     public class InvoicePaymentController : ControllerBase
     {
         private readonly IUnitOfWork _db;
@@ -43,16 +45,22 @@ namespace BookReader.Controller
                 return NotFound();
             }
 
-            return Ok(invoicePayment);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] InvoicePayment invoicePayment) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            invoicePayment.InvoiceId = invoicePayment.Invoice.Id;
-            invoicePayment.CreationDate = DateTime.Now;
+
+            InvoicePayment invoicePayment = new InvoicePayment()
+            {
+                CreationDate = DateTime.Now,
+                Id = invoicePaymentVm.Id,
+                TransactionId = invoicePaymentVm.TransactionId,
+                InvoiceId = invoicePaymentVm.InvoiceId,
+                PayAmount = invoicePaymentVm.PayAmount,
+
+            };
+
             var result = await _db.InvoicePayments.CreateAsync(invoicePayment);
             result.Id = invoicePayment.Id;
             result.Extra = invoicePayment;
@@ -68,6 +76,25 @@ namespace BookReader.Controller
             result.Extra = invoicePayment;
             return Ok(result);
         }
+        //[HttpPut]
+        //public async Task<IActionResult> Edit([FromBody] InvoicePaymentVm invoicePaymentVm)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var oldInvoicePayment = await _db.InvoicePayments.Find(invoicePaymentVm.Id);
+        //    oldInvoicePayment.Id = invoicePaymentVm.Id;
+        //    oldInvoicePayment.InvoiceId = invoicePaymentVm.InvoiceId;
+        //    oldInvoicePayment.PayAmount = invoicePaymentVm.PayAmount;
+        //    oldInvoicePayment.TransactionId = invoicePaymentVm.TransactionId;
+
+        //    var result = await _db.InvoicePayments.EditAsync(oldInvoicePayment);
+        //    result.Id = invoicePaymentVm.Id;
+        //    result.Extra = invoicePaymentVm;
+        //    return Ok(result);
+        //}
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id) {

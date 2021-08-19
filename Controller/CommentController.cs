@@ -19,7 +19,8 @@ namespace BookReader.Controller
     public class CommentController : ControllerBase
     {
         public IUnitOfWork _db;
-        public CommentController(IUnitOfWork db) {
+        public CommentController(IUnitOfWork db)
+        {
             _db = db;
         }
         /// <summary>
@@ -29,9 +30,11 @@ namespace BookReader.Controller
         /// <param name="pageSize"></param>
         /// <returns>IActionResults of Ok with Comments Model</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(int productId, int page = 1, int pageSize = 10) {
+        public async Task<IActionResult> GetAll(int productId, int page = 1, int pageSize = 10)
+        {
             var commentList = await _db.Comments.GetAll().Where(w => w.ProductId == productId).
-                Select(s => new CommentVm {
+                Select(s => new CommentVm
+                {
                     Id = s.Id,
                     CreationDate = s.CreationDate,
                     ProductId = s.ProductId,
@@ -50,10 +53,13 @@ namespace BookReader.Controller
         /// <param name="id"></param>
         /// <returns>Special Comment</returns>
         [HttpGet]
-        public async Task<IActionResult> FindById(int id) {
-            if (await _db.Comments.IsExists(id)) {
+        public async Task<IActionResult> FindById(int id)
+        {
+            if (await _db.Comments.IsExists(id))
+            {
                 var comment = await _db.Comments.Find(id);
-                var test = new CommentVm {
+                var test = new CommentVm
+                {
                     CreationDate = comment.CreationDate,
                     Id = comment.Id,
                     ProductId = comment.ProductId,
@@ -63,7 +69,8 @@ namespace BookReader.Controller
                 ;
                 return Ok(test);
             }
-            else {
+            else
+            {
                 return NotFound();
             }
         }
@@ -73,8 +80,10 @@ namespace BookReader.Controller
         /// <param name="comment"></param>
         /// <returns>Comment which is ResultObjectVm</returns>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CommentVmPost commentViewModel, int productId) {
-            if (!ModelState.IsValid) {
+        public async Task<IActionResult> Create([FromBody] CommentVmPost commentViewModel, int productId)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
@@ -127,9 +136,11 @@ namespace BookReader.Controller
         /// <param name="id"></param>
         /// <returns>ResultViewModel</returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id) {
+        public async Task<IActionResult> Delete(int id)
+        {
             var comment = await _db.Comments.Find(id);
-            if (comment == null) {
+            if (comment == null)
+            {
                 return NotFound();
             }
             var result = await _db.Comments.DeleteAsync(id);
