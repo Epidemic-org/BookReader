@@ -89,13 +89,14 @@ namespace BookReader.Repositories
         }
 
         public IQueryable<ProductListVm> GetUserProducts(int userId) {
-
-            //var query = from p in GetAllProducts()
-            //            from invoice in _db.InvoiceItems
-            //            where p.Id == invoice.ProductId && p.UserId == userId
-            //            select p;
-            //return query;
+            var invoices = _db.Invoices.Where(i => i.UserId == userId).Select(i => i.Id);
+            var invoiceItems = _db.InvoiceItems.Where(i => invoices.Contains(i.InvoiceID)).Select(i => i.ProductId);
+            var userProducts = GetAllProducts().Where(p => invoiceItems.Contains(p.Id));
+            return userProducts;
         }
+
+
+
         public IQueryable<ProductListVm> GetUserFavorites(int userId) {
             var query = from p in GetAllProducts()
                         from fav in _db.UserFavorites

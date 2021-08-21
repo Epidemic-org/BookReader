@@ -1,5 +1,4 @@
-﻿
-using BookReader.Data;
+﻿using BookReader.Data;
 using BookReader.Data.Models;
 using BookReader.Repositories.Base;
 using BookReader.Repositories.Interfaces;
@@ -7,7 +6,6 @@ using BookReader.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-
 
 
 namespace BookReader.Repositories
@@ -21,7 +19,8 @@ namespace BookReader.Repositories
 
         public async Task<AppUser> Find(string username) {
             return await _db.Users.Where(u => u.UserName == username).FirstOrDefaultAsync();
-        }        
+        }                     
+
 
     }
 }

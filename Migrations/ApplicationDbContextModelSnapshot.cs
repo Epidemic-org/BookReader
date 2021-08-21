@@ -153,17 +153,17 @@ namespace BookReader.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9deff32d-b27f-4df9-b01c-79b48ab716c6",
+                            ConcurrencyStamp = "ac906cb0-6c4f-4698-a40f-b109f90c97bc",
                             Email = "AbbasKashi69@gmail.com",
                             EmailConfirmed = false,
                             IsActive = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "09132602521",
                             NormalizedUserName = "09132602521",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEfBCri5Xmfe+QtCG71Yrg2T6KxbqdD/DT6NvU2626aMD/QHIo7pMsGmopJhrpyeuw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHc4l3ayuTwTJ7ReHcVmjFxzG2ILt83SUCMxaZnc7CPzs592xkvQV7bGdsTtr8QZhw==",
                             PhoneNumber = "09132602521",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "0ead66ba-3170-49ef-afad-c630bf866754",
+                            SecurityStamp = "7a7a6292-244a-4f70-a8be-cd0a7b572ee5",
                             TwoFactorEnabled = false,
                             UserName = "09132602521"
                         });
@@ -997,7 +997,7 @@ namespace BookReader.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(1990, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreationDate = new DateTime(2021, 8, 17, 10, 23, 43, 299, DateTimeKind.Local).AddTicks(7772),
+                            CreationDate = new DateTime(2021, 8, 20, 20, 52, 52, 883, DateTimeKind.Local).AddTicks(2236),
                             FirstName = "Abbas",
                             GenderType = 1,
                             IsAcceptRules = 1,
@@ -2182,6 +2182,35 @@ namespace BookReader.Migrations
                     b.HasKey("Id");
 
                     b.ToView("vwProducts");
+                });
+
+            modelBuilder.Entity("BookReader.Data.Models.vwUserInvoices", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("vwUserInvoices");
                 });
 
             modelBuilder.Entity("BookReader.Data.Models.AppRoleClaim", b =>

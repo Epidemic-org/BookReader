@@ -18,22 +18,6 @@ FROM     dbo.Products INNER JOIN
 
             migrationBuilder.Sql(sql);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             migrationBuilder.AlterColumn<int>(
                 name: "ParentId",
                 table: "Comments",
@@ -62,14 +46,6 @@ FROM     dbo.Products INNER JOIN
             var sql = @"DROP VIEW [dbo].[vwProducts]";
 
             migrationBuilder.Sql(sql);
-
-
-
-
-
-
-
-
 
 
             migrationBuilder.AlterColumn<int>(

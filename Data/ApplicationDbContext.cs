@@ -8,16 +8,12 @@ using System.Text;
 
 namespace BookReader.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<AppUser,AppRole,int, AppUserClaim, AppUserRole,
+    public class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, int, AppUserClaim, AppUserRole,
         AppUserLogin, AppRoleClaim, AppUserToken>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
+            : base(options) {
         }
-
-
-        public virtual DbSet<vwProduct> vwProducts { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Campaingn> Campaigns { get; set; }
         public virtual DbSet<CampaignItem> CampaignItems { get; set; }
@@ -72,9 +68,13 @@ namespace BookReader.Data
         public virtual DbSet<UserLogs> UserLogs { get; set; }
         public virtual DbSet<UserShelves> UserShelves { get; set; }
         public virtual DbSet<WalletLog> WalletLogs { get; set; }
+        public virtual DbSet<vwProduct> vwProducts { get; set; }
+        public virtual DbSet<vwUserInvoices> vwUserInvoices { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
+
+
+
+        protected override void OnModelCreating(ModelBuilder builder) {
             builder.ApplyConfiguration<Product>(new ProductMap());
             builder.ApplyConfiguration<vwProduct>(new vwProductMap());
             builder.ApplyConfiguration<ProductCategory>(new ProductCategoryMap());
@@ -113,12 +113,12 @@ namespace BookReader.Data
             builder.ApplyConfiguration<InvoicePayment>(new InvoicePaymentMap());
             builder.ApplyConfiguration<InvoiceTerm>(new InvoiceTermMap());
             builder.ApplyConfiguration<RequestMoney>(new RequestMoneyMap());
-            builder.ApplyConfiguration <RolePermission>(new RolePermissionMap());
+            builder.ApplyConfiguration<RolePermission>(new RolePermissionMap());
             builder.ApplyConfiguration<ScoreLog>(new ScoreLogMap());
             builder.ApplyConfiguration<ScoreType>(new ScoreTypeMap());
             builder.ApplyConfiguration<ScoreTypeItem>(new ScoreTypeItemMap());
             builder.ApplyConfiguration<Shelves>(new ShelvesMap());
-            builder.ApplyConfiguration <SubscriptionInvoice>(new SubscriptionInvoiceMap());
+            builder.ApplyConfiguration<SubscriptionInvoice>(new SubscriptionInvoiceMap());
             builder.ApplyConfiguration<SubscriptionInvoiceItem>(new SubscriptionInvoiceItemMap());
             builder.ApplyConfiguration<SubscriptionInvoicePayment>(new SubscriptionInvoicePaymentMap());
             builder.ApplyConfiguration<SubscriptionType>(new SubscriptionTypeMap());
@@ -131,14 +131,9 @@ namespace BookReader.Data
             builder.ApplyConfiguration(new UserLogMap());
             builder.ApplyConfiguration(new UserShelveMap());
             builder.ApplyConfiguration(new WalletMap());
-
             builder.ApplyConfiguration(new UserMap());
-
-
+            builder.ApplyConfiguration<vwUserInvoices>(new vwUserInvoicesMap());
             base.OnModelCreating(builder);
         }
-
-
-        
     }
 }

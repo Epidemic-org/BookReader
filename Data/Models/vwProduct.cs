@@ -21,9 +21,6 @@ namespace BookReader.Data.Models
         public DateTime CreationDate { get; set; }
         public DateTime? EditionDate { get; set; }
         public int  ProductType { get; set; }
-
-
-
       
     }
 }

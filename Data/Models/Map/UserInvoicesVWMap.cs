@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace BookReader.Data.Models.Map
 {
-    public class vwProductMap : IEntityTypeConfiguration<vwProduct>
+    public class vwUserInvoicesMap : IEntityTypeConfiguration<vwUserInvoices>
     {
-        public void Configure(EntityTypeBuilder<vwProduct> builder) {
-            //builder.ToTable("prrrr");
-            builder.ToView("vwProducts");
+        public void Configure(EntityTypeBuilder<vwUserInvoices> builder) {
+            builder.ToView("vwUserInvoices");
         }
     }
 }

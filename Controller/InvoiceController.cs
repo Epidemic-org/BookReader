@@ -2,6 +2,7 @@
 using BookReader.Data.Models;
 using BookReader.Utillities;
 using BookReader.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,22 +15,18 @@ namespace BookReader.Controller
 {
     [Route("api/[controller]/[action]/{id?}")]
     [ApiController]
-
-
+    [Authorize]
     public class InvoiceController : ControllerBase
     {
         private readonly IUnitOfWork _db;
-        public InvoiceController(IUnitOfWork db)
-        {
+        public InvoiceController(IUnitOfWork db) {
             _db = db;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
-        {
+        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10) {
             var list = await _db.Invoice.GetAll().
-                Select(s => new InvoiceVm
-                {
+                Select(s => new InvoiceVm {
                     Address = s.Address,
                     PayableAmount = s.PayableAmount,
                     CreationDate = s.CreationDate,
@@ -45,11 +42,9 @@ namespace BookReader.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> FindById(int id)
-        {
+        public async Task<IActionResult> FindById(int id) {
             var invoice = await _db.Invoice.Find(id);
-            if (invoice == null)
-            {
+            if (invoice == null) {
                 return NotFound();
             }
 
@@ -57,17 +52,14 @@ namespace BookReader.Controller
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromRoute] int orderId, int paymentType)
-        {
+        public async Task<IActionResult> Create([FromRoute] int orderId, int paymentType) {
 
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
             var validOrder = await _db.Orders.Find(orderId);
 
-            var validInvoice = new Invoice()
-            {
+            var validInvoice = new Invoice() {
                 UserId = validOrder.UserId,
                 PermitGenerationId = 1,
                 Address = validOrder.Address,
@@ -82,10 +74,8 @@ namespace BookReader.Controller
             validInvoice.PayableAmount = validInvoice.TotalAmount - validInvoice.TotalTerms;
             var result = await _db.Invoice.CreateAsync(validInvoice);
 
-            foreach (var item in validOrder.OrderItems)
-            {
-                var invoiceItem = new InvoiceItem()
-                {
+            foreach (var item in validOrder.OrderItems) {
+                var invoiceItem = new InvoiceItem() {
                     InvoiceID = validInvoice.Id,
                     Price = item.Product.ProductPrices.Where(p => p.IsActive)
                     .FirstOrDefault().ProductPriceValue,
@@ -96,8 +86,7 @@ namespace BookReader.Controller
                 await _db.InvoiceItem.CreateAsync(invoiceItem);
             }
 
-            var invoiceVm = new InvoiceVm()
-            {
+            var invoiceVm = new InvoiceVm() {
                 Id = validInvoice.Id,
                 Address = validInvoice.Address,
                 PayableAmount = validInvoice.PayableAmount,
@@ -110,13 +99,11 @@ namespace BookReader.Controller
 
             string bankName = "";
 
-            if (paymentType == 1)
-            {
+            if (paymentType == 1) {
                 bankName = "کیف پول";
             }
 
-            Transaction transaction = new Transaction()
-            {
+            Transaction transaction = new Transaction() {
                 Amount = validInvoice.PayableAmount,
                 BankName = bankName,
                 CreationDate = DateTime.Now,
@@ -126,13 +113,11 @@ namespace BookReader.Controller
 
             };
             decimal value = validInvoice.PayableAmount;
-            if (paymentType == 1)
-            {
-                value = (validInvoice.PayableAmount)*(-1);
+            if (paymentType == 1) {
+                value = (validInvoice.PayableAmount) * (-1);
             }
 
-            WalletLog wallet = new WalletLog()
-            {
+            WalletLog wallet = new WalletLog() {
                 CreationDate = DateTime.Now,
                 Description = transaction.Description,
                 TransactionId = transaction.Id,
@@ -145,10 +130,8 @@ namespace BookReader.Controller
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] InvoiceVm invoice)
-        {
-            if (!ModelState.IsValid)
-            {
+        public async Task<IActionResult> Edit([FromBody] InvoiceVm invoice) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
             var validInvoice = await _db.Invoice.Find(invoice.Id);
@@ -161,13 +144,18 @@ namespace BookReader.Controller
             return Ok(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetUserInvoices() {
+            var userId = User.GetUserId();
+            var result = _db.Invoice.GetUserInvoices(userId);
+            return Ok(result);
+        }
+
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
+        public async Task<IActionResult> Delete(int id) {
             var invoice = await _db.Invoice.Find(id);
 
-            if (invoice == null)
-            {
+            if (invoice == null) {
                 return NotFound();
             }
 
